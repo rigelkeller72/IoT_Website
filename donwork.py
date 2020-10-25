@@ -3,6 +3,7 @@ DEVICE = 'COM8'
 ser = serial.Serial(DEVICE)
 while True:
     #Reads in serial data
+    serprint = ('r' + '\n').encode('ascii')
     rxdata = ser.readline()
     str = rxdata.decode('ascii')
     #converts to string and splits comma deliniated
@@ -23,6 +24,7 @@ while True:
         ser.write(serprint)
         ser.flush()
     else:
-        serprint = ('g' + '\n').encode('ascii')
+
+
         ser.write(serprint)
         ser.flush()
