@@ -1,12 +1,17 @@
 import serial
+import time
 DEVICE = 'COM8'
 ser = serial.Serial(DEVICE)
-while True:
+#while True:
+if 1 == 1:
     #Reads in serial data
-    serprint = ('r').encode('ascii')
+    time.sleep(.01)
+    ser.flush()
+    serprint = ("r\n").encode('ascii')
     ser.write(serprint)
     rxdata = ser.readline()
     str = rxdata.decode('ascii')
+    str = 'ahahah'
     print(str)
     #converts to string and splits comma deliniated
     #chunks = str.split(',')
