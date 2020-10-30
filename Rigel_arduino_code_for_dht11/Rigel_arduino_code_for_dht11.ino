@@ -1,7 +1,7 @@
 
-#include <dht.h>
+//#include <dht.h>
 
-dht DHT;
+//dht DHT;
 float temp,hum;
 #define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
 #define trigPin 3 //attach pin D3 Arduino to pin Trig of HC-SR04
@@ -28,7 +28,7 @@ void loop() {
       {
       case 'r':
         //readsensors();
-        serial.print(1,20,6,10);
+        Serial.print("1,20,6,10");
         break;
       case 'l':
         digitalWrite(LED_BUILTIN, HIGH);
