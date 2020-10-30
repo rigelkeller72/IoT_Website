@@ -2,7 +2,7 @@ import serial
 import time
 DEVICE = 'COM8'
 ser = serial.Serial(DEVICE)
-time.sleep(2)
+time.sleep(1)
 #Reads in serial data
 for i in range(4):
     serprint = ("l").encode('ascii')
