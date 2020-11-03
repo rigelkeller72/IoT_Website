@@ -23,4 +23,5 @@ def hello_world():
     #sensVals[3] = sensVals[3] * 100
     ser.close()
 
-    return "<h1>" + str + "</h1>"
+    return "<h1>" + str +
+
