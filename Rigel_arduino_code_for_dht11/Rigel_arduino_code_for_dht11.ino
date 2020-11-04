@@ -10,7 +10,7 @@ int distance;
 char cmd;
 float pot;
 int potpin = A5;
-#define DHT11_PIN 7
+//#define DHT11_PIN 7
 void setup() {
    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
@@ -28,7 +28,7 @@ void loop() {
       {
       case 'r':
         //readsensors();
-        Serial.print("1,20,6,10");
+        Serial.print("1,20,6,10\n");////
         break;
       case 'l':
         digitalWrite(LED_BUILTIN, HIGH);
@@ -47,6 +47,7 @@ void loop() {
 
 
 }
+
 void readsensors(){
       // Clears the trigPin condition
       digitalWrite(trigPin, LOW);
@@ -59,12 +60,12 @@ void readsensors(){
       duration = pulseIn(echoPin, HIGH);
       // Calculating the distance
       distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
-      dht DHT;
-      #define DHT11_PIN 7
+//      dht DHT;
+//      #define DHT11_PIN 7
       // Displays the distance on the Serial Monitor
-      int test1 = DHT.read11(DHT11_PIN);
-      temp = DHT.temperature;
-      hum = DHT.humidity;
+ //     int test1 = DHT.read11(DHT11_PIN);
+ //     temp = DHT.temperature;
+ //     hum = DHT.humidity;
       pot = analogRead(potpin)/1023.0;
       Serial.print(distance);
       Serial.print(",");

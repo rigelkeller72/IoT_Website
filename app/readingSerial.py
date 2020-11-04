@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello_world():
-    DEVICE = 'COM8'
+    DEVICE = 'COM5'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     serprint = ('r').encode('ascii')
@@ -25,4 +25,3 @@ def hello_world():
 
 
     return "<h1>" + str + "</h1>"
-
