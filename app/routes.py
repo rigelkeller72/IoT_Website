@@ -43,7 +43,7 @@ def login():
 
 @app.route('/data', methods=['GET'])
 def data():
-    DEVICE = 'COM5'
+    DEVICE = 'COM8'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     serprint = ('r').encode('ascii')
@@ -58,7 +58,8 @@ def data():
         sensVals.append(float(sense))
     #sensVals[3] = sensVals[3] * 100
     ser.close()
-
-    return render_template('data.html', title='Data', str=str)
+    newstr = "Range: %.2f cm, Temp: %.2f C, Humidity: %.2f Percent, Pot: %.2f" % (sensVals[0], sensVals[1], sensVals[2], sensVals[3])
+    #return newstr
+    return render_template('data.html', title='Data', str=newstr)
 
 #Rigel is here

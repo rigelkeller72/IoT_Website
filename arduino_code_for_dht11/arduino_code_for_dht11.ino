@@ -27,8 +27,8 @@ void loop() {
       switch (cmd)
       {
       case 'r':
-        //readsensors();
-        serial.print(1,20,6,10);
+        readsensors();
+        //serial.print(1,20,6,10);
         break;
       case 'l':
         digitalWrite(LED_BUILTIN, HIGH);
