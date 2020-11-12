@@ -61,7 +61,11 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< Updated upstream
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/__init__.py" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/iot_website.py" />
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager">
     <configuration name="Flask (app/__init__.py)" type="Python.FlaskServer" nameIsGenerated="true">
@@ -94,6 +98,21 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="IoT_Website" />
+      <option name="target" value="C:\Users\m213366\Documents\GitHub\IoT_Website\app\iot_website.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Users\m213366\Documents\GitHub\IoT_Website\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -103,16 +122,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604514251833</updated>
+<<<<<<< Updated upstream
       <workItem from="1604514254743" duration="586000" />
       <workItem from="1604521345682" duration="3423000" />
       <workItem from="1605149209881" duration="373000" />
       <workItem from="1605149645599" duration="157000" />
+=======
+      <workItem from="1604514254743" duration="3583000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< Updated upstream
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -183,5 +207,39 @@
     <SUITE FILE_PATH="coverage/IoT_Website$IoT_Website.coverage" NAME="IoT_Website Coverage Results" MODIFIED="1604519704225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/IoT_Website$readingSerial.coverage" NAME="readingSerial Coverage Results" MODIFIED="1604346096319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IoT_Website$Flask__app_iot_website_py_.coverage" NAME="Flask (app/iot_website.py) Coverage Results" MODIFIED="1604521070668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+=======
+  <component name="WindowStateProjectService">
+    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604519699885">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604519699885" />
+    <state x="2609" y="322" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604519106960">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2609" y="322" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604519106960" />
+    <state x="2660" y="287" key="FileChooserDialogImpl" timestamp="1604519698291">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2660" y="287" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604519698291" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604520816302">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604520816302" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604520816301">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604520816301" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604520816301">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604520816301" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604520816302">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604520816302" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/IoT_Website$IoT_Website.coverage" NAME="IoT_Website Coverage Results" MODIFIED="1604519704225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+>>>>>>> Stashed changes
   </component>
 </project>
