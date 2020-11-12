@@ -8,6 +8,7 @@ float temp,hum;
 long duration;
 float distance;
 char cmd;
+//char resetted = 'o';
 float pot;
 int hallSensorPin = 2; 
 int potpin = A5;
@@ -36,6 +37,7 @@ void loop() {
       case 'l':
         digitalWrite(LED_BUILTIN, HIGH);
         Serial.print("LIGHT_ON\n");
+        //resetted ='g';
         break;
       case 'o':
         digitalWrite(LED_BUILTIN, LOW);
@@ -46,6 +48,7 @@ void loop() {
         break;
       
   }
+  //Serial.print(resetted);
   }
 
 
