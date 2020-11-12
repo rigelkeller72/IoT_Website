@@ -48,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JupyterTrust" id="783df191-1cb7-4988-83b3-03ee5a85260a" />
+  <component name="JupyterTrust" id="2586651e-6f86-4ddf-a738-3ce92f77a53a" />
   <component name="ProjectId" id="1jpwGNQNOH4TGOxdQ2sPXAE3g2f" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -61,38 +61,31 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/iot_website.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/__init__.py" />
   </component>
-  <component name="RunManager" selected="Flask server.Flask (app/iot_website.py)">
-    <configuration name="IoT_Website" type="PythonConfigurationType" factoryName="Python">
+  <component name="RunManager">
+    <configuration name="Flask (app/__init__.py)" type="Python.FlaskServer" nameIsGenerated="true">
       <module name="IoT_Website" />
+      <option name="target" value="C:\Users\m213366\Documents\GitHub\IoT_Website\app\__init__.py" />
+      <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="SDK_HOME" value="C:\Users\m213366\Anaconda3\envs\IoT_Website\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hello.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Flask (app/iot_website.py)" type="Python.FlaskServer" nameIsGenerated="true">
+    <configuration default="true" type="Python.FlaskServer">
       <module name="IoT_Website" />
-      <option name="target" value="C:\Users\m214134\ew430\IoT_Website\app\iot_website.py" />
+      <option name="target" value="C:\Users\m213366\Documents\GitHub\IoT_Website\app\__init__.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\envs\IoT_Website\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\m213366\Anaconda3\envs\IoT_Website\python.exe" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -101,26 +94,6 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Flask (myreadserialdonttouch.py)" type="Python.FlaskServer" nameIsGenerated="true">
-      <module name="IoT_Website" />
-      <option name="target" value="C:\Users\m214134\ew430\IoT_Website\myreadserialdonttouch.py" />
-      <option name="targetType" value="PATH" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="C:\ProgramData\Anaconda3\envs\IoT_Website\python.exe" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Flask server.Flask (myreadserialdonttouch.py)" />
-      <item itemvalue="Flask server.Flask (app/iot_website.py)" />
-      <item itemvalue="Python.IoT_Website" />
-    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -131,6 +104,9 @@
       <option name="presentableId" value="Default" />
       <updated>1604514251833</updated>
       <workItem from="1604514254743" duration="586000" />
+      <workItem from="1604521345682" duration="3423000" />
+      <workItem from="1605149209881" duration="373000" />
+      <workItem from="1605149645599" duration="157000" />
     </task>
     <servers />
   </component>
@@ -150,29 +126,50 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="175" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604519676510">
+    <state x="414" y="86" width="1092" height="954" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605149802789">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="2334" y="175" width="1092" height="786" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521668200" />
+    <state x="414" y="86" width="1092" height="954" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149802789" />
     <state x="414" y="175" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604519676510" />
-    <state x="740" y="287" key="FileChooserDialogImpl" timestamp="1604519673956">
+    <state x="321" y="77" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1604601984060">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="321" y="77" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601984060" />
+    <state x="740" y="288" key="FileChooserDialogImpl" timestamp="1605149742167">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="493" y="188" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601835628" />
+    <state x="2660" y="287" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521546677" />
+    <state x="740" y="288" key="FileChooserDialogImpl/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149742167" />
     <state x="740" y="287" key="FileChooserDialogImpl/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604519673956" />
-    <state width="1877" height="274" key="GridCell.Tab.0.bottom" timestamp="1604521070686">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1605149583944">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601995803" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521727498" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149583944" />
     <state width="1877" height="274" key="GridCell.Tab.0.bottom/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604521070686" />
-    <state width="1877" height="274" key="GridCell.Tab.0.center" timestamp="1604521070686">
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1605149583944">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601995803" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521727498" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149583944" />
     <state width="1877" height="274" key="GridCell.Tab.0.center/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604521070686" />
-    <state width="1877" height="274" key="GridCell.Tab.0.left" timestamp="1604521070686">
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1605149583944">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601995802" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521727498" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149583944" />
     <state width="1877" height="274" key="GridCell.Tab.0.left/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604521070686" />
-    <state width="1877" height="274" key="GridCell.Tab.0.right" timestamp="1604521070686">
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1605149583944">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1604601995803" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1604521727498" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/1920.-5.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1605149583944" />
     <state width="1877" height="274" key="GridCell.Tab.0.right/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604521070686" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604518952390">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -180,9 +177,11 @@
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.147.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1604518952390" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/IoT_Website$donwork.coverage" NAME="donwork Coverage Results" MODIFIED="1604081224572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/IoT_Website$iot_flask_server.coverage" NAME="iot_flask_server Coverage Results" MODIFIED="1605149230890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/IoT_Website$reading.coverage" NAME="reading Coverage Results" MODIFIED="1604513320953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/IoT_Website$IoT_Website.coverage" NAME="IoT_Website Coverage Results" MODIFIED="1604519704225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/IoT_Website$readingSerial.coverage" NAME="readingSerial Coverage Results" MODIFIED="1604346096319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/IoT_Website$Flask__app_iot_website_py_.coverage" NAME="Flask (app/iot_website.py) Coverage Results" MODIFIED="1604521070668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/IoT_Website$reading.coverage" NAME="reading Coverage Results" MODIFIED="1604513320953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/IoT_Website$donwork.coverage" NAME="donwork Coverage Results" MODIFIED="1604081224572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

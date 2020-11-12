@@ -4,6 +4,7 @@ import serial
 import time
 from flask import request
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -20,6 +21,7 @@ def index():
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
 
+
 @app.route('/cats')
 def cats():
     user = {'username': 'Rigel'}
@@ -34,6 +36,7 @@ def cats():
         }
     ]
     return render_template('index.html', title='Cats', user=user, posts=posts)
+
 
 @app.route('/login')
 def login():
@@ -61,5 +64,3 @@ def data():
     newstr = "Range: %.2f cm, Temp: %.2f C, Humidity: %.2f Percent, Pot: %.2f" % (sensVals[0], sensVals[1], sensVals[2], sensVals[3])
     #return newstr
     return render_template('data.html', title='Data', str=newstr)
-
-#Rigel is here

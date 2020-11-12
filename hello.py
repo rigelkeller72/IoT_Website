@@ -25,4 +25,3 @@ def hello_world():
 
     return "<h1>" + str + "</h1"
 
-# RIGEL IS HERE
