@@ -24,7 +24,7 @@ def index():
 
 @app.route('/cats')
 def cats():
-    user = {'username': 'Rigel'}
+    user = {'username': 'Rigel is cool'}
     posts = [
         {
             'author': {'username': 'Max'},
