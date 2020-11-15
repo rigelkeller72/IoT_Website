@@ -69,7 +69,13 @@ def data():
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
         time.sleep(1.8)
-        serprint = ('l').encode('ascii')
+        print(request.form)
+        if "Turn On" in request.form:
+            serprint = ('l').encode('ascii')
+            print("ooh")
+        if "Turn Off" in request.form:
+            serprint = ('o').encode('ascii')
+            print("ahh")
         ser.write(serprint)
         ser.readline()
         time.sleep(1.8)
