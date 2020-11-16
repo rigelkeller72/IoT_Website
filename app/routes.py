@@ -46,6 +46,7 @@ def login():
 
 @app.route('/data', methods=['POST','GET'])
 def data():
+    print(request.values)
     if request.method =='GET':
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
@@ -66,19 +67,10 @@ def data():
         #return newstr
         return render_template('data.html', title='Data', str=newstr)
     if request.method =='POST':
-        print(request.args)
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
         time.sleep(1.8)
-        serprint=('j').encode('ascii')
-        jabba = request.get_json()
-        if "Turn On" in request.form:
-            serprint = ('l').encode('ascii')
-            print("ooh")
-        if "Turn Off" in request.form:
-            serprint = ('o').encode('ascii')
-            print("ahh")
+        serprint = ('l').encode('ascii')
         ser.write(serprint)
         ser.readline()
-        time.sleep(1.8)
         return redirect(url_for('data'))
