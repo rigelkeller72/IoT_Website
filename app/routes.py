@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-import serial
+import serial, json
 import time
 from flask import request, redirect, url_for
 
@@ -66,10 +66,12 @@ def data():
         #return newstr
         return render_template('data.html', title='Data', str=newstr)
     if request.method =='POST':
+        print(request.args)
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
         time.sleep(1.8)
-        print(request.form)
+        serprint=('j').encode('ascii')
+        jabba = request.get_json()
         if "Turn On" in request.form:
             serprint = ('l').encode('ascii')
             print("ooh")
