@@ -13,13 +13,14 @@ float pot;
 int hallSensorPin = 2; 
 int hallDrivePin = 1;
 int buzzer = 8;
+int lit = 12;
 int potpin = A5;
 int mags = 0;
 #define DHT11_PIN 7
 void setup() {
    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(lit, OUTPUT);
   pinMode(buzzer, OUTPUT);
   pinMode(hallDrivePin, OUTPUT);
   pinMode(hallSensorPin, INPUT);    
@@ -40,12 +41,12 @@ void loop() {
         //serial.print(1,20,6,10);
         break;
       case 'l':
-        digitalWrite(LED_BUILTIN, HIGH);
+        digitalWrite(lit, HIGH);
         Serial.print("LIGHT_ON\n");
         //resetted ='g';
         break;
       case 'o':
-        digitalWrite(LED_BUILTIN, LOW);
+        digitalWrite(lit, LOW);
         Serial.print("LIGHT_OFF\n");
         break;
        case 'b':
@@ -65,17 +66,16 @@ void loop() {
 void readsensors(){
       // Clears the trigPin condition
      
-      digitalWrite(trigPin, LOW);
-      delayMicroseconds(2);
-      // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
-      digitalWrite(trigPin, HIGH);
-      delayMicroseconds(10);
-      digitalWrite(trigPin, LOW);
-     
-      // Reads the echoPin, returns the sound wave travel time in microseconds
-      duration = pulseIn(echoPin, HIGH);
-      // Calculating the distance
-      distance = duration * 0.034 / 2.0; // Speed of sound wave divided by 2 (go and back)
+     digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
       dht DHT;
       #define DHT11_PIN 7
       // Displays the distance on the Serial Monitor
