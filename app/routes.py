@@ -1,49 +1,10 @@
 from flask import render_template
 from app import app
-import serial, json
-import time
+import serial, json, time
 from flask import request, redirect, url_for
 
 
 @app.route('/')
-@app.route('/index')
-def index():
-    user = {'username': 'Rigel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Annapolis!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'What about that election? Am I right!'
-        }
-    ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
-
-
-@app.route('/cats')
-def cats():
-    user = {'username': 'Rigel is cool'}
-    posts = [
-        {
-            'author': {'username': 'Max'},
-            'body': 'I love cats soooo much!'
-        },
-        {
-            'author': {'username': 'Bob'},
-            'body': 'I LOVE CATS TOO! We should hang out?'
-        }
-    ]
-    return render_template('index.html', title='Cats', user=user, posts=posts)
-
-
-@app.route('/login')
-def login():
-    user = {'username': 'Rigel'}
-    return render_template('login.html', title='Login', user=user)
-
-
 @app.route('/data', methods=['GET'])
 def data():
     if request.method =='GET':
