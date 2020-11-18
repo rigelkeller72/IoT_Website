@@ -11,6 +11,8 @@ char cmd;
 //char resetted = 'o';
 float pot;
 int hallSensorPin = 2; 
+int hallDrivePin = 1;
+int buzzer = 8;
 int potpin = A5;
 int mags = 0;
 #define DHT11_PIN 7
@@ -18,6 +20,8 @@ void setup() {
    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(hallDrivePin, OUTPUT);
   pinMode(hallSensorPin, INPUT);    
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -28,6 +32,7 @@ void loop() {
   if(Serial.available() > 0)
   {
     cmd = Serial.read();
+    digitalWrite(buzzer,LOW);
       switch (cmd)
       {
       case 'r':
@@ -43,6 +48,10 @@ void loop() {
         digitalWrite(LED_BUILTIN, LOW);
         Serial.print("LIGHT_OFF\n");
         break;
+       case 'b':
+        digitalWrite(buzzer, HIGH);
+        Serial.print("AHHHH\n");
+        break;
       default:
         Serial.print("Unknown Command use rlo\n");
         break;
@@ -55,12 +64,14 @@ void loop() {
 }
 void readsensors(){
       // Clears the trigPin condition
+     
       digitalWrite(trigPin, LOW);
       delayMicroseconds(2);
       // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
       digitalWrite(trigPin, HIGH);
       delayMicroseconds(10);
       digitalWrite(trigPin, LOW);
+     
       // Reads the echoPin, returns the sound wave travel time in microseconds
       duration = pulseIn(echoPin, HIGH);
       // Calculating the distance
@@ -71,6 +82,7 @@ void readsensors(){
       int test1 = DHT.read11(DHT11_PIN);
       temp = DHT.temperature;
       hum = DHT.humidity;
+       digitalWrite(hallDrivePin,HIGH);
       mags = digitalRead(hallSensorPin);
       //pot = analogRead(potpin)/1023.0;
       Serial.print(distance);
@@ -82,4 +94,5 @@ void readsensors(){
       Serial.print(mags);
       Serial.print("\n");
       Serial.flush();
+       digitalWrite(hallDrivePin,LOW);
   }
