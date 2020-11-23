@@ -61,3 +61,8 @@ def turnOff():
         ser.write(serprint)
         ser.readline()
         return redirect(url_for('data'))
+
+
+@app.route('/test')
+def index():
+    return render_template('test.html', title='Test Site')

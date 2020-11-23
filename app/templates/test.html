@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <div>
+            <img src="bus_pic_01.JPG" class="img-rounded" alt="Bus pic 1">
+        </div>
+
+        <div>
+            <img class="img-responsive" src="lights.jpg" alt="Bus pic 2" style="width:100%">
+        </div>
+    </div>
+
+    <div class="jumbotron">
+        <div>
+            <img src="bus_pic_03.JPG" class="img-rounded" alt="Bus pic 3">
+        </div>
+
+        <div>
+            <img src="bus_pic_04.JPG" class="img-rounded" alt="Bus pic 4">
+        </div>
+
+    </div>
+
+    <div class="container" style="background-color:yellow;>
+  <h2>Image Gallery</h2>
+  <p>The .thumbnail class can be used to display an image gallery.</p>
+  <p>The .caption class adds proper padding and a dark grey color to text inside thumbnails.</p>
+  <p>Click on the images to enlarge them.</p>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <a href="/lights.jpg" target="_blank">
+          <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+          <div class="caption">
+            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <a href="/w3images/nature.jpg" target="_blank">
+          <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
+          <div class="caption">
+            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <a href="/w3images/fjords.jpg" target="_blank">
+          <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
+          <div class="caption">
+            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="jumbotron text-center">
+  <h1>IoT RV</h1>
+  <p>Internet of Things Recerational Vehicle</p>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 3</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <h2>Table</h2>
+  <p>Table is populated with static data. </p>
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Sensor Name</th>
+        <th>Serial Number</th>
+        <th>Model</th>
+        <th>Data</th>
+        <th>Last inspected</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Thermomete</td>
+        <td>128239487a8df628</td>
+        <td>DHT11</td>
+        <td>26.73</td>
+        <td>07NOV20</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="jumbotron">
+    <div>
+        <img src="bus_pic_01.JPG" class="img-rounded" alt="Bus pic 1">
+    </div>
+
+    <div>
+        <img src="lights.jpg" class="img-rounded" alt="Bus pic 2">
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div>
+        <img src="bus_pic_03.JPG" class="img-rounded" alt="Bus pic 3">
+    </div>
+
+    <div>
+        <img src="bus_pic_04.JPG" class="img-rounded" alt="Bus pic 4">
+    </div>
+
+</div>
+
+
+{% endblock %}
