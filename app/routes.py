@@ -26,8 +26,8 @@ def data():
             sensVals.append(float(sense))
         sensVals[0] =40 - sensVals[0]*togalls
         if sensVals[3] != 0:
-            ser.write(('b').encode('ascii'))
-            ser.readline()
+            #ser.write(('b').encode('ascii'))
+            #ser.readline()
             doorstate = "Door OPEN"
         else:
             doorstate = "Door Secured"
@@ -46,27 +46,50 @@ def data():
 @app.route('/turnon', methods=['POST'])
 def turnON():
     if request.method == 'POST':
-        print(request.values)
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
         time.sleep(1.8)
         serprint = ('l').encode('ascii')
         ser.write(serprint)
         ser.readline()
+        ser.close()
         return redirect(url_for('data'))
 
 @app.route('/turnoff', methods=['POST'])
 def turnOff():
     if request.method == 'POST':
-        print(request.values)
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
         time.sleep(1.8)
         serprint = ('o').encode('ascii')
         ser.write(serprint)
         ser.readline()
+        ser.close()
         return redirect(url_for('data'))
 
+@app.route('/turnonb', methods=['POST'])
+def turnONB():
+    if request.method == 'POST':
+        DEVICE = 'COM8'
+        ser = serial.Serial(DEVICE)
+        time.sleep(1.8)
+        serprint = ('b').encode('ascii')
+        ser.write(serprint)
+        ser.readline()
+        ser.close()
+        return redirect(url_for('data'))
+
+@app.route('/turnoffb', methods=['POST'])
+def turnOffB():
+    if request.method == 'POST':
+        DEVICE = 'COM8'
+        ser = serial.Serial(DEVICE)
+        time.sleep(1.8)
+        serprint = ('q').encode('ascii')
+        ser.write(serprint)
+        ser.readline()
+        ser.close()
+        return redirect(url_for('data'))
 
 @app.route('/test')
 def index():

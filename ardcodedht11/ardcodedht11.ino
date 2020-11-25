@@ -33,7 +33,6 @@ void loop() {
   if(Serial.available() > 0)
   {
     cmd = Serial.read();
-    digitalWrite(buzzer,LOW);
       switch (cmd)
       {
       case 'r':
@@ -52,6 +51,10 @@ void loop() {
        case 'b':
         digitalWrite(buzzer, HIGH);
         Serial.print("AHHHH\n");
+        break;
+        case 'q':
+          digitalWrite(buzzer, LOW);
+          Serial.print("AHHHH\n");
         break;
       default:
         Serial.print("Unknown Command use rlo\n");
