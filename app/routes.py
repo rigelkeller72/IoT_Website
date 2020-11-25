@@ -39,7 +39,8 @@ def data():
         newstr = "Water: %.2f gallons, Temp: %.2f C, Humidity: %.2f Percent, %s, %s"% (sensVals[0], sensVals[1], sensVals[2], doorstate, near)
 
         #return newstr
-        return render_template('data.html', title='Data', str=newstr)
+        #return render_template('data.html', title='Data', str=newstr)
+        return render_template('test.html', title='test', temp=sensVals[1], hum=sensVals[2], gals=sensVals[1], pir=near,hall=doorstate)
 
 
 @app.route('/turnon', methods=['POST'])
