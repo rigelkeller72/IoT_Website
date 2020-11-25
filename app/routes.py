@@ -24,15 +24,19 @@ def data():
         togalls = .393701*23.5*23*.004329
         for sense in chunks:
             sensVals.append(float(sense))
-        sensVals[0] *= togalls
+        sensVals[0] =40 - sensVals[0]*togalls
         if sensVals[3] != 0:
             ser.write(('b').encode('ascii'))
             ser.readline()
-            doorstate = "Door OPEN!"
+            doorstate = "Door OPEN"
         else:
-            doorstate = "Door Secured."
+            doorstate = "Door Secured"
         ser.close()
-        newstr = "Water: %.2f gallons, Temp: %.2f C, Humidity: %.2f Percent, %s"% (sensVals[0], sensVals[1], sensVals[2], doorstate)
+        if sensVals[4] > .5:
+            near = "Person Near!"
+        else:
+            near = "No one Around."
+        newstr = "Water: %.2f gallons, Temp: %.2f C, Humidity: %.2f Percent, %s, %s"% (sensVals[0], sensVals[1], sensVals[2], doorstate, near)
 
         #return newstr
         return render_template('data.html', title='Data', str=newstr)

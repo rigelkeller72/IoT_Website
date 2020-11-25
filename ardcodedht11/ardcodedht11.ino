@@ -65,7 +65,9 @@ void loop() {
 }
 void readsensors(){
       // Clears the trigPin condition
-     
+    digitalWrite(hallDrivePin,LOW);
+       delayMicroseconds(2);
+       digitalWrite(hallDrivePin,HIGH); 
      digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
@@ -84,7 +86,7 @@ void readsensors(){
       hum = DHT.humidity;
        digitalWrite(hallDrivePin,HIGH);
       mags = digitalRead(hallSensorPin);
-      //pot = analogRead(potpin)/1023.0;
+      pot = analogRead(potpin)/1023.0;
       Serial.print(distance);
       Serial.print(",");
       Serial.print(temp);
@@ -92,7 +94,11 @@ void readsensors(){
       Serial.print(hum);
       Serial.print(",");
       Serial.print(mags);
+      Serial.print(",");
+      Serial.print(pot);
       Serial.print("\n");
       Serial.flush();
        digitalWrite(hallDrivePin,LOW);
+       delayMicroseconds(2);
+       digitalWrite(hallDrivePin,HIGH);
   }
