@@ -3,7 +3,7 @@
 {% block content %}
     <div class="jumbotron text-center">
       <h1>IoT RV</h1>
-      <p>Internet of Things Recerational Vehicle</p>
+      <p>Internet of Things Recreational Vehicle</p>
     </div>
 
 
@@ -55,10 +55,12 @@
         <td>
             <div class="btn-group">
                   <form method="post" action = "/turnon">
-                    <input type="submit" value="Lock Door" class = "btn btn-success">
+                    <input type="submit" id="lock" value="Lock Door" class = "btn btn-success">
+                      <script>$("#lock").click(function(){alert("Door Locking")})</script>
                   </form>
                 <form method="post" action = "/turnoff">
-                    <input type="submit" value="Unlock Door" class = "btn btn-danger">
+                    <input type="submit" value="Unlock Door" id="unlock" class = "btn btn-danger">
+                      <script>$("#unlock").click(function(){alert("Door Unlocking")})</script>
                 </form>
             </div>
         </td>
@@ -88,10 +90,12 @@
         <td>
             <div class="btn-group">
               <form method="post" action = "/turnonb">
-                    <input type="submit" value="Alarm On" class = "btn btn-success">
+                    <input type="submit" value="Alarm On" id="buzz" class = "btn btn-success">
+                      <script>$("#buzz").click(function(){alert("Alarm Activated")})</script>
                   </form>
                 <form method="post" action = "/turnoffb">
-                    <input type="submit" value="Alarm Off" class = "btn btn-danger">
+                    <input type="submit" value="Alarm Off" id = "nobuzz" class = "btn btn-danger">
+                     <script>$("#nobuzz").click(function(){alert("Alarm Silenced")})</script>
                 </form>
             </div>
         </td>
@@ -120,7 +124,7 @@
 <div class="container" style="background-color:lightgray;>
   <div class="row">
     <div class="col-sm-4">
-      <h3>Therometer</h3>
+      <h3>Thermometer</h3>
       <p>Information: </p>
       <p>Specs:</p>
     </div>

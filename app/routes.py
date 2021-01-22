@@ -25,6 +25,7 @@ def data():
         for sense in chunks:
             sensVals.append(float(sense))
         sensVals[0] =40 - sensVals[0]*togalls
+        sensVals[0] = round(sensVals[0],2)
         if sensVals[3] != 0:
             #ser.write(('b').encode('ascii'))
             #ser.readline()
@@ -40,7 +41,7 @@ def data():
 
         #return newstr
         #return render_template('data.html', title='Data', str=newstr)
-        return render_template('test.html', title='test', temp=sensVals[1], hum=sensVals[2], gals=sensVals[1], pir=near,hall=doorstate)
+        return render_template('test.html', title='test', temp=sensVals[1], hum=sensVals[2], gals=sensVals[0], pir=near,hall=doorstate)
 
 
 @app.route('/turnon', methods=['POST'])
