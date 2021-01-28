@@ -28,16 +28,24 @@
                 document.getElementById("clocker").innerHTML = tstring;
             }
             var interval = setInterval(clockit,1000);
-            $('form').mouseenter(function(){
-
+            $('input').mouseenter(function(){
                     if($(this).hasClass('btn-success')){
-                        console.log("inside if");
-                        $(this).css("color", 'yellow');
+                        $(this).removeClass('btn-success');
                     }
+                    if($(this).hasClass('btn-danger')){
+                        $(this).removeClass('btn-danger');
+                    }
+                     $(this).addClass('btn-warning');
 
                 });
-            $('form').mouseleave(function(){
-
+            $('input').mouseleave(function(){
+                $(this).removeClass('btn-warning');
+                if($(this).hasClass('grn')){
+                        $(this).addClass('btn-success');
+                    }
+                if($(this).hasClass('rd')){
+                    $(this).addClass('btn-danger');
+                }
                 });
               });
         </script>
