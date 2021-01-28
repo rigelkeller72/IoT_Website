@@ -10,16 +10,6 @@
         <script>
 
             $(document).ready(function(){
-                $("#cool").click(function(){alert("hello")})
-            });
-
-             $(document).ready(function(){
-                 $("#steve").onmouseover(function(){resizeBy(1.1,1.1)})
-            });
-
-             function mousesize(){
-                 document.getElementById("steve").
-             }
 
             var span = document.getElementById('clocker');
             function  clockit(){
@@ -38,6 +28,18 @@
                 document.getElementById("clocker").innerHTML = tstring;
             }
             var interval = setInterval(clockit,1000);
+            $('form').mouseenter(function(){
+
+                    if($(this).hasClass('btn-success')){
+                        console.log("inside if");
+                        $(this).css("color", 'yellow');
+                    }
+
+                });
+            $('form').mouseleave(function(){
+
+                });
+              });
         </script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

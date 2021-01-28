@@ -29,7 +29,7 @@
         <td>Thermometer</td>
         <td>128239487a8df628</td>
         <td>DHT11</td>
-        <td>{{ temp }} (Celsius)</td>
+        <td id="tmp">{{ temp }} (Celsius)</td>
         <td>07NOV20</td>
       </tr>
       <tr>
@@ -37,7 +37,7 @@
         <td>Humidity</td>
         <td>128239487a8df628</td>
         <td>DHT11</td>
-        <td>{{ hum }}%</td>
+        <td id="hm">{{ hum }}%</td>
         <td>07NOV20</td>
       </tr>
       <tr>
@@ -45,7 +45,7 @@
         <td>Tank Level</td>
         <td>2348vn9fll39sk</td>
         <td>Ultra Sonic Sensor</td>
-        <td>{{ gals }} gallons</td>
+        <td id="wlev">{{ gals }} gallons</td>
         <td>07NOV20</td>
       </tr>
       <tr>
@@ -54,7 +54,7 @@
         <td>gn4556vv</td>
         <td>LED Bulb</td>
         <td>
-            <div class="btn-group" id="'steve" onmouseover="">
+            <div class="btn-group">
                   <form method="post" action = "/turnon" id="txtplay">
                       <input type="submit" id="lock" value="Lock Door"class = "btn btn-success">
                       <script>$("#lock").click(function(){alert("Door Locking")})</script>
@@ -72,7 +72,7 @@
         <td>PIR</td>
         <td>1111COOO6</td>
         <td>Passive Infrared Sensor</td>
-        <td>{{ pir }}</td>
+        <td id="pir">{{ pir }}</td>
         <td>07NOV20</td>
       </tr>
       <tr>
@@ -80,7 +80,7 @@
         <td>Magnetic Sensor</td>
         <td>US1881LUA</td>
         <td>Hall Effect Sensor</td>
-        <td>{{ hall }}</td>
+        <td id="hesense">{{ hall }}</td>
         <td>07NOV20</td>
       </tr>
       <tr>
@@ -91,11 +91,11 @@
         <td>
             <div class="btn-group">
               <form method="post" action = "/turnonb">
-                    <input type="submit" value="Alarm On" id="buzz" class = "btn btn-success">
+                    <input type="submit" value="Alarm On" id="buzz" class = "btn btn-success grn">
                       <script>$("#buzz").click(function(){alert("Alarm Activated")})</script>
                   </form>
                 <form method="post" action = "/turnoffb">
-                    <input type="submit" value="Alarm Off" id = "nobuzz" class = "btn btn-danger">
+                    <input type="submit" value="Alarm Off" id = "nobuzz" class = "btn btn-danger rd">
                      <script>$("#nobuzz").click(function(){alert("Alarm Silenced")})</script>
                 </form>
             </div>
