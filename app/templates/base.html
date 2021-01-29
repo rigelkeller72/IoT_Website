@@ -11,6 +11,17 @@
 
             $(document).ready(function(){
 
+
+
+
+<!-- ***************** Rigel AJAX CODE START****************************************-->
+          $("button, #btn1").click(function(){
+            $("#div1").load("ajax_info.txt");
+                });
+<!-- ****************** Rigel AJAX CODE END*******************************************-->
+
+
+
             var span = document.getElementById('clocker');
             function  clockit(){
                 var d = new Date();
@@ -107,6 +118,7 @@
         {% else %}
         <title>Welcome to IoT Website</title>
         {% endif %}
+
 
 
     </head>
