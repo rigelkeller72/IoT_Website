@@ -13,6 +13,7 @@ def home():
         serprint = ('r').encode('ascii')
         ser.write(serprint)
         rxdata = ser.readline()
+        ser.close()
         str = rxdata.decode('ascii')
         # converts to string and splits comma deliniated
         chunks = str.split(',')
@@ -31,7 +32,6 @@ def home():
             doorstate = "Door OPEN"
         else:
             doorstate = "Door Secured"
-        ser.close()
         if sensVals[4] > .5:
             near = "Person Near!"
         else:
@@ -57,7 +57,10 @@ def ton():
     ser.write(serprint)
     pstate=ser.readline()
     ser.close()
-    return jsonify(pstate.decode('ascii'))
+    message = {'mess': pstate.decode('ascii')}
+    return jsonify(message)
+    #msend= {'mess': "Light on"}
+    #return jsonify(msend)
 
 @app.route('/turnon', methods=['POST'])
 def turnON():

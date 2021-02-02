@@ -119,7 +119,8 @@
             }),10000);*/
                 $("#lock").click(function(){
                     $.getJSON('lon.json', function(lon){
-                        alert(ton['mess']);
+                        console.log("I'm here")
+                        alert(lon['mess']);
                     });
                 })
               });
