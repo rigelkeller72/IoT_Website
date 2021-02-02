@@ -49,6 +49,7 @@ def data():
 
 @app.route('/lon.json')
 def ton():
+    time.sleep(1.8)
     DEVICE = 'COM8'
     ser = serial.Serial(DEVICE)
     time.sleep(1.8)
@@ -56,8 +57,7 @@ def ton():
     ser.write(serprint)
     pstate=ser.readline()
     ser.close()
-    redict = {'mess': pstate, 'help': "arrr"}
-    return jsonify(redict)
+    return jsonify(pstate.decode('ascii'))
 
 @app.route('/turnon', methods=['POST'])
 def turnON():
