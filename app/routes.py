@@ -47,6 +47,17 @@ def data():
               'gals': random.randint(10,400)/10, 'near':random.randint(0,1)}
     return jsonify(mockdata)
 
+@app.route('/lon.json')
+def ton():
+    DEVICE = 'COM8'
+    ser = serial.Serial(DEVICE)
+    time.sleep(1.8)
+    serprint = ('l').encode('ascii')
+    ser.write(serprint)
+    pstate=ser.readline()
+    ser.close()
+    redict = {'mess': pstate, 'help': "arrr"}
+    return jsonify(redict)
 
 @app.route('/turnon', methods=['POST'])
 def turnON():
@@ -70,7 +81,7 @@ def turnOff():
         ser.write(serprint)
         ser.readline()
         ser.close()
-        return redirect(url_for('data'))
+        return redirect(url_for('/'))
 
 @app.route('/turnonb', methods=['POST'])
 def turnONB():
