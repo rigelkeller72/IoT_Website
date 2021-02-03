@@ -61,7 +61,7 @@
                 document.getElementById("clocker").innerHTML = tstring;
             }
             var interval = setInterval(clockit,1000);
-            $('input').mouseenter(function(){
+            $('button').mouseenter(function(){
                     if($(this).hasClass('btn-success')){
                         $(this).removeClass('btn-success');
                     }
@@ -71,7 +71,7 @@
                      $(this).addClass('btn-warning');
 
                 });
-            $('input').mouseleave(function(){
+            $('button').mouseleave(function(){
                 $(this).removeClass('btn-warning');
                 if($(this).hasClass('grn')){
                         $(this).addClass('btn-success');
