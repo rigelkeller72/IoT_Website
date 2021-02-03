@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr id="tmprow">
         <td>1</td>
         <td>Thermometer</td>
         <td>128239487a8df628</td>
@@ -38,7 +38,7 @@
         <td id="tmp">{{ temp }} (Celsius)</td>
         <td>07NOV20</td>
       </tr>
-      <tr>
+      <tr id="humrow">
         <td>2</td>
         <td>Humidity</td>
         <td>128239487a8df628</td>
@@ -46,7 +46,7 @@
         <td id="hm">{{ hum }}%</td>
         <td>07NOV20</td>
       </tr>
-      <tr>
+      <tr id="ultrow">
         <td>3</td>
         <td>Tank Level</td>
         <td>2348vn9fll39sk</td>
@@ -54,7 +54,7 @@
         <td id="wlev">{{ gals }} gallons</td>
         <td>07NOV20</td>
       </tr>
-      <tr>
+      <tr id="ledrow">
         <td>4</td>
         <td>LED</td>
         <td>gn4556vv</td>
@@ -73,7 +73,7 @@
         </td>
         <td>07NOV20</td>
       </tr>
-          <tr>
+          <tr id="pirrow">
         <td>5</td>
         <td>PIR</td>
         <td>1111COOO6</td>
@@ -89,7 +89,7 @@
         <td id="hesense">{{ hall }}</td>
         <td>07NOV20</td>
       </tr>
-      <tr>
+      <tr id="buzzrow">
         <td>7</td>
         <td>Buzzer</td>
         <td>12412394712</td>
@@ -158,7 +158,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/therometer.jpg" target="_blank">
-          <img src="/static/images/therometer.jpg" alt="therometer" style="width:100%">
+          <img src="/static/images/therometer.jpg" alt="therometer" id="thermpic" style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
@@ -168,7 +168,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/distance_sensor.jpg" target="_blank">
-          <img src="/static/images/distance_sensor.jpg" alt="Distance Sensor" style="width:100%">
+          <img src="/static/images/distance_sensor.jpg" id="ultrpic" alt="Distance Sensor" style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
@@ -178,7 +178,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/PIR.jpg" target="_blank">
-          <img src="/static/images/PIR.jpg" alt="PIR" style="width:100%">
+          <img src="/static/images/PIR.jpg" id="pirpic" alt="PIR" style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
@@ -218,7 +218,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/humidity.jpg" target="_blank">
-          <img src="/static/images/humidity.jpg" alt="humidity" style="width:100%">
+          <img src="/static/images/humidity.jpg" id="humpic" alt="humidity" style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
@@ -228,7 +228,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/LED.png" target="_blank">
-          <img src="/static/images/LED.png" alt="LED" style="width:100%">
+          <img src="/static/images/LED.png" alt="LED" id='ledpic' style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
@@ -238,7 +238,7 @@
     <div class="col-md-4">
       <div class="thumbnail">
         <a href="/static/images/buzzer.jpg" target="_blank">
-          <img src="/static/images/buzzer.jpg" alt="passive buzzer" style="width:100%">
+          <img src="/static/images/buzzer.jpg" alt="passive buzzer" id="buzzpic" style="width:100%">
           <div class="caption">
             <p>Short Discription of sensor.</p>
           </div>
