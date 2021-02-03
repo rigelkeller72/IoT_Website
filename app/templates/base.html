@@ -10,18 +10,25 @@
         <script>
 
             $(document).ready(function(){
-
-
-
-
-<!-- ***************** Rigel AJAX CODE START****************************************-->
-          $("#btn1").click(function(){
-            $("#div1").load("ajax_info.txt");
+                
+            function rdata(){
+                $.getJSON('data.json',function (data){
+                    var nearby = "Stranger Alert";
+                    if(data['near']==0){
+                        nearby="No one Near";
+                    }
+                    var calocked = "Door Secured";
+                    if(data['door']==1){
+                        calocked="Door Open"
+                    }
+                    $("#pird").text(nearby);
+                    $('#tmp').text(data['temp'] + '°C');
+                    $('#hm').text(data['humid']+"%");
+                    $('#wlev').text(data['gals']+ 'gallons');
+                    $('#hesense').text(calocked);
                 });
-<!-- ****************** Rigel AJAX CODE END*******************************************-->
-
-
-
+            }
+            var interval = setInterval(rdata,10000);
             var span = document.getElementById('clocker');
             function  clockit(){
                 var d = new Date();
