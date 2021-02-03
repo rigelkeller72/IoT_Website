@@ -11,19 +11,19 @@
 
             $(document).ready(function(){
 
-<<<<<<< HEAD
+
 
 
 
 <!-- ***************** Rigel AJAX CODE START****************************************-->
-          $("#btn1").click(function(){
+         $("#btn1").click(function(){
             $("#div1").load("ajax_info.txt");
                 });
 <!-- ****************** Rigel AJAX CODE END*******************************************-->
 
 
 
-=======
+
             function rdata(){
                 $.getJSON('data.json',function (data){
                     var nearby = "Stranger Alert";
@@ -42,7 +42,7 @@
                 });
             }
             var interval = setInterval(rdata,10000);
->>>>>>> c14c420911af507bc8ff259a1ef19ce8b29e472f
+
             var span = document.getElementById('clocker');
             function  clockit(){
                 //https://dev.to/arc__coder/real-time-javascript-clock-2dn0 heavy inspired by this example
