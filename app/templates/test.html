@@ -61,9 +61,9 @@
         <td>LED Bulb</td>
         <td>
             <div class="btn-group">
-                  <form method="ton" id="txtplay">
+                  <form method="post" action = "/turnon" id="txtplay">
                       <input type="submit" id="lock" value="Lock Door"class = "btn btn-success grn">
-                     <!-- <script>$("#lock").click(function(){alert("Door Locking")})</script> -->
+                      <script>$("#lock").click(function(){alert("Door Locking")})</script>
                   </form>
                 <form method="post" action = "/turnoff">
                     <input type="submit" value="Unlock Door" id="unlock" class = "btn btn-danger rd">
@@ -78,7 +78,7 @@
         <td>PIR</td>
         <td>1111COOO6</td>
         <td>Passive Infrared Sensor</td>
-        <td id="pird">{{ pir }}</td>
+        <td id="pir">{{ pir }}</td>
         <td>07NOV20</td>
       </tr>
       <tr>
