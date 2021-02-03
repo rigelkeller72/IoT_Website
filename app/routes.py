@@ -47,44 +47,59 @@ def data():
               'gals': random.randint(10,400)/10, 'near':random.randint(0,1)}
     return jsonify(mockdata)
 
-@app.route('/lon.json')
-def ton():
-    time.sleep(1.8)
-    DEVICE = 'COM8'
-    ser = serial.Serial(DEVICE)
-    time.sleep(1.8)
-    serprint = ('l').encode('ascii')
-    ser.write(serprint)
-    pstate=ser.readline()
-    ser.close()
-    message = {'mess': pstate.decode('ascii')}
-    return jsonify(message)
-    #msend= {'mess': "Light on"}
-    #return jsonify(msend)
+@app.route('/ligon.json')
+def ligon():
+    #time.sleep(1.8)
+    #DEVICE = 'COM8'
+    #ser = serial.Serial(DEVICE)
+    #time.sleep(1.8)
+    #serprint = ('l').encode('ascii')
+    #ser.write(serprint)
+    #pstate=ser.readline()
+    #ser.close()
+    #message = {'mess': pstate.decode('ascii')}
+    #return jsonify(message)
+    msend= {'mess': "Light on"}
+    return jsonify(msend)
 
-@app.route('/turnon', methods=['POST'])
-def turnON():
-    if request.method == 'POST':
-        DEVICE = 'COM8'
-        ser = serial.Serial(DEVICE)
-        time.sleep(1.8)
-        serprint = ('l').encode('ascii')
-        ser.write(serprint)
-        ser.readline()
-        ser.close()
-        return redirect(url_for('data'))
+@app.route('/ligoff.json')
+def ligoff():
+    #time.sleep(1.8)
+    #DEVICE = 'COM8'
+    #ser = serial.Serial(DEVICE)
+    #time.sleep(1.8)
+    #serprint = ('l').encode('ascii')
+    #ser.write(serprint)
+    #pstate=ser.readline()
+    #ser.close()
+    #message = {'mess': pstate.decode('ascii')}
+    #return jsonify(message)
+    msend= {'mess': "Light off"}
+    return jsonify(msend)
 
-@app.route('/turnoff', methods=['POST'])
-def turnOff():
-    if request.method == 'POST':
-        DEVICE = 'COM8'
-        ser = serial.Serial(DEVICE)
-        time.sleep(1.8)
-        serprint = ('o').encode('ascii')
-        ser.write(serprint)
-        ser.readline()
-        ser.close()
-        return redirect(url_for('/'))
+#@app.route('/turnon', methods=['POST'])
+#def turnON():
+#    if request.method == 'POST':
+#        DEVICE = 'COM8'
+#        ser = serial.Serial(DEVICE)
+#        time.sleep(1.8)
+#        serprint = ('l').encode('ascii')
+#        ser.write(serprint)
+#        ser.readline()
+#        ser.close()
+#        return redirect(url_for('data'))
+
+#@app.route('/turnoff', methods=['POST'])
+#def turnOff():
+#    if request.method == 'POST':
+#        DEVICE = 'COM8'
+#        ser = serial.Serial(DEVICE)
+#        time.sleep(1.8)
+#        serprint = ('o').encode('ascii')
+#        ser.write(serprint)
+#        ser.readline()
+#        ser.close()
+#        return redirect(url_for('/'))
 
 @app.route('/turnonb', methods=['POST'])
 def turnONB():

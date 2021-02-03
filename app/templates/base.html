@@ -132,9 +132,15 @@
                 console.log(data);
             }),10000);*/
                 $("#lock").click(function(){
-                    $.getJSON('lon.json', function(lon){
+                    $.getJSON('ligon.json', function(ligon){
                         console.log("I'm here")
-                        alert(lon['mess']);
+                        alert(ligon['mess']);
+                    });
+                })
+               $("#unlock").click(function(){
+                    $.getJSON('ligoff.json', function(ligoff){
+                        console.log("I'm here")
+                        alert(ligoff['mess']);
                     });
                 })
               });
