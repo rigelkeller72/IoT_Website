@@ -1,12 +1,11 @@
-from flask import render_template
+from flask import render_template, jsonify
 from app import app
-import serial, json, time
+import serial, json, time, random
 from flask import request, redirect, url_for
 
 
 @app.route('/')
-@app.route('/data', methods=['GET'])
-def data():
+def home():
     if request.method =='GET':
         DEVICE = 'COM8'
         ser = serial.Serial(DEVICE)
@@ -14,6 +13,7 @@ def data():
         serprint = ('r').encode('ascii')
         ser.write(serprint)
         rxdata = ser.readline()
+        ser.close()
         str = rxdata.decode('ascii')
         # converts to string and splits comma deliniated
         chunks = str.split(',')
@@ -32,7 +32,6 @@ def data():
             doorstate = "Door OPEN"
         else:
             doorstate = "Door Secured"
-        ser.close()
         if sensVals[4] > .5:
             near = "Person Near!"
         else:
@@ -42,7 +41,26 @@ def data():
         #return newstr
         #return render_template('data.html', title='Data', str=newstr)
         return render_template('test.html', title='test', temp=sensVals[1], hum=sensVals[2], gals=sensVals[0], pir=near,hall=doorstate)
+@app.route('/data.json')
+def data():
+    mockdata={'temp': random.randint(150,250)/10, 'humid': random.randint(100,700)/10, 'door': random.randint(0,1),
+              'gals': random.randint(10,400)/10, 'near':random.randint(0,1)}
+    return jsonify(mockdata)
 
+@app.route('/lon.json')
+def ton():
+    time.sleep(1.8)
+    DEVICE = 'COM8'
+    ser = serial.Serial(DEVICE)
+    time.sleep(1.8)
+    serprint = ('l').encode('ascii')
+    ser.write(serprint)
+    pstate=ser.readline()
+    ser.close()
+    message = {'mess': pstate.decode('ascii')}
+    return jsonify(message)
+    #msend= {'mess': "Light on"}
+    #return jsonify(msend)
 
 @app.route('/turnon', methods=['POST'])
 def turnON():
@@ -66,7 +84,7 @@ def turnOff():
         ser.write(serprint)
         ser.readline()
         ser.close()
-        return redirect(url_for('data'))
+        return redirect(url_for('/'))
 
 @app.route('/turnonb', methods=['POST'])
 def turnONB():
