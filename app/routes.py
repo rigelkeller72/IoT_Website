@@ -41,11 +41,14 @@ def home():
         #return newstr
         #return render_template('data.html', title='Data', str=newstr)
         return render_template('test.html', title='test', temp=sensVals[1], hum=sensVals[2], gals=sensVals[0], pir=near,hall=doorstate)
+
+
 @app.route('/data.json')
 def data():
     mockdata={'temp': random.randint(150,250)/10, 'humid': random.randint(100,700)/10, 'door': random.randint(0,1),
               'gals': random.randint(10,400)/10, 'near':random.randint(0,1)}
     return jsonify(mockdata)
+
 
 @app.route('/ligon.json')
 def ligon():

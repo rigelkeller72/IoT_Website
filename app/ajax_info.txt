@@ -1,2 +1,0 @@
-<h1>AJAX IS WORKING</h1>
-<p id="p1">This is some text in a paragraph.</p>
