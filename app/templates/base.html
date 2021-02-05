@@ -27,19 +27,11 @@
 
             function rdata(){
                 $.getJSON('data.json',function (data){
-                    var nearby = "Stranger Alert";
-                    if(data['near']==0){
-                        nearby="No one Near";
-                    }
-                    var calocked = "Door Secured";
-                    if(data['door']==1){
-                        calocked="Door Open"
-                    }
-                    $("#pird").text(nearby);
+                    $("#pird").text(data['near']);
                     $('#tmp').text(data['temp'] + '°C');
                     $('#hm').text(data['humid']+"%");
                     $('#wlev').text(data['gals']+ 'gallons');
-                    $('#hesense').text(calocked);
+                    $('#hesense').text(data['door']);
                 });
             }
             var interval = setInterval(rdata,10000);
@@ -134,14 +126,22 @@
             }),10000);*/
                 $("#lock").click(function(){
                     $.getJSON('ligon.json', function(ligon){
-                        console.log("I'm here")
                         alert(ligon['mess']);
                     });
                 })
                $("#unlock").click(function(){
                     $.getJSON('ligoff.json', function(ligoff){
-                        console.log("I'm here")
                         alert(ligoff['mess']);
+                    });
+                })
+                $("#buzz").click(function(){
+                    $.getJSON('buzzon.json', function(buzzon){
+                        alert(buzzon['mess']);
+                    });
+                })
+                $("#exterminator").click(function(){
+                    $.getJSON('buzzoff.json', function(buzzoff){
+                        alert(buzzoff['mess']);
                     });
                 })
               });

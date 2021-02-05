@@ -26,6 +26,25 @@ async def ligon(request):
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+
+async def ligoff(request):
+    ser.write(('o').encode('ascii'))
+    pstate = ser.readline()
+    message = {'mess': pstate.decode('ascii')}
+    return web.json_response(message)
+
+async def buzzoff(request):
+    ser.write(('q').encode('ascii'))
+    pstate = ser.readline()
+    message = {'mess': pstate.decode('ascii')}
+    return web.json_response(message)
+
+async def buzzon(request):
+    ser.write(('b').encode('ascii'))
+    pstate = ser.readline()
+    message = {'mess': pstate.decode('ascii')}
+    return web.json_response(message)
+
 def rdata():
     serprint = ('r').encode('ascii')
     ser.write(serprint)
@@ -42,17 +61,21 @@ def rdata():
         sensVals.append(float(sense))
     sensVals[0] = 40 - sensVals[0] * togalls
     sensVals[0] = round(sensVals[0], 2)
-    if sensVals[3] != 0:
+    print(sensVals[4])
+    if sensVals[3] == 0:
         # ser.write(('b').encode('ascii'))
         # ser.readline()
         doorstate = "Door OPEN"
     else:
         doorstate = "Door Secured"
+    sensVals[3]=doorstate
     if sensVals[4] > .5:
         near = "Person Near!"
     else:
         near = "No one Around."
-        return sensVals
+    sensVals[4]=near
+
+    return sensVals
 
 
 def main():
@@ -66,7 +89,10 @@ def main():
     app.add_routes([web.get('/', home),
                     web.get('/data.json',data),
                     web.static('/static','static'),
-                    web.get('/ligon.json',ligon)])
+                    web.get('/ligon.json',ligon),
+                    web.get('/ligoff.json',ligoff),
+                    web.get('/buzzon.json',buzzon),
+                    web.get('/buzzoff.json',buzzoff)])
     web.run_app(app, host="127.0.0.1", port=5000)
 
 if __name__=="__main__":

@@ -7,13 +7,6 @@
         <div id="clocker"></div>
     </div>
 
-
-<!-- **************************RIGEL WORK ON AJAX START**************************************** -->
-<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
-
-<button id="btn1">Get External Content</button>
-<!-- **************************RIGEL WORK ON AJAX END**************************************** -->
-
 <div class="container">
   <h2>Table</h2>
   <p>Table is populated with static data. </p>
@@ -90,14 +83,8 @@
         <td>Arduino Passive Buzzer</td>
         <td>
             <div class="btn-group">
-              <form method="post" action = "/turnonb">
-                    <input type="submit" value="Alarm On" id="buzz" class = "btn btn-success grn">
-                      <script>$("#buzz").click(function(){alert("Alarm Activated")})</script>
-                  </form>
-                <form method="post" action = "/turnoffb">
-                    <input type="submit" value="Alarm Off" id = "nobuzz" class = "btn btn-danger rd">
-                     <script>$("#nobuzz").click(function(){alert("Alarm Silenced")})</script>
-                </form>
+              <button type="button" class="btn btn-success grn" id="buzz">Alarm On</button>
+                <button type="button" class="btn btn-danger rd" id="exterminator">Alarm Off</button>
             </div>
         </td>
         <td>07NOV20</td>
@@ -122,7 +109,7 @@
 </div>
 
 
-<div class="container" style="background-color:lightgray;>
+<div class="container" style="background-color:lightgray">
   <div class="row">
     <div class="col-sm-4">
       <h3>Thermometer</h3>
@@ -143,11 +130,7 @@
 </div>
 
 
-        <div class="container" style="background-color:lightgray;>
-  <h2>Image Gallery</h2>
-  <p>The .thumbnail class can be used to display an image gallery.</p>
-  <p>The .caption class adds proper padding and a dark grey color to text inside thumbnails.</p>
-  <p>Click on the images to enlarge them.</p>
+        <div class="container" style="background-color:lightgray">
   <div class="row">
     <div class="col-md-4">
       <div class="thumbnail">
@@ -182,7 +165,7 @@
   </div>
 </div>
 
-    <div class="container" style="background-color:lightgray;>
+    <div class="container" style="background-color:lightgray">
   <div class="row">
     <div class="col-sm-4">
       <h3>Humidity</h3>
@@ -203,11 +186,7 @@
 </div>
 
 
-        <div class="container" style="background-color:lightgray;>
-  <h2>Image Gallery</h2>
-  <p>The .thumbnail class can be used to display an image gallery.</p>
-  <p>The .caption class adds proper padding and a dark grey color to text inside thumbnails.</p>
-  <p>Click on the images to enlarge them.</p>
+        <div class="container" style="background-color:lightgray">
   <div class="row">
     <div class="col-md-4">
       <div class="thumbnail">
