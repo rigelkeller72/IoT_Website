@@ -2,6 +2,8 @@ from flask import render_template, jsonify
 from app import app
 import serial, json, time, random
 from flask import request, redirect, url_for
+from aiohttp import web
+
 
 
 @app.route('/')
@@ -65,6 +67,7 @@ def ligon():
     msend= {'mess': "Light on"}
     return jsonify(msend)
 
+
 @app.route('/ligoff.json')
 def ligoff():
     #time.sleep(1.8)
@@ -80,6 +83,7 @@ def ligoff():
     msend= {'mess': "Light off"}
     return jsonify(msend)
 
+
 #@app.route('/turnon', methods=['POST'])
 #def turnON():
 #    if request.method == 'POST':
@@ -91,6 +95,7 @@ def ligoff():
 #        ser.readline()
 #        ser.close()
 #        return redirect(url_for('data'))
+
 
 #@app.route('/turnoff', methods=['POST'])
 #def turnOff():
@@ -104,6 +109,7 @@ def ligoff():
 #        ser.close()
 #        return redirect(url_for('/'))
 
+
 @app.route('/turnonb', methods=['POST'])
 def turnONB():
     if request.method == 'POST':
@@ -115,6 +121,7 @@ def turnONB():
         ser.readline()
         ser.close()
         return redirect(url_for('data'))
+
 
 @app.route('/turnoffb', methods=['POST'])
 def turnOffB():
@@ -128,6 +135,30 @@ def turnOffB():
         ser.close()
         return redirect(url_for('data'))
 
+
 @app.route('/test')
 def index():
     return render_template('test.html', title='Test Site')
+
+
+async def test1(request):
+    f = open("hello_world.html", "r")
+    contents = f.read()
+    f.close()
+    #myserial.read()
+    return web.Response(text=contents, content_type="text/html")
+
+
+async def about_me(request):
+    return web.Response(text="You are at about me!")
+
+
+def main():
+    #serial stuff goes here
+    #myserial = serial.Serial('COM6')
+    app = web.Application()
+
+    app.add_routes([web.get('/test1.html', test1), web.get('/about_me.html', about_me)])
+
+    print("Hi welcome to Webserver 1.0")
+    web.run_app(app, host="127.0.0.1", port=3000)
