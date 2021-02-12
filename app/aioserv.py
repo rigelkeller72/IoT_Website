@@ -1,22 +1,30 @@
 from flask import render_template, jsonify
 from app import app
+import sqlite3
 import serial, json, time, random
 from aiohttp import web
 import aiohttp_jinja2
 import jinja2
 from flask import request, redirect, url_for
 ser = None
+conn = None
 
 @aiohttp_jinja2.template('test.html.jinja2')
 async def home(request):
-    holdval=rdata()
+   # holdval=rdata()
     return {}
 
 
 async def data(request):
-    tempvals=rdata()
-    sensdata={'temp': tempvals[1], 'humid': tempvals[2], 'door': tempvals[3],
-              'gals': tempvals[0], 'near':tempvals[4]}
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
+    record = cursor.fetchone()
+
+
+
+
+    # tempvals=rdata()
+    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5]}
+
     return web.json_response(sensdata)
 
 
@@ -79,9 +87,10 @@ def rdata():
 
 
 def main():
-    global ser
+    global ser, conn
+    conn = sqlite3.connect("development.db")
     DEVICE = 'COM8'
-    ser = serial.Serial(DEVICE)
+    #ser = serial.Serial(DEVICE)
     time.sleep(2)
     app = web.Application()
     aiohttp_jinja2.setup(app,
