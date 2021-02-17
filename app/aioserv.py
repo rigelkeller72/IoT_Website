@@ -1,6 +1,7 @@
 from flask import render_template, jsonify
 from app import app
 import sqlite3
+import math
 import serial, json, time, random
 from aiohttp import web
 import aiohttp_jinja2
@@ -69,7 +70,6 @@ def rdata():
         sensVals.append(float(sense))
     sensVals[0] = 40 - sensVals[0] * togalls
     sensVals[0] = round(sensVals[0], 2)
-    print(sensVals[4])
     if sensVals[3] == 0:
         # ser.write(('b').encode('ascii'))
         # ser.readline()
@@ -85,6 +85,25 @@ def rdata():
 
     return sensVals
 
+def randtableEntries():
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
+    record = cursor.fetchone()
+    minid = record[0]
+    cursor.close()
+    logtime = math.floor(time.time())
+    for x in range(100):
+        temp = random.random()*35
+        temp = round(temp,2)
+        hum = 10 + random.random()*30
+        hum = round(hum,2)
+        pir = random.randint(0,1)
+        halleff = random.randint(0,1)
+        gals = round(random.random()*40,2)
+        cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",(x+minid+1,logtime,temp,hum,pir,gals,halleff))
+        cursor.close()
+        conn.commit()
+        logtime +=1
+
 
 def main():
     global ser, conn
@@ -92,6 +111,7 @@ def main():
     DEVICE = 'COM8'
     #ser = serial.Serial(DEVICE)
     time.sleep(2)
+    randtableEntries()
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
