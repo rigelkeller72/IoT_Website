@@ -151,18 +151,27 @@
                         $("#buzzrow").css("background-color","white");
                         break;
                 }
-            });
-                 $("#lock").click(function(){
-                    $.getJSON('ligon.json', function(ligon){
-                        alert(ligon['mess']);
-                    });
+            });*/
+                 $("#lockpick").click(function(){
+                     if($(this).hasClass('notlock'))
+                     {
+                         $(this).removeClass('notlock');
+                         $.getJSON('ligon.json', function(ligon){
+                        //alert(ligon['mess']);
+                        $(this).attr('src','/static/images/locked.png');
+                        });
+                     }
+                     else{
+                         $(this).addClass('notlock')
+                         $.getJSON('ligoff.json', function(ligoff){
+                        //alert(ligoff['mess']);
+                             console.log('here to change the image')
+                        $(this).attr('src','static/images/unlocked.png');
+                        });
+                     }
+
                 })
-               $("#unlock").click(function(){
-                    $.getJSON('ligoff.json', function(ligoff){
-                        alert(ligoff['mess']);
-                    });
-                })
-                $("#buzz").click(function(){
+                /*$("#buzz").click(function(){
                     $.getJSON('buzzon.json', function(buzzon){
                         alert(buzzon['mess']);
                     });

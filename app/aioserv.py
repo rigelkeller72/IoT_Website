@@ -115,7 +115,7 @@ def main():
     global ser, conn
     conn = sqlite3.connect("development.db")
     DEVICE = 'COM8'
-    #ser = serial.Serial(DEVICE)
+    ser = serial.Serial(DEVICE)
     time.sleep(2)
     #randtableEntries()
     app = web.Application()
