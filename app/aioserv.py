@@ -15,6 +15,12 @@ async def home(request):
    # holdval=rdata()
     return {}
 
+@aiohttp_jinja2.template('newtemp.html.jinja2')
+async def newdisp(request):
+    wlevel = 30
+    return{}
+
+
 
 async def data(request):
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
@@ -111,7 +117,7 @@ def main():
     DEVICE = 'COM8'
     #ser = serial.Serial(DEVICE)
     time.sleep(2)
-    randtableEntries()
+    #randtableEntries()
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
@@ -119,6 +125,7 @@ def main():
                     web.get('/data.json',data),
                     web.static('/static','static'),
                     web.get('/ligon.json',ligon),
+                    web.get('/new',newdisp),
                     web.get('/ligoff.json',ligoff),
                     web.get('/buzzon.json',buzzon),
                     web.get('/buzzoff.json',buzzoff)])

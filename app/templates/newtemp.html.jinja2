@@ -1,0 +1,36 @@
+{% extends "testbase.html.jinja2" %}
+
+{% block content %}
+ <div class="container my-4">
+     <div class = "alert alert-danger text-center invisible" role="alert" id="ondoor"><b>Door Open!</b></div>
+
+    <hr class="my-5">
+
+    <div class="card-columns text-black">
+      <div class="card mt-2 mb-3" id="watlevel">
+          <div class ="card-title text-center">Water Level</div>
+        <div class="card-body text-center">
+          <p id="wlev">{{ gallon }} Gallons</p>
+        </div>
+      </div>
+        <div class="card mt-2 mb-3" id="frosty">
+            <div class ="card-title text-center">Temperature</div>
+        <div class="card-body text-center">
+          <p id="tmp">{{ temp }}° C</p>
+        </div>
+      </div>
+        <div class="card mt-2 mb-3 img-fluid" id="humid">
+            <img class="card-img-top" src="/static/images/humpic.jpg" style="width:100%" id="watapic">
+            <div class="card-img-overlay">
+            <div class ="card-title text-center">Humidity</div>
+        <div class="card-body text-center">
+          <p id="hm">{{ humid }}%</p>
+        </div>
+      </div>
+        </div>
+
+
+  </div>
+ </div>
+
+{% endblock %}
