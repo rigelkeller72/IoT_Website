@@ -1,7 +1,7 @@
 from flask import render_template, jsonify
 from app import app
 import sqlite3
-import math
+import math, asyncio
 import serial, json, time, random
 from aiohttp import web
 import aiohttp_jinja2
@@ -30,7 +30,7 @@ async def data(request):
 
 
     # tempvals=rdata()
-    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5]}
+    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1]}
 
     return web.json_response(sensdata)
 
@@ -61,6 +61,10 @@ async def buzzon(request):
     return web.json_response(message)
 
 def rdata():
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
+    record = cursor.fetchone()
+    minid = record[0]
+    cursor.close()
     serprint = ('r').encode('ascii')
     ser.write(serprint)
     rxdata = ser.readline()
@@ -76,20 +80,13 @@ def rdata():
         sensVals.append(float(sense))
     sensVals[0] = 40 - sensVals[0] * togalls
     sensVals[0] = round(sensVals[0], 2)
-    if sensVals[3] == 0:
-        # ser.write(('b').encode('ascii'))
-        # ser.readline()
-        doorstate = "Door OPEN"
-    else:
-        doorstate = "Door Secured"
-    sensVals[3]=doorstate
-    if sensVals[4] > .5:
-        near = "Person Near!"
-    else:
-        near = "No one Around."
-    sensVals[4]=near
 
-    return sensVals
+
+    cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",
+                          (minid + 1,round(time.time()) , sensVals[1], sensVals[2], round(sensVals[4]), sensVals[0], sensVals[3]))
+    cursor.close()
+    conn.commit()
+    #return sensVals
 
 def randtableEntries():
     cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
@@ -110,6 +107,16 @@ def randtableEntries():
         conn.commit()
         logtime +=1
 
+async def runserver(app):
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, host="127.0.0.1", port=5000)
+    await site.start()
+
+async def readdata(serial):
+    while(True):
+        rdata()
+        await asyncio.sleep(2.34)
 
 def main():
     global ser, conn
@@ -129,7 +136,10 @@ def main():
                     web.get('/ligoff.json',ligoff),
                     web.get('/buzzon.json',buzzon),
                     web.get('/buzzoff.json',buzzoff)])
-    web.run_app(app, host="127.0.0.1", port=5000)
+    #web.run_app(app, host="127.0.0.1", port=5000)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(runserver(app))
+    loop.run_until_complete(readdata(ser))
 
 if __name__=="__main__":
     main()

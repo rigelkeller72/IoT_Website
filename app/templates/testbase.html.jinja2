@@ -14,32 +14,59 @@
 
 
 
-            function rdata(){
-                $.getJSON('data.json',function (data){
-                    //$("#pird").text(data['near']);
-                    $('#tmp').text(data['temp'] + '°C');
-                    $('#hm').text(data['humid']+"%");
-                    $('#wlev').text(data['water level']+ ' gallons');
-                    var doorbool = (data['door']);
-                    //update as brought online, shows the water level based on how full you are out of
-                    showwater(data['water level']);
-                    hotcold(data['temp']);
-                    if (doorbool>0)
-                    {
-                       $("#ondoor").fadeIn('slow');
-                       if($('#ondoor').hasClass('invisible')){
-                           ('#ondoor').removeClass('invisible');
-                       }
-                    }
-                    else
-                    {
-                        $("#ondoor").fadeOut();
-                    }
-                    $('#watapic').css('opacity',data['humid']/100.0);
-                });
-            }
+                function rdata(){
+                    $.getJSON('data.json',function (data){
+                        //$("#pird").text(data['near']);
+                        $('#tmp').text(data['temp'] + '°C');
+                        $('#hm').text(data['humid']+"%");
+                        $('#wlev').text(data['water level']+ ' gallons');
+                        //$('#wlev').text(35)
+                        var doorbool = (data['door']);
+                        //update as brought online, shows the water level based on how full you are out of
+                        showwater(data['water level']);
+                        hotcold(data['temp']);
+                        if (doorbool>0)
+                        {
+                            $("#ondoor").fadeIn('slow');
+                            if($('#ondoor').hasClass('invisible')){
+                                ('#ondoor').removeClass('invisible');
+                            }
+                        }
+                        else
+                        {
+                            $("#ondoor").fadeOut();
+                        }
+                        $('#watapic').css('opacity',data['humid']/100.0);
+                        timdif(data['tor']);
+                    });
+                }
            setInterval(rdata,10000);
-
+            function timdif(readtime){
+                var realtime = Math.round(Date.now() / 1000);
+                var tdif = realtime-readtime;
+                if (tdif<60)
+                {
+                    console.log("Less than a minute");
+                }
+                else
+                {
+                    tdif = Math.round(tdif/60);
+                    if(tdif < 60)
+                    {
+                        console.log(tdif + " Minutes");
+                    }
+                    else{
+                        tdif = Math.round(tdif/60);
+                        if(tdif < 24){
+                            console.log(tdif + " Hours");
+                        }
+                        else{
+                            tdif = Math.round(tdif/24);
+                            console.log(tdif + " Days");
+                        }
+                    }
+                }
+            }
             function showwater(gall){
                 var perc = (gall/40.0)*100
                 var lowperc = perc-5
