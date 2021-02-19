@@ -158,16 +158,16 @@
                          $(this).removeClass('notlock');
                          $.getJSON('ligon.json', function(ligon){
                         //alert(ligon['mess']);
-                        $(this).attr('src','/static/images/locked.png');
+                        $('#lockpick').attr('src','/static/images/locked.png');
                         });
                      }
                      else{
-                         $(this).addClass('notlock')
+                         $(this).attr('src','static/images/unlocked.png');
+
                          $.getJSON('ligoff.json', function(ligoff){
                         //alert(ligoff['mess']);
-                             console.log('here to change the image')
-                        $(this).attr('src','static/images/unlocked.png');
                         });
+                         $('#lockpick').addClass('notlock')
                      }
 
                 })

@@ -10,18 +10,35 @@
         <script>
 
             $(document).ready(function(){
-
+            rdata();
 
 
 
 
             function rdata(){
                 $.getJSON('data.json',function (data){
-                    $("#pird").text(data['near']);
+                    var near, closed;
+                    if(data['presence'] == 0)
+                    {
+                        near = "Someone's Near";
+                    }
+                    else
+                    {
+                        near = "No one Around"
+                    }
+                    if(data['door'] == 0)
+                    {
+                        closed = "Door open";
+                    }
+                    else
+                    {
+                        closed = "Doors Closed"
+                    }
+                    $("#pird").text(near);
                     $('#tmp').text(data['temp'] + '°C');
                     $('#hm').text(data['humid']+"%");
-                    $('#wlev').text(data['gals']+ 'gallons');
-                    $('#hesense').text(data['door']);
+                    $('#wlev').text(data['water level']+ 'gallons');
+                    $('#hesense').text(closed);
                 });
             }
            setInterval(rdata,10000);
