@@ -7,107 +7,116 @@
         <div id="clocker"></div>
     </div>
 
-<div class="container">
-  <h2>Table</h2>
-  <p>Table is populated with static data. </p>
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Sensor Name</th>
-        <th>Serial Number</th>
-        <th>Model</th>
-        <th>Data</th>
-        <th>Last inspected</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr id="tmprow">
-        <td>1</td>
-        <td>Thermometer <i class="fas fa-thermometer-half"></i> </td>
-        <td>128239487a8df628</td>
-        <td>DHT11</td>
-        <td id="tmp">{{ temp }} (Celsius)</td>
-        <td>07NOV20</td>
-      </tr>
-      <tr id="humrow">
-        <td>2</td>
-        <td>Humidity <i class="fas fa-tint"></i></td>
-        <td>128239487a8df628</td>
-        <td>DHT11</td>
-        <td id="hm">{{ hum }}%</td>
-        <td>07NOV20</td>
-      </tr>
-      <tr id="ultrow">
-        <td>3</td>
-        <td>Tank Level <i class="fas fa-water"></i></td>
-        <td>2348vn9fll39sk</td>
-        <td>Ultra Sonic Sensor</td>
-        <td id="wlev">{{ gals }} gallons</td>
-        <td>07NOV20</td>
-      </tr>
-      <tr id="ledrow">
-        <td>4</td>
-        <td>LED <i class="far fa-lightbulb"></i></td>
-        <td>gn4556vv</td>
-        <td>LED Bulb</td>
-        <td>
-            <div class="btn-group">
-                <button type="button" class="btn btn-success grn" id="lock">Lock Door</button>
-                <button type="button" class="btn btn-danger rd" id="unlock">Unlock Door</button>
+    <div class="w3-panel">
+        <div class="w3-row-padding" style="margin:0 -20px">
+            <div class="w3-third w3-amber">
+                <h5>Your Bus!</h5>
+                <img src="/static/images/bus_pic_01.JPG" style="width:100%" style="height:50%" alt="Bus Pic #1">
             </div>
-        </td>
-        <td>07NOV20</td>
-      </tr>
-          <tr id="pirrow">
-        <td>5</td>
-        <td>PIR <i class="fas fa-people-arrows"></i></td>
-        <td>1111COOO6</td>
-        <td>Passive Infrared Sensor</td>
-        <td id="pird">{{ pir }}</td>
-        <td>07NOV20</td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>Magnetic Sensor <i class="fas fa-magnet"></i></td>
-        <td>US1881LUA</td>
-        <td>Hall Effect Sensor</td>
-        <td id="hesense">{{ hall }}</td>
-        <td>07NOV20</td>
-      </tr>
-      <tr id="buzzrow">
-        <td>7</td>
-        <td>Buzzer <i class="fas fa-music"></i></td>
-        <td>12412394712</td>
-        <td>Arduino Passive Buzzer</td>
-        <td>
-            <div class="btn-group">
-              <button type="button" class="btn btn-success grn" id="buzz">Alarm On</button>
-                <button type="button" class="btn btn-danger rd" id="exterminator">Alarm Off</button>
-            </div>
-        </td>
-        <td>07NOV20</td>
-      </tr>
+            <div class="w3-twothird">
+                <!--<div class="container">-->
+                <h2>Data Table</h2>
+                <p>Table is populated with dynamic data. </p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Sensor Name</th>
+                            <th>Serial Number</th>
+                            <th>Model</th>
+                            <th>Data</th>
+                            <th>Last inspected</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="tmprow">
+                            <td>1</td>
+                            <td>Thermometer <i class="fas fa-thermometer-half"></i> </td>
+                            <td>128239487a8df628</td>
+                            <td>DHT11</td>
+                            <td id="tmp">{{ temp }} (Celsius)</td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr id="humrow">
+                            <td>2</td>
+                            <td>Humidity <i class="fas fa-tint"></i></td>
+                            <td>128239487a8df628</td>
+                            <td>DHT11</td>
+                            <td id="hm">{{ hum }}%</td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr id="ultrow">
+                            <td>3</td>
+                            <td>Tank Level <i class="fas fa-water"></i></td>
+                            <td>2348vn9fll39sk</td>
+                            <td>Ultra Sonic Sensor</td>
+                            <td id="wlev">{{ gals }} gallons</td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr id="ledrow">
+                            <td>4</td>
+                            <td>LED <i class="far fa-lightbulb"></i></td>
+                            <td>gn4556vv</td>
+                            <td>LED Bulb</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success grn" id="lock">Lock Door</button>
+                                    <button type="button" class="btn btn-danger rd" id="unlock">Unlock Door</button>
+                                </div>
+                            </td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr id="pirrow">
+                            <td>5</td>
+                            <td>PIR <i class="fas fa-people-arrows"></i></td>
+                            <td>1111COOO6</td>
+                            <td>Passive Infrared Sensor</td>
+                            <td id="pird">{{ pir }}</td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Magnetic Sensor <i class="fas fa-magnet"></i></td>
+                            <td>US1881LUA</td>
+                            <td>Hall Effect Sensor</td>
+                            <td id="hesense">{{ hall }}</td>
+                            <td>07NOV20</td>
+                        </tr>
+                        <tr id="buzzrow">
+                            <td>7</td>
+                            <td>Buzzer <i class="fas fa-music"></i></td>
+                            <td>12412394712</td>
+                            <td>Arduino Passive Buzzer</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success grn" id="buzz">Alarm On</button>
+                                    <button type="button" class="btn btn-danger rd" id="exterminator">Alarm Off</button>
+                                </div>
+                            </td>
+                            <td>07NOV20</td>
+                        </tr>
 
-          <tr>
-        <td>8</td>
-        <td>Motor <i class="fas fa-caravan"></i></td>
-        <td>FGD2423DFD</td>
-        <td>Brushless DC Motor</td>
-        <td>
-            <div class="btn-group">
-              <button type="button" class="btn btn-primary">On</button>
-              <button type="button" class="btn btn-primary">Off</button>
+                        <tr>
+                            <td>8</td>
+                            <td>Motor <i class="fas fa-caravan"></i></td>
+                            <td>FGD2423DFD</td>
+                            <td>Brushless DC Motor</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary">On</button>
+                                    <button type="button" class="btn btn-primary">Off</button>
+                                </div>
+                            </td>
+                            <td>07NOV20</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </td>
-        <td>07NOV20</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-</div>
-
+            <!--</div>-->
+        </div>
+    </div>
 
 <div class="container" style="background-color:lightgray">
   <div class="row">
