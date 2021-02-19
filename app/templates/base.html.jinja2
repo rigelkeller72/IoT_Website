@@ -9,10 +9,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
 
+
+
             $(document).ready(function(){
             rdata();
-
-
 
 
             function rdata(){
@@ -155,6 +155,12 @@
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
 
+        <!-- Font Awesome tags -->
+        <script src="https://kit.fontawesome.com/5977c79ddd.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/solid.css" integrity="sha384-6qO6EOFIDfvv6uzAzozX/BvMu/qkIIHxWYOVMjpVjX+NtPuNyd3YiOEflKIIV2ka" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/fontawesome.css" integrity="sha384-Hx1dya9ptAdKu2hLNR5C2Cwgm+wCfwD0VMGE6jk5OUxxa9I58YfxOCwEtRog+3wk" crossorigin="anonymous">
+
+
         {% if title %}
         <title>{{ title }} - IoT Website</title>
         {% else %}
@@ -178,6 +184,7 @@
             </ul>
         </div>
         </div>
+
          <!-- PAGE CONTENT -->
         {% block content %}
              Default Content
