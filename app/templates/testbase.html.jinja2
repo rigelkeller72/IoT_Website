@@ -6,13 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/static/jquery/jquery.min.js"></script>
+        <script src="/static/jquery/jquery.canvaswrapper.js"></script>
+        <script src="/static/jquery/jquery.flot.js"></script>
         <script>
 
             $(document).ready(function(){
             rdata();
-
-
 
                 function rdata(){
                     $.getJSON('data.json',function (data){
@@ -29,7 +29,7 @@
                         {
                             $("#ondoor").fadeIn('slow');
                             if($('#ondoor').hasClass('invisible')){
-                                ('#ondoor').removeClass('invisible');
+                                $('#ondoor').removeClass('invisible');
                             }
                         }
                         else
@@ -39,7 +39,13 @@
                         $('#watapic').css('opacity',data['humid']/100.0);
                         timdif(data['tor']);
                     });
-                }
+                    $.getJSON('tempinfo.json', function(tempinfo) {
+                        var tempplot = ([tempinfo["times"][0],tempinfo["temps"][0]], [tempinfo["times"][1],tempinfo["temps"][1]])
+                        $.plot("#placeholder", [tempplot])
+                        $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+                    });
+                    }
+
            setInterval(rdata,10000);
             function timdif(readtime){
                 var realtime = Math.round(Date.now() / 1000);

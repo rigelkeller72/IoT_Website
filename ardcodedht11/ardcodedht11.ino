@@ -1,5 +1,6 @@
 
 #include <dht.h>
+#include <Servo.h>
 
 dht DHT;
 float temp,hum;
@@ -13,19 +14,20 @@ float pot;
 int hallSensorPin = 2; 
 int hallDrivePin = 1;
 int buzzer = 8;
-int lit = 12;
+Servo servo;
 int potpin = A5;
 int mags = 0;
 #define DHT11_PIN 7
 void setup() {
    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-  pinMode(lit, OUTPUT);
   pinMode(buzzer, OUTPUT);
   pinMode(hallDrivePin, OUTPUT);
   pinMode(hallSensorPin, INPUT);    
   // put your setup code here, to run once:
   Serial.begin(9600);
+  servo.attach(5);
+  servo.write(135);
   
 }
 
@@ -40,12 +42,12 @@ void loop() {
         //serial.print(1,20,6,10);
         break;
       case 'l':
-        digitalWrite(lit, HIGH);
-        Serial.print("LIGHT_ON\n");
+        servo.write(0);
+        Serial.print("door locked\n");
         //resetted ='g';
         break;
       case 'o':
-        digitalWrite(lit, LOW);
+        servo.write(135);
         Serial.print("LIGHT_OFF\n");
         break;
        case 'b':

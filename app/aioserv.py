@@ -25,7 +25,7 @@ async def newdisp(request):
 async def data(request):
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
     record = cursor.fetchone()
-
+    cursor.close()
 
 
 
@@ -33,6 +33,19 @@ async def data(request):
     sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1]}
 
     return web.json_response(sensdata)
+
+async def tempinfo(request):
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 5;")
+    record = cursor.fetchall()
+    cursor.close()
+    times=[]
+    temps=[]
+    #currently just making a 5 point plot, can add more/take them away in future
+    for x in range(5):
+        times.append(record[x][1])
+        temps.append(record[x][2])
+    senddict ={'times': times, 'temps': temps}
+    return web.json_response(senddict)
 
 
 async def ligon(request):
@@ -135,6 +148,7 @@ def main():
                     web.get('/new',newdisp),
                     web.get('/ligoff.json',ligoff),
                     web.get('/buzzon.json',buzzon),
+                    web.get('/tempinfo.json', tempinfo),
                     web.get('/buzzoff.json',buzzoff)])
     #web.run_app(app, host="127.0.0.1", port=5000)
     loop = asyncio.get_event_loop()
