@@ -46,17 +46,18 @@
                         timdif(data['tor']);
                     });
                     $.getJSON('tempinfo.json', function(tempinfo) {
-                        var readtime = [];
                         var plotdata = [];
                         for (i =0; i<tempinfo["times"].length; i++)
                         {
                             var datetest = new Date(1000*tempinfo["times"][0]);
-                            var holdcell = datetest.getHours()+":"+datetest.getMinutes();
-                            plotdata.push([i, tempinfo["temps"][i]]);
+                            plotdata.push([tempinfo['times'][i], tempinfo["temps"][i]]);
                         }
-                        console.log(plotdata);
-                        var idumb =[[0,0], [10,10]];
-                        $.plot("#placeholder", [plotdata]);
+                        console.log(tempinfo["times"][tempinfo["times"].length-1]);
+                        $.plot("#placeholder", [plotdata], {
+                            xaxis: {mode: "time", timeBase: "seconds",
+                            min: tempinfo["times"][tempinfo["times"].length-1],
+                            max: tempinfo["times"][0]}
+                        });
                         $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
                         //console.log(tempinfo['temps']);
                     });
