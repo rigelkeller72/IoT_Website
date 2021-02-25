@@ -54,7 +54,7 @@
                         }
                         console.log(tempinfo["times"][tempinfo["times"].length-1]);
                         $.plot("#placeholder", [plotdata], {
-                            xaxis: {mode: "time", timeBase: "seconds",
+                            xaxis: {mode: "time", timeBase: "seconds", timezone: "browser",
                             min: tempinfo["times"][tempinfo["times"].length-1],
                             max: tempinfo["times"][0]}
                         });
