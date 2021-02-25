@@ -14,6 +14,7 @@
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.browser.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.drawSeries.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.uiConstants.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.time.js"></script>
 	<script type="text/javascript">
 
             $(document).ready(function(){
@@ -45,9 +46,19 @@
                         timdif(data['tor']);
                     });
                     $.getJSON('tempinfo.json', function(tempinfo) {
-                        var tempplot = ([tempinfo["times"][0],tempinfo["temps"][0]], [tempinfo["times"][1],tempinfo["temps"][1]])
-                        $.plot("#placeholder", [tempplot])
+                        var readtime = [];
+                        var plotdata = [];
+                        for (i =0; i<tempinfo["times"].length; i++)
+                        {
+                            var datetest = new Date(1000*tempinfo["times"][0]);
+                            var holdcell = datetest.getHours()+":"+datetest.getMinutes();
+                            plotdata.push([i, tempinfo["temps"][i]]);
+                        }
+                        console.log(plotdata);
+                        var idumb =[[0,0], [10,10]];
+                        $.plot("#placeholder", [plotdata]);
                         $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+                        //console.log(tempinfo['temps']);
                     });
                     }
 
@@ -57,23 +68,23 @@
                 var tdif = realtime-readtime;
                 if (tdif<60)
                 {
-                    console.log("Less than a minute");
+                    $("#lastupdate").text("less than a minute ago");
                 }
                 else
                 {
                     tdif = Math.round(tdif/60);
                     if(tdif < 60)
                     {
-                        console.log(tdif + " Minutes");
+                        $("#lastupdate").text(tdif + " minutes ago");
                     }
                     else{
                         tdif = Math.round(tdif/60);
                         if(tdif < 24){
-                            console.log(tdif + " Hours");
+                            $("#lastupdate").text(tdif + " hours ago");
                         }
                         else{
                             tdif = Math.round(tdif/24);
-                            console.log(tdif + " Days");
+                            $("#lastupdate").text(tdif + " days ago");
                         }
                     }
                 }

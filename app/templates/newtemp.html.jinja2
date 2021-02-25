@@ -3,6 +3,12 @@
 {% block content %}
  <div class="container my-4">
      <div class = "alert alert-danger text-center invisible" role="alert" id="ondoor"><b>Door Open!</b></div>
+    <div class="row text-center">
+        <h1>Last updated:</h1>
+    </div>
+     <div class="row text-center">
+        <h2 id="lastupdate"></h2>
+    </div>
 
     <hr class="my-5">
 
@@ -34,14 +40,15 @@
           <img src="/static/images/unlocked.png" style="width:100%" id="lockpick" class="notlock">
         </div>
       </div>
-        <div id="content">
-        <div class="demo-container">
-			<div id="placeholder" class="demo-placeholder"></div>
-		</div>
-        </div>
+         <!--<div class="card mt-2 mb-3" id="keyring">-->
+
+		<!--</div> -->
 
 
   </div>
  </div>
+    <div class="container">
+			<div id="placeholder" class="demo-placeholder" style="width:600px;height:450px"></div>
+        </div>
 
 {% endblock %}
