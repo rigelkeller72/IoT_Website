@@ -1,6 +1,7 @@
-
+#include <Servo.h>
 #include <dht.h>
 
+Servo myservo;  // create servo object to control a servo
 dht DHT;
 float temp,hum;
 #define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
@@ -10,13 +11,15 @@ int distance;
 char cmd;
 float pot;
 int potpin = A5;
+int pos = 0;    // variable to store the servo position
 #define DHT11_PIN 7
 void setup() {
-   pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-  pinMode(LED_BUILTIN, OUTPUT);
-  // put your setup code here, to run once:
-  Serial.begin(9600);
+    myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+    pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+    pinMode(LED_BUILTIN, OUTPUT);
+    // put your setup code here, to run once:
+    Serial.begin(9600);
   
 }
 
@@ -37,6 +40,14 @@ void loop() {
       case 'o':
         digitalWrite(LED_BUILTIN, LOW);
         Serial.print("LIGHT_OFF\n");
+        break;
+      case 'x':
+        myservo.write(180);//position of the servo is 180 degrees. (Far left)
+        Serial.print("SERVO_MAX_LEFT\n");
+        break;
+      case 'y':
+        myservo.write(0);//position of the servo is 0 degrees. (Far right)
+        Serial.print("SERVO_MAX_RIGHT\n");
         break;
       default:
         Serial.print("Unknown Command use rlo\n");

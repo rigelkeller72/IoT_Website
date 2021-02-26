@@ -73,6 +73,18 @@ async def buzzon(request):
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+async def servo_l(request):
+    ser.write(('x').encode('ascii'))
+    pstate = ser.readline()
+    message = {'mess': pstate.decode('ascii')}
+    return web.json_response(message)
+
+async def servo_r(request):
+    ser.write(('y').encode('ascii'))
+    pstate = ser.readline()
+    message = {'mess': pstate.decode('ascii')}
+    return web.json_response(message)
+
 def rdata():
     cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
     record = cursor.fetchone()
