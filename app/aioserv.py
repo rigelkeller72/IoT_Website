@@ -1,5 +1,5 @@
 from flask import render_template, jsonify
-from app import app
+#from app import app
 import sqlite3
 import math, asyncio
 import serial, json, time, random
