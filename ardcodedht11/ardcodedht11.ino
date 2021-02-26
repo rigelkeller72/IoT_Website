@@ -15,6 +15,7 @@ int hallSensorPin = 2;
 int hallDrivePin = 1;
 int buzzer = 8;
 Servo servo;
+Servo serv2;
 int potpin = A5;
 int mags = 0;
 #define DHT11_PIN 7
@@ -28,6 +29,8 @@ void setup() {
   Serial.begin(9600);
   servo.attach(5);
   servo.write(135);
+  serv2.attach(9);
+  serv2.write(135);
   
 }
 
@@ -57,6 +60,14 @@ void loop() {
         case 'q':
           digitalWrite(buzzer, LOW);
           Serial.print("AHHHH\n");
+        break;
+        case 'x':
+        serv2.write(180);
+        Serial.print("left\n");
+        break;
+        case 'y':
+        serv2.write(0);
+        Serial.print("right\n");
         break;
       default:
         Serial.print("Unknown Command use rlo\n");

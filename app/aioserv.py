@@ -75,12 +75,14 @@ async def buzzon(request):
 
 async def servo_l(request):
     ser.write(('x').encode('ascii'))
+    print("left")
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
 async def servo_r(request):
     ser.write(('y').encode('ascii'))
+    print()
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
@@ -161,7 +163,9 @@ def main():
                     web.get('/ligoff.json',ligoff),
                     web.get('/buzzon.json',buzzon),
                     web.get('/tempinfo.json', tempinfo),
-                    web.get('/buzzoff.json',buzzoff)])
+                    web.get('/buzzoff.json',buzzoff),
+                    web.get('/servo_r.json', servo_r),
+                    web.get('/servo_l.json',servo_l)])
     #web.run_app(app, host="127.0.0.1", port=5000)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(runserver(app))
