@@ -35,13 +35,13 @@ async def data(request):
     return web.json_response(sensdata)
 
 async def tempinfo(request):
-    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 5;")
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 10;")
     record = cursor.fetchall()
     cursor.close()
     times=[]
     temps=[]
     #currently just making a 5 point plot, can add more/take them away in future
-    for x in range(5):
+    for x in range(10):
         times.append(record[x][1])
         temps.append(record[x][2])
     senddict ={'times': times, 'temps': temps}

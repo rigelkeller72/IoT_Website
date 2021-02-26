@@ -15,6 +15,7 @@
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.drawSeries.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.uiConstants.js"></script>
     <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.time.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.axislabels.js"></script>
 	<script type="text/javascript">
 
             $(document).ready(function(){
@@ -49,14 +50,15 @@
                         var plotdata = [];
                         for (i =0; i<tempinfo["times"].length; i++)
                         {
-                            var datetest = new Date(1000*tempinfo["times"][0]);
-                            plotdata.push([tempinfo['times'][i], tempinfo["temps"][i]]);
-                        }
-                        console.log(tempinfo["times"][tempinfo["times"].length-1]);
-                        $.plot("#placeholder", [plotdata], {
-                            xaxis: {mode: "time", timeBase: "seconds", timezone: "browser",
-                            min: tempinfo["times"][tempinfo["times"].length-1],
-                            max: tempinfo["times"][0]}
+                                var datetest = new Date(1000*tempinfo["times"][0]);
+                                plotdata.push([tempinfo['times'][i], tempinfo["temps"][i]]);
+                            }
+                            var today = new Date(1000*tempinfo["times"][0]);
+                            var xlabel = today.getDate();
+                            $.plot("#placeholder", [plotdata], {xaxis: {mode: "time", timeBase: "seconds", timezone: "browser",
+                                min: tempinfo["times"][tempinfo["times"].length-1],
+                                max: tempinfo["times"][0],
+                                axisLabel: xlabel}
                         });
                         $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
                         //console.log(tempinfo['temps']);
@@ -91,20 +93,13 @@
                 }
             }
             function showwater(gall){
-                var perc = (gall/40.0)*100
-                var lowperc = perc-5
-                if (lowperc<0)
-                    {lowperc = 0}
-                if(lowperc>20)
-                {
-                    var gradlvl = "linear-gradient(0deg,rgba(0,212,255,1) " + lowperc + "%,rgba(255,255,255,1) " + perc + "%"
-                }
-                else
-                {
-                    var gradlvl = "linear-gradient(0deg,rgba(255,0,129,1) " + lowperc + "%,rgba(255,255,255,1) " + perc + "%"
-                }
+                var perc = (gall/40.0)*100;
+                var perstr = perc+"%";
+                var widstr = "width:"+perstr;
+                $('#pgbar').attr('aria-valuenow',gall);
+                $('#pgbar').attr('style',widstr);
+                console.log(widstr);
 
-                $('#watlevel').css("background-image",gradlvl);
             }
             function hotcold(temp){
                 var maxred = 255;
