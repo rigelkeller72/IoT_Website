@@ -1,5 +1,6 @@
 from flask import render_template, jsonify
 #from app import app
+#imports, need serial for arduino, aiohttp for web handling, jinja for passing data
 import sqlite3
 import math, asyncio
 import serial, json, time, random
@@ -15,13 +16,13 @@ async def home(request):
    # holdval=rdata()
     return {}
 
-@aiohttp_jinja2.template('newtemp.html.jinja2')
+@aiohttp_jinja2.template('polished.html.jinja2')
 async def newdisp(request):
     wlevel = 30
     return{}
 
 
-
+#reads the most recent table entry, and returns the values in json format
 async def data(request):
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
     record = cursor.fetchone()
@@ -29,11 +30,11 @@ async def data(request):
 
 
 
-    # tempvals=rdata()
+
     sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1]}
 
     return web.json_response(sensdata)
-
+#returns several entries of temperature and time, used for plotting
 async def tempinfo(request):
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 10;")
     record = cursor.fetchall()
@@ -47,26 +48,28 @@ async def tempinfo(request):
     senddict ={'times': times, 'temps': temps}
     return web.json_response(senddict)
 
-
+#engages door locks, waits for arduino response
 async def ligon(request):
     ser.write(('l').encode('ascii'))
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
-
+#unlock process, tells arduino to actuate
 async def ligoff(request):
     ser.write(('o').encode('ascii'))
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+#tells arduino to turn off buzzer
 async def buzzoff(request):
     ser.write(('q').encode('ascii'))
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+#turns on buzzer by telling arduino
 async def buzzon(request):
     ser.write(('b').encode('ascii'))
     pstate = ser.readline()
@@ -87,6 +90,7 @@ async def servo_r(request):
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+#tells arduino to pass info, stores info in database
 def rdata():
     cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
     record = cursor.fetchone()
@@ -115,6 +119,7 @@ def rdata():
     conn.commit()
     #return sensVals
 
+#for creating random table entries. Not normally employed
 def randtableEntries():
     cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
     record = cursor.fetchone()
@@ -134,12 +139,14 @@ def randtableEntries():
         conn.commit()
         logtime +=1
 
+#method for hosting server
 async def runserver(app):
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, host="127.0.0.1", port=5000)
     await site.start()
 
+#reads data every x seconds, infinitly
 async def readdata(serial):
     while(True):
         rdata()
@@ -147,6 +154,7 @@ async def readdata(serial):
 
 def main():
     global ser, conn
+    #launches db connection and serial, gives time to init
     conn = sqlite3.connect("development.db")
     DEVICE = 'COM8'
     ser = serial.Serial(DEVICE)
@@ -155,6 +163,7 @@ def main():
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
+    #creates routes for various methods
     app.add_routes([web.get('/', home),
                     web.get('/data.json',data),
                     web.static('/static','static'),

@@ -2,36 +2,45 @@
 
 {% block content %}
  <div class="container my-4">
-     <div class = "alert alert-danger text-center invisible" role="alert" id="ondoor"><b>Door Open!</b></div>
-    <div class="row text-center">
-        <h1>Last updated:</h1>
-    </div>
-     <div class="row text-center">
-        <h2 id="lastupdate"></h2>
+     <div class="jumbotron text-center">
+      <h1>KEWL DASH</h1>
+      <p>Updated: {{ rtime }}</p>
+
     </div>
 
     <hr class="my-5">
 
-    <div class="card-columns text-black">
-      <div class="card mt-2 mb-3" id="watlevel">
-          <div class ="card-title text-center">Water Level</div>
-        <div class="card-body text-center">
-          <p id="wlev">{{ gallon }} Gallons</p>
-            <div class="progress">
-  <div id="pgbar" class="progress-bar" role="progressbar" aria-valuenow="70"
-  aria-valuemin="0" aria-valuemax="40" style="width:70%">
-    <span class="sr-only" id="watbar">70%</span>
-  </div>
-</div>
-        </div>
-      </div>
-        <div class="card mt-2 mb-3" id="frosty">
+      <div class="col-3" id="heathum"> <!-- temp/humsection -->
+          <div class="row">
             <div class ="card-title text-center">Temperature</div>
-        <div class="card-body text-center">
-          <p id="tmp">{{ temp }}° C</p>
-        </div>
+            <div class="card-body text-center">
+                <p id="howhot">{{ degC }} C</p>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class ="card-title text-center">Humidity</div>
+            <div class="card-body text-center">
+                <p id="howhum">{{ hum }} C</p>
+
+            </div>
+          </div>
       </div>
-        <div class="card mt-2 mb-3 img-fluid" id="humid">
+
+        <div class="col-3" id="watlevel"><!-- gallon section -->
+            <div class ="card-title text-center">Temperature</div>
+            <div class="card-body text-center">
+                <p id="tmp">{{ temp }}° C</p>
+                <div class="progress">
+                    <div id="pgbar" class="progress-bar" role="progressbar" aria-valuenow="70"
+                     aria-valuemin="0" aria-valuemax="40" style="width:70%">
+                        <span class="sr-only" id="watbar">70%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3" id="humid">
             <img class="card-img-top" src="/static/images/humpic.jpg" style="width:100%" id="watapic">
             <div class="card-img-overlay">
             <div class ="card-title text-center">Humidity</div>
@@ -40,7 +49,7 @@
         </div>
       </div>
         </div>
-        <div class="card mt-2 mb-3" id="keyring">
+        <div class="col-3" id="keyring">
             <div class ="card-title text-center">Lock/Unlock</div>
         <div class="card-body text-center">
           <img src="/static/images/unlocked.png" style="width:100%" id="lockpick" class="notlock">
@@ -51,7 +60,6 @@
 		<!--</div> -->
 
 
-  </div>
  </div>
     <div class="container">
 			<div id="placeholder" class="demo-placeholder" style="width:600px;height:450px"></div>

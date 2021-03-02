@@ -55,7 +55,13 @@
                             }
                             var today = new Date(1000*tempinfo["times"][0]);
                             var xlabel = today.getDate();
-                            $.plot("#placeholder", [plotdata], {xaxis: {mode: "time", timeBase: "seconds", timezone: "browser",
+                            $.plot("#placeholder", [plotdata], {
+                                grid: {
+                                    backgroundColor: "#FFFFFF"
+                                    //hoverable: true,
+                                    //clickable: true,
+                                },
+                                xaxis: {mode: "time", timeBase: "seconds", timezone: "browser",
                                 min: tempinfo["times"][tempinfo["times"].length-1],
                                 max: tempinfo["times"][0],
                                 axisLabel: xlabel}
@@ -98,7 +104,7 @@
                 var widstr = "width:"+perstr;
                 $('#pgbar').attr('aria-valuenow',gall);
                 $('#pgbar').attr('style',widstr);
-                console.log(widstr);
+                //console.log(widstr);
 
             }
             function hotcold(temp){

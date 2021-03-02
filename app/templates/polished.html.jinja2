@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DASH</title>
+        <!-- Bootstrap CSS -->
+        <script src="/static/jquery/jquery.min.js"></script>
+        <script src="/static/jquery/jquery.canvaswrapper.js"></script>
+        <script src="/static/jquery/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.colorhelpers.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.saturated.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.browser.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.drawSeries.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.uiConstants.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.time.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.axislabels.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/bstrap.css">
+	<script type="text/javascript">
+        $(document).ready(function(){
+            rdata();//run at launch
+            function rdata() {
+                $.getJSON('data.json', function (data) {
+                    //assign
+                    $('#howhot').text(data['temp'] + '°C');
+                    $('#hm').text(data['humid'] + "%");
+                    $('#wlev').text(data['water level'] + ' gallons');
+                    //$('#wlev').text(35)
+                    grayLocks(data['door']);
+
+                    dstring(data['tor']);
+
+                });
+            }
+            function dstring(tor){
+                var tUsed = new Date(1000*tor);
+                var monarr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                mon = monarr[tUsed.getMonth()];
+                day = tUsed.getDay();
+                var upTime = "Last Updated: " + tUsed.getHours()+":"+tUsed.getMinutes()+ " " +mon + " " + day;
+                $("#timeread").text(upTime);
+            }
+            function grayLocks(lbool){//clears color classes, then assigns based off of lock state
+                console.log(lbool);
+                $('#locked').removeClass("btn-secondary");
+                $('#locked').removeClass("btn-success");
+                $('#notlocked').removeClass("btn-secondary");
+                $('#notlocked').removeClass("btn-success");
+                $('#lstatus').removeClass("bg-info");
+                $('#lstatus').removeClass("bg-danger");
+                if (lbool == 1)
+                {
+                    $('#lstatus').text("Doors are Locked");
+                    $('#lstatus').addClass("bg-info");
+                    $('#locked').addClass("btn-success");
+                    $('#notlocked').addClass("btn-secondary");
+                }
+                else{
+                    $('#lstatus').text("Doors Unlocked!");
+                    $('#lstatus').addClass("bg-danger");
+                    $('#locked').addClass("btn-secondary");
+                    $('#notlocked').addClass("btn-success");
+                }
+            }
+            setInterval(rdata,10000);
+        });
+     </script>
+
+ </head>
+    <body>
+ <div class="container">
+     <div class="jumbotron text-center">
+      <h1>KEWL DASH</h1>
+      <p id="timeread">Updated: {{ rtime }}</p>
+
+    </div>
+
+    <hr class="my-5">
+
+      <div class="col-lg-3" id="heathum"> <!-- temp/humsection -->
+          <div class="row text-center">
+              <div class ="card-title text-center">Temperature</div>
+              <div class="card-body text-center">
+                  <p id="howhot">{{degC}} C</p>
+                  <button type="button" class="btn btn-dark grn" id="heatgraph">History</button> <!--button for showing temp graphs-->
+              </div>
+        </div>
+          <div class="row">
+              <div class ="card-title text-center">Humidity</div>
+              <div class="card-body text-center">
+                  <p id="hm" class="text-center">{{ humid }}%</p>
+              </div>
+          </div>
+      </div>
+
+
+        <div class="col-lg-3 text-center"><!-- thermometer secion -->
+            <div class="card-title text-center">Water Level</div>
+            <div class="card-body text-center">
+                <p id="wlev">{{ wlv }}</p>
+                <div class="progress">
+                    <div id="pgbar" class="progress-bar" role="progressbar" aria-valuenow="70"
+                     aria-valuemin="0" aria-valuemax="40" style="width:70%">
+                        <span class="sr-only" id="watbar">70%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 text-center" id="keyring">
+            <div class ="card-title">Door Locks</div>
+        <div class="card-body text-center">
+            <p id="lstatus"></p>
+          <div class="col-lg-6 text-center">
+             <button type="button" class="btn" id="locked">Unlock Doors</button>
+          </div>
+            <div class="col-lg-6 text-center">
+              <button type="button" class="btn" id="notlocked">Lock Doors</button>
+          </div>
+        </div>
+      </div>
+         <!--<div class="card mt-2 mb-3" id="keyring">-->
+
+		<!--</div> -->
+
+
+ </div>
+
+    </body>
+</html>
