@@ -34,8 +34,31 @@
                     showwater(data['water level']);
                     showheat(data['temp']);
                     dstring(data['tor']);
-
+                    pirResponse(data['presence'],data['astat']);
                 });
+            }
+            function pirResponse(near, armed){
+                $("#alarmmess").removeClass("alert-warning");
+                $("#alarmmess").removeClass("alert-info");
+                if(near && armed)
+                {
+                    $.getJSON('buzzon.json', function(){
+                        $("#alarmmess").show();
+                        $("#alarmmess").text("Person Near, Alarm Engaged!")
+                        $("#alarmmess").addClass("alert-info");
+                    });
+                }
+                else{
+                    $.getJSON('buzzoff.json', function() {
+                        if (near) {
+                            $("#alarmmess").show();
+                            $("#alarmmess").text("Person Near, Alarm System Offline!!")
+                            $("#alarmmess").addClass("alert-warning");
+                        } else {
+                            $("#alarmmess").hide();
+                        }
+                    });
+                }
             }
             function dstring(tor){//creates a nice string for the last update and updates it
                 var tUsed = new Date(1000*tor);
@@ -67,20 +90,22 @@
                 }
             }
             function grayAlarm(albool){//clears color classes, then assigns based off of alarm state
-                $('#unArmed').removeClass("btn-secondary");
+                $('#unArmed').removeClass("btn-danger");
                 $('#readyArmed').removeClass("btn-success");
                 $('#readyArmed').removeClass("btn-secondary");
                 $('#unArmed').removeClass("btn-success");
+                $('#alarmstatus').removeClass("bg-danger");
+                $('#alarmstatus').removeClass("bg-info");
                 if (albool == 0)
                 {
                     $('#alarmstatus').text("Alarm Offline");
-                    $('#alarmstatus').addClass("bg-secondary");
+                    $('#alarmstatus').addClass("bg-danger");
                     $('#unArmed').addClass("btn-success");
                     $('#readyArmed').addClass("btn-secondary");
                 }
                 else{
                     $('#alarmstatus').text("Alarm Armed");
-                    $('#alarmstatus').addClass("bg-primary");
+                    $('#alarmstatus').addClass("bg-info");
                     $('#unArmed').addClass("btn-secondary");
                     $('#readyArmed').addClass("btn-success");
                 }
@@ -150,6 +175,42 @@
                     setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
                 }
             })
+            $('#readyArmed').click(function (){//checks to see if already locked, if not locks
+                if($(this).hasClass("btn-success"))
+                {
+                    $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
+                        $("#messban").text("Disarming Alarm");
+                        $("#messban").addClass('alert-primary');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                    });
+                }
+                else
+                {
+                    $("#messban").text("Alarm Already Offline!");
+                    $("#messban").addClass('alert-warning');
+                    $("#messban").show().delay(3000).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                }
+            })
+            $('#unArmed').click(function (){//checks to see if already locked, if not locks
+                if($(this).hasClass("btn-success"))
+                {
+                    $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
+                        $("#messban").text("Alarm Coming Online");
+                        $("#messban").addClass('alert-primary');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                    });
+                }
+                else
+                {
+                    $("#messban").text("Alarm Already Online!");
+                    $("#messban").addClass('alert-warning');
+                    $("#messban").show().delay(3000).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                }
+            })
         });
      </script>
 
@@ -159,7 +220,7 @@
      <div class="alert text-center font-weight-bold" role="alert" id="messban">
 <!-- Empty div, hidden. used to display messages -->
      </div>
-     <div class="alert alert-danger text-center font-weight-bold" role="alert" id="alarmmess">
+     <div class="alert text-center font-weight-bold" role="alert" id="alarmmess">
 <!-- Empty div, hidden. used to display messages -->
      </div>
      <div class="jumbotron text-center">
@@ -171,7 +232,7 @@
     <hr class="my-5">
 
       <div class="col-lg-4" id="heathum"> <!-- temp/humsection -->
-          <div class="row text-center">
+          <div class="card text-center">
               <div class ="card-title text-center">Temperature</div>
               <div class="card-body text-center">
                   <div class="col-lg-6">
@@ -187,27 +248,27 @@
                 </div> <!--button for showing temp graphs-->
               </div>
         </div>
-          <div class="row">
+          <div class="card text-center">
               <div class ="card-title text-center">Humidity</div>
               <div class="card-body text-center">
                   <p id="hm" class="text-center">{{ humid }}%</p>
               </div>
           </div>
       </div>
-
+<!-- for locks and alarms -->
         <div class="col-lg-4" id="keyring">
-            <div class="row bg-warning text-center">
-                <div class ="card-titl" id="lstatus">Door Locks</div>
+            <div class="card text-center">
+                <div class ="card-title text-center" id="lstatus">Door Locks</div>
                 <div class="card-body">
                     <div class="col-lg-6">
-                      <button type="button" class="btn" id="locked">Unlock Doors</button>
+                        <button type="button" class="btn" id="locked">Unlock Doors</button>
                     </div>
                     <div class="col-lg-6">
                         <button type="button" class="btn" id="notlocked">Lock Doors</button>
                     </div>
                 </div>
             </div>
-            <div class="row spacer">
+            <div class="card text-center">
                 <div class="card-title" id="alarmstatus">Alarm</div>
                 <div class="card-body">
                   <div class="col-lg-6">
@@ -220,7 +281,8 @@
             </div>
         </div>
 
-     <div class="col-lg-4 text-center"><!-- thermometer secion -->
+     <div class="col-lg-4"><!-- thermometer secion -->
+         <div class="card">
             <div class="card-title text-center">Water Level</div>
             <div class="card-body text-center">
                 <div class="col-lg-6">
@@ -236,6 +298,7 @@
                 </div>
             </div>
         </div>
+     </div>
 
  </div>
 

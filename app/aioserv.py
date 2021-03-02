@@ -76,6 +76,15 @@ async def buzzon(request):
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
 
+async  def armDisarm(request):
+    global alarmarm
+    if alarmarm:
+        alarmarm =0
+    else:
+        alarmarm = 1
+    message = {"mess":"Alarm toggeled"}
+    return web.json_response(message)
+
 async def servo_l(request):
     ser.write(('x').encode('ascii'))
     print("left")
@@ -177,7 +186,8 @@ def main():
                     web.get('/tempinfo.json', tempinfo),
                     web.get('/buzzoff.json',buzzoff),
                     web.get('/servo_r.json', servo_r),
-                    web.get('/servo_l.json',servo_l)])
+                    web.get('/servo_l.json',servo_l),
+                    web.get('/togglealarm.json',armDisarm)])
     #web.run_app(app, host="127.0.0.1", port=5000)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(runserver(app))
