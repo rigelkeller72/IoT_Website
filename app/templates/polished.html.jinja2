@@ -16,6 +16,7 @@
 	<script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.uiConstants.js"></script>
     <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.time.js"></script>
     <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.axislabels.js"></script>
+    <script src="/static/jquery/jquery.gauge.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/bstrap.css">
         <link rel="stylesheet" href="/static/css/dash.css">
@@ -27,7 +28,6 @@
             function rdata() {
                 $.getJSON('data.json', function (data) {//repeating function to pull data from py script
                     //assign
-                    $('#hm').text(data['humid'] + "%");
                     //$('#wlev').text(35)
                     grayLocks(data['door']);;
                     grayAlarm(data['astat'])
@@ -35,6 +35,7 @@
                     showheat(data['temp']);
                     dstring(data['tor']);
                     pirResponse(data['presence'],data['astat']);
+                    $("#humgGauge").gauge(data['humid'],{color: "#0d63ff"});
                 });
             }
             function pirResponse(near, armed){
@@ -251,7 +252,7 @@
           <div class="card text-center">
               <div class ="card-title text-center">Humidity</div>
               <div class="card-body text-center">
-                  <p id="hm" class="text-center">{{ humid }}%</p>
+                  <canvas id="humgGauge" width="150" height="150"></canvas>
               </div>
           </div>
       </div>
