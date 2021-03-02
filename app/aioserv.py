@@ -111,6 +111,7 @@ def rdata():
         sensVals.append(float(sense))
     sensVals[0] = 40 - sensVals[0] * togalls
     sensVals[0] = round(sensVals[0], 2)
+    sensVals[1] = round(sensVals[1]*9/5.0 +32)
 
 
     cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",

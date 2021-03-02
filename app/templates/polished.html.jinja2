@@ -18,23 +18,24 @@
     <script language="javascript" type="text/javascript" src="/static/jquery/jquery.flot.axislabels.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/bstrap.css">
+        <link rel="stylesheet" href="/static/css/dash.css">
 	<script type="text/javascript">
         $(document).ready(function(){
+            $("#messban").hide();
             rdata();//run at launch
             function rdata() {
-                $.getJSON('data.json', function (data) {
+                $.getJSON('data.json', function (data) {//repeating function to pull data from py script
                     //assign
-                    $('#howhot').text(data['temp'] + '°C');
                     $('#hm').text(data['humid'] + "%");
-                    $('#wlev').text(data['water level'] + ' gallons');
                     //$('#wlev').text(35)
                     grayLocks(data['door']);
-
+                    showwater(data['water level']);
+                    showheat(data['temp']);
                     dstring(data['tor']);
 
                 });
             }
-            function dstring(tor){
+            function dstring(tor){//creates a nice string for the last update and updates it
                 var tUsed = new Date(1000*tor);
                 var monarr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
                 mon = monarr[tUsed.getMonth()];
@@ -43,14 +44,13 @@
                 $("#timeread").text(upTime);
             }
             function grayLocks(lbool){//clears color classes, then assigns based off of lock state
-                console.log(lbool);
                 $('#locked').removeClass("btn-secondary");
                 $('#locked').removeClass("btn-success");
                 $('#notlocked').removeClass("btn-secondary");
                 $('#notlocked').removeClass("btn-success");
                 $('#lstatus').removeClass("bg-info");
                 $('#lstatus').removeClass("bg-danger");
-                if (lbool == 1)
+                if (lbool == 0)
                 {
                     $('#lstatus').text("Doors are Locked");
                     $('#lstatus').addClass("bg-info");
@@ -64,13 +64,80 @@
                     $('#notlocked').addClass("btn-success");
                 }
             }
-            setInterval(rdata,10000);
+            function showwater(gall){//function to change tank level bar as water changes
+                var perc = (gall/40.0)*100;
+                var heistr = "height:"+perc +"%";
+                $('#wlev').text(gall + ' gallons');
+                $('#watbar').attr('style',heistr);
+
+
+            }
+            function showheat(temp){//function to change thermlevel
+                var heistr = "height:"+ temp +"%";
+                $('#heatbar').attr('style',heistr);
+                $('#howhot').text(temp + '°F');
+                $('#heatbar').removeClass("bg-danger");
+                $('#heatbar').removeClass("bg-info");
+                $('#heatbar').removeClass("bg-success");
+                if (temp > 80 ){
+                    $('#heatbar').addClass("bg-danger");
+                }
+                else{
+                    if (temp> 65){
+                        $('#heatbar').addClass("bg-success");
+                    }
+                    else {
+                        $('#heatbar').addClass("bg-info");
+                    }
+                }
+            }
+            setInterval(rdata,10000);//refresh rate for the data
+
+            $('#locked').click(function (){//for unlocking doors, checks to see if already unlocked, otherwise sends command to do so
+                if($(this).hasClass("btn-success"))
+                {
+                    $.getJSON('ligoff.json', function(ligoff) {//turns on lock and displays locking message
+                        $("#messban").text("Doors Unlocking");
+                        $("#messban").addClass('alert-primary');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                    });
+                }
+                else
+                {
+                    $("#messban").text("Doors Already Unlocked!");
+                    $("#messban").addClass('alert-warning');
+                    $("#messban").show().delay(3000).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                }
+            })
+            $('#notlocked').click(function (){//checks to see if already locked, if not locks
+                if($(this).hasClass("btn-success"))
+                {
+                    $.getJSON('ligoff.json', function(ligon) {//turns on lock and displays locking message
+                        $("#messban").text("Doors Locking");
+                        $("#messban").addClass('alert-primary');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                    });
+                }
+                else
+                {
+                    $("#messban").text("Doors Already Locked!");
+                    $("#messban").addClass('alert-warning');
+                    $("#messban").show().delay(3000).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                }
+            })
         });
      </script>
 
  </head>
     <body>
  <div class="container">
+     <div class="alert text-center font-weight-bold" role="alert" id="messban">
+<!-- Empty div, hidden. used to display messages -->
+     </div>
      <div class="jumbotron text-center">
       <h1>KEWL DASH</h1>
       <p id="timeread">Updated: {{ rtime }}</p>
@@ -83,8 +150,17 @@
           <div class="row text-center">
               <div class ="card-title text-center">Temperature</div>
               <div class="card-body text-center">
-                  <p id="howhot">{{degC}} C</p>
-                  <button type="button" class="btn btn-dark grn" id="heatgraph">History</button> <!--button for showing temp graphs-->
+                  <div class="col-lg-6">
+                    <p id="howhot">{{degC}} C</p>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="progress progress-bar-vertical">
+                        <div id="heatbar" class="progress-bar" role="progressbar" aria-valuenow="70"
+                         aria-valuemin="0" aria-valuemax="100" style="height:70%">
+                            <span class="sr-only">70%</span>
+                        </div>
+                    </div>
+                </div> <!--button for showing temp graphs-->
               </div>
         </div>
           <div class="row">
@@ -94,20 +170,6 @@
               </div>
           </div>
       </div>
-
-
-        <div class="col-lg-3 text-center"><!-- thermometer secion -->
-            <div class="card-title text-center">Water Level</div>
-            <div class="card-body text-center">
-                <p id="wlev">{{ wlv }}</p>
-                <div class="progress">
-                    <div id="pgbar" class="progress-bar" role="progressbar" aria-valuenow="70"
-                     aria-valuemin="0" aria-valuemax="40" style="width:70%">
-                        <span class="sr-only" id="watbar">70%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="col-lg-3 text-center" id="keyring">
             <div class ="card-title">Door Locks</div>
@@ -121,10 +183,23 @@
           </div>
         </div>
       </div>
-         <!--<div class="card mt-2 mb-3" id="keyring">-->
 
-		<!--</div> -->
-
+     <div class="col-lg-3 text-center"><!-- thermometer secion -->
+            <div class="card-title text-center">Water Level</div>
+            <div class="card-body text-center">
+                <div class="col-lg-6">
+                    <p id="wlev">{{ wlv }}</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="progress progress-bar-vertical">
+                        <div id="watbar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="70"
+                         aria-valuemin="0" aria-valuemax="40" style="height:70%">
+                            <span class="sr-only" id="watbar">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
  </div>
 
