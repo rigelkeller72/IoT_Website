@@ -31,7 +31,7 @@ async def data(request):
 
 
 
-    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1]}
+    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':alarmarm}
 
     return web.json_response(sensdata)
 #returns several entries of temperature and time, used for plotting
@@ -134,6 +134,7 @@ def randtableEntries():
         hum = round(hum,2)
         pir = random.randint(0,1)
         halleff = random.randint(0,1)
+        alarmed = random.randint(0, 1)
         gals = round(random.random()*40,2)
         cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",(x+minid+1,logtime,temp,hum,pir,gals,halleff))
         cursor.close()
@@ -151,10 +152,11 @@ async def runserver(app):
 async def readdata(serial):
     while(True):
         rdata()
-        await asyncio.sleep(2.34)
+        await asyncio.sleep(2.5)
 
 def main():
-    global ser, conn
+    global ser, conn, alarmarm
+    alarmarm=0;
     #launches db connection and serial, gives time to init
     conn = sqlite3.connect("development.db")
     DEVICE = 'COM8'

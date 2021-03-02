@@ -21,3 +21,7 @@ Found solution on https://stackoverflow.com/questions/16318375/how-to-vertically
   -o-transition: height 0.6s ease;
   transition: height 0.6s ease;
 }
+
+.spacer{
+  margin-top:40px;
+}

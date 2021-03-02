@@ -111,6 +111,7 @@ void readsensors(){
       Serial.print(mags);
       Serial.print(",");
       Serial.print(pot);
+      Serial.print(digitalRead(buzzer));
       Serial.print("\n");
       Serial.flush();
        digitalWrite(hallDrivePin,LOW);

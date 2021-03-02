@@ -22,13 +22,15 @@
 	<script type="text/javascript">
         $(document).ready(function(){
             $("#messban").hide();
+            $("#alarmmess").hide();
             rdata();//run at launch
             function rdata() {
                 $.getJSON('data.json', function (data) {//repeating function to pull data from py script
                     //assign
                     $('#hm').text(data['humid'] + "%");
                     //$('#wlev').text(35)
-                    grayLocks(data['door']);
+                    grayLocks(data['door']);;
+                    grayAlarm(data['astat'])
                     showwater(data['water level']);
                     showheat(data['temp']);
                     dstring(data['tor']);
@@ -62,6 +64,25 @@
                     $('#lstatus').addClass("bg-danger");
                     $('#locked').addClass("btn-secondary");
                     $('#notlocked').addClass("btn-success");
+                }
+            }
+            function grayAlarm(albool){//clears color classes, then assigns based off of alarm state
+                $('#unArmed').removeClass("btn-secondary");
+                $('#readyArmed').removeClass("btn-success");
+                $('#readyArmed').removeClass("btn-secondary");
+                $('#unArmed').removeClass("btn-success");
+                if (albool == 0)
+                {
+                    $('#alarmstatus').text("Alarm Offline");
+                    $('#alarmstatus').addClass("bg-secondary");
+                    $('#unArmed').addClass("btn-success");
+                    $('#readyArmed').addClass("btn-secondary");
+                }
+                else{
+                    $('#alarmstatus').text("Alarm Armed");
+                    $('#alarmstatus').addClass("bg-primary");
+                    $('#unArmed').addClass("btn-secondary");
+                    $('#readyArmed').addClass("btn-success");
                 }
             }
             function showwater(gall){//function to change tank level bar as water changes
@@ -114,7 +135,7 @@
             $('#notlocked').click(function (){//checks to see if already locked, if not locks
                 if($(this).hasClass("btn-success"))
                 {
-                    $.getJSON('ligoff.json', function(ligon) {//turns on lock and displays locking message
+                    $.getJSON('ligon.json', function(ligon) {//turns on lock and displays locking message
                         $("#messban").text("Doors Locking");
                         $("#messban").addClass('alert-primary');
                         $("#messban").show().delay(3000).fadeOut();
@@ -136,6 +157,9 @@
     <body>
  <div class="container">
      <div class="alert text-center font-weight-bold" role="alert" id="messban">
+<!-- Empty div, hidden. used to display messages -->
+     </div>
+     <div class="alert alert-danger text-center font-weight-bold" role="alert" id="alarmmess">
 <!-- Empty div, hidden. used to display messages -->
      </div>
      <div class="jumbotron text-center">
@@ -171,18 +195,30 @@
           </div>
       </div>
 
-        <div class="col-lg-4 text-center" id="keyring">
-            <div class ="card-title">Door Locks</div>
-        <div class="card-body text-center">
-            <p id="lstatus"></p>
-          <div class="col-lg-6 text-center">
-             <button type="button" class="btn" id="locked">Unlock Doors</button>
-          </div>
-            <div class="col-lg-6 text-center">
-              <button type="button" class="btn" id="notlocked">Lock Doors</button>
-          </div>
+        <div class="col-lg-4" id="keyring">
+            <div class="row bg-warning text-center">
+                <div class ="card-titl" id="lstatus">Door Locks</div>
+                <div class="card-body">
+                    <div class="col-lg-6">
+                      <button type="button" class="btn" id="locked">Unlock Doors</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn" id="notlocked">Lock Doors</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row spacer">
+                <div class="card-title" id="alarmstatus">Alarm</div>
+                <div class="card-body">
+                  <div class="col-lg-6">
+                      <button type="button" class="btn" id="readyArmed">Disarm Alarm</button>
+                  </div>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn" id="unArmed">Arm Alarm</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
 
      <div class="col-lg-4 text-center"><!-- thermometer secion -->
             <div class="card-title text-center">Water Level</div>
