@@ -36,16 +36,32 @@ async def data(request):
     return web.json_response(sensdata)
 #returns several entries of temperature and time, used for plotting
 async def tempinfo(request):
-    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 10;")
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 24;")
     record = cursor.fetchall()
     cursor.close()
     times=[]
     temps=[]
+    hums=[]
     #currently just making a 5 point plot, can add more/take them away in future
-    for x in range(10):
+    for x in range(24):
         times.append(record[x][1])
         temps.append(record[x][2])
-    senddict ={'times': times, 'temps': temps}
+        hums.append(record[x][3])
+    senddict ={'times': times, 'temps': temps, 'hums': hums}
+    return web.json_response(senddict)
+
+async def waterinfo(request):
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 24;")
+    record = cursor.fetchall()
+    cursor.close()
+    times=[]
+    wlev=[]
+
+    #currently just making a 5 point plot, can add more/take them away in future
+    for x in range(24):
+        times.append(record[x][1])
+        wlev.append(record[x][5])
+    senddict ={'times': times, 'levs': wlev}
     return web.json_response(senddict)
 
 #engages door locks, waits for arduino response
@@ -184,6 +200,7 @@ def main():
                     web.get('/ligoff.json',ligoff),
                     web.get('/buzzon.json',buzzon),
                     web.get('/tempinfo.json', tempinfo),
+                    web.get('/watinfo.json',waterinfo),
                     web.get('/buzzoff.json',buzzoff),
                     web.get('/servo_r.json', servo_r),
                     web.get('/servo_l.json',servo_l),

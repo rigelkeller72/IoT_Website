@@ -24,6 +24,7 @@
         $(document).ready(function(){
             $("#messban").hide();
             $("#alarmmess").hide();
+            var hehumopt=1;
             rdata();//run at launch
             function rdata() {
                 $.getJSON('data.json', function (data) {//repeating function to pull data from py script
@@ -35,7 +36,90 @@
                     showheat(data['temp']);
                     dstring(data['tor']);
                     pirResponse(data['presence'],data['astat']);
+                    graphHeat();
+                    graphWater();
                     $("#humgGauge").gauge(data['humid'],{color: "#0d63ff"});
+                });
+            }
+            function graphHeat() {
+                var legendSettings = {
+				position: "nw",
+                show: true,
+                noColumns: 2};
+                /*var recnum;
+                switch (hehumopt){
+                    case 1:
+                        recnum=24;
+                    break;
+                    case 2:
+                        recnum=1440
+                    break;
+                    case 3:
+                        console.log("We don't have enough data for a day yet, enjoy an hour");
+                        recnum=1440;
+                    break;For future use
+                    }*/
+
+                $.getJSON('tempinfo.json', function (tempinfo) {
+                    var plotdata = [];
+                    var humset = [];
+                    for (i = 0; i < tempinfo["times"].length; i++) {
+                        plotdata.push([tempinfo['times'][i], tempinfo["temps"][i]]);
+                        humset.push([tempinfo['times'][i], tempinfo["hums"][i]]);
+                    }
+                    var today = new Date(1000 * tempinfo["times"][0]);
+                    var data = [
+                        //heat
+                        {color: "red", lines: {show: true, fill: true}, data: plotdata, label: "Heat"},
+                        {color: "cyan", lines: {show: true, fill: true}, data: humset, label: "Humidity"}
+                    ];
+                    $.plot("#hehumgraph", data, {
+                        legend: legendSettings,
+                        xaxis: {
+                            mode: "time", timeBase: "seconds", timezone: "browser",
+                            min: tempinfo["times"][tempinfo["times"].length - 1],
+                            max: tempinfo["times"][0]
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 100
+                        }
+                    });
+                    $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+                    //console.log(tempinfo['temps']);
+                });
+            }
+
+            function graphWater(){
+                var legendSettings = {
+				position: "nw",
+                show: true,
+                noColumns: 2};
+                $.getJSON('watinfo.json', function (watinfo) {
+                    var plotdata = [];
+
+                    for (i = 0; i < watinfo["times"].length; i++) {
+                        plotdata.push([watinfo['times'][i], watinfo["levs"][i]]);
+                    }
+                    var today = new Date(1000 * watinfo["times"][0]);
+                    var data = [
+                        //heat
+                        {color: "cyan", lines: {show: true, fill: true}, data: plotdata, label: "Gallons"}
+                    ];
+                    $.plot("#watgraph", data, {
+                        legend: legendSettings,
+                        xaxis: {
+                            mode: "time", timeBase: "seconds", timezone: "browser",
+                            min: watinfo["times"][watinfo["times"].length - 1],
+                            max: watinfo["times"][0]
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 40
+                        }
+                    });
+                    $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+                    //console.log(tempinfo['temps']);
                 });
             }
             function pirResponse(near, armed){
@@ -110,6 +194,7 @@
                     $('#unArmed').addClass("btn-secondary");
                     $('#readyArmed').addClass("btn-success");
                 }
+
             }
             function showwater(gall){//function to change tank level bar as water changes
                 var perc = (gall/40.0)*100;
@@ -165,7 +250,7 @@
                         $("#messban").text("Doors Locking");
                         $("#messban").addClass('alert-primary');
                         $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
                     });
                 }
                 else
@@ -173,7 +258,7 @@
                     $("#messban").text("Doors Already Locked!");
                     $("#messban").addClass('alert-warning');
                     $("#messban").show().delay(3000).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");},1500);
                 }
             })
             $('#readyArmed').click(function (){//checks to see if already locked, if not locks
@@ -183,16 +268,17 @@
                         $("#messban").text("Disarming Alarm");
                         $("#messban").addClass('alert-primary');
                         $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
                     });
                 }
                 else
                 {
                     $("#messban").text("Alarm Already Offline!");
                     $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(3000).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                    $("#messban").show().delay(1500).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 1500);
                 }
+                rdata();
             })
             $('#unArmed').click(function (){//checks to see if already locked, if not locks
                 if($(this).hasClass("btn-success"))
@@ -200,18 +286,49 @@
                     $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
                         $("#messban").text("Alarm Coming Online");
                         $("#messban").addClass('alert-primary');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
+                        $("#messban").show().delay(1500).fadeOut();
+                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
                     });
                 }
                 else
                 {
                     $("#messban").text("Alarm Already Online!");
                     $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(3000).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                    $("#messban").show().delay(1500).fadeOut();
+                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 1500);
                 }
+                rdata();
             })
+            $("#opt1").click(function (){
+                hehumopt=1;
+                $("#opt1").addClass("btn-info");
+                $("#opt1").removeClass("btn-primary");
+                $("#opt2").removeClass("btn-info");
+                $("#opt3").removeClass("btn-info")
+                $("#opt2").addClass("btn-primary");
+                $("#opt3").addClass("btn-primary");
+                rdata();
+                                           });
+            $("#opt2").click(function (){
+                hehumopt=2;
+                $("#opt2").addClass("btn-info");
+                $("#opt2").removeClass("btn-primary");
+                $("#opt1").removeClass("btn-info");
+                $("#opt3").removeClass("btn-info");
+                $("#opt1").addClass("btn-primary");
+                $("#opt3").addClass("btn-primary");
+                rdata();
+                                           });
+            $("#opt3").click(function (){
+                hehumopt=3;
+                $("#opt3").addClass("btn-info");
+                $("#opt3").removeClass("btn-primary");
+                $("#opt2").removeClass("btn-info");
+                $("#opt1").removeClass("btn-info");
+                $("#opt2").addClass("btn-primary");
+                $("#opt1").addClass("btn-primary");
+                rdata();
+                                           });
         });
      </script>
 
@@ -230,7 +347,7 @@
 
     </div>
 
-    <hr class="my-5">
+    <hr class="my-3">
 
       <div class="col-lg-4" id="heathum"> <!-- temp/humsection -->
           <div class="card text-center">
@@ -253,6 +370,19 @@
               <div class ="card-title text-center">Humidity</div>
               <div class="card-body text-center">
                   <canvas id="humgGauge" width="150" height="150"></canvas>
+              </div>
+          </div>
+          <div class="card text-center">
+            <div class ="card-title text-center">
+                <!--<div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
+                   <button type="button" class="btn btn-info hehum" id="opt1">1 Min</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
+                </div> Cool idea, needs thought and work -->
+                Last Minute Heat and Humidity
+            </div>
+              <div class="card-body text-center">
+                  <div id="hehumgraph" class="demo-placeholder" style="width:350px;height:200px"></div>
               </div>
           </div>
       </div>
@@ -299,6 +429,19 @@
                 </div>
             </div>
         </div>
+         <div class="card text-center">
+            <div class ="card-title text-center">
+                <!--<div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
+                   <button type="button" class="btn btn-info hehum" id="opt1">1 Min</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
+                </div> Cool idea, needs thought and work -->
+                Water over Last Minute
+            </div>
+              <div class="card-body text-center">
+                  <div id="watgraph" class="demo-placeholder" style="width:350px;height:200px"></div>
+              </div>
+          </div>
      </div>
 
  </div>
