@@ -28,6 +28,7 @@
             $("#alarmmess").hide();
             //currently unused, for tracking which button is pressed for graph
             var hehumopt=1;
+            var watopt=1;
             rdata();//run at launch
             function rdata() {
                 $.getJSON('data.json', function (data) {//repeating function to pull data from py script
@@ -51,21 +52,26 @@
                     position: "nw",
                     show: true,
                     noColumns: 2};
-                /*var recnum;
+                var recnum;
+                var skipnum;
                 switch (hehumopt){
                     case 1:
                         recnum=24;
+                        skipnum=1;
                     break;
                     case 2:
                         recnum=1440
+                        skipnum=60;
                     break;
                     case 3:
-                        console.log("We don't have enough data for a day yet, enjoy an hour");
-                        recnum=1440;
-                    break;For future use
-                    }*/
+                        console.log("We don't have enough data for a day yet, enjoy 12 hours");
+                        recnum=12*1440;
+                        skipnum=60*12
+                    break;
+                    }
+                var reqstr = "tempinfo.json?num="+recnum+"&skip="+skipnum
                 //pulls data, formats it into the pairs necessary for flot
-                $.getJSON('tempinfo.json', function (tempinfo) {
+                $.getJSON(reqstr, function (tempinfo) {
                     var plotdata = [];
                     var humset = [];
                     for (i = 0; i < tempinfo["times"].length; i++) {
@@ -96,11 +102,29 @@
             }
 
             function graphWater(){//same as heat, but only 1 set of data
-                var legendSettings = {
+               var legendSettings = {
                     position: "nw",
                     show: true,
                     noColumns: 2};
-                $.getJSON('watinfo.json', function (watinfo) {
+                var recnum;
+                var skipnum;
+                switch (watopt){
+                    case 1:
+                        recnum=24;
+                        skipnum=1;
+                    break;
+                    case 2:
+                        recnum=1440
+                        skipnum=60;
+                    break;
+                    case 3:
+                        console.log("We don't have enough data for a day yet, enjoy 12 hours");
+                        recnum=12*1440;
+                        skipnum=60*12
+                    break;
+                    }
+                    var reqstr = "watinfo.json?num="+recnum+"&skip="+skipnum
+                $.getJSON(reqstr, function (watinfo) {
                     var plotdata = [];
 
                     for (i = 0; i < watinfo["times"].length; i++) {
@@ -332,6 +356,36 @@
                 $("#opt1").addClass("btn-primary");
                 rdata();
             });
+            $("#opt21").click(function (){
+                watopt=1;
+                $("#opt21").addClass("btn-info");
+                $("#opt21").removeClass("btn-primary");
+                $("#opt22").removeClass("btn-info");
+                $("#opt23").removeClass("btn-info")
+                $("#opt22").addClass("btn-primary");
+                $("#opt23").addClass("btn-primary");
+                rdata();
+            });
+            $("#opt22").click(function (){
+                watopt=2;
+                $("#opt22").addClass("btn-info");
+                $("#opt22").removeClass("btn-primary");
+                $("#opt21").removeClass("btn-info");
+                $("#opt23").removeClass("btn-info");
+                $("#opt21").addClass("btn-primary");
+                $("#opt23").addClass("btn-primary");
+                rdata();
+            });
+            $("#opt3").click(function (){
+                watopt=3;
+                $("#opt23").addClass("btn-info");
+                $("#opt23").removeClass("btn-primary");
+                $("#opt22").removeClass("btn-info");
+                $("#opt21").removeClass("btn-info");
+                $("#opt22").addClass("btn-primary");
+                $("#opt21").addClass("btn-primary");
+                rdata();
+            });
         });
     </script>
 
@@ -378,12 +432,13 @@
         </div>
         <div class="card text-center">
             <div class ="card-title text-center">
-                <!--<div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
+                <i class="fas fa-chart-line"></i>
+                <div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
                    <button type="button" class="btn btn-info hehum" id="opt1">1 Min</button>
                     <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
                     <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
-                </div> Cool idea, needs thought and work -->
-                <i class="fas fa-chart-line"></i> Last Minute Heat and Humidity <i class="fas fa-chart-line"></i>
+                </div>
+                <i class="fas fa-chart-line"></i>
             </div>
             <div class="card-body text-center"><!-- canvas for graph 1-->
                 <div id="hehumgraph" class="demo-placeholder" style="width:350px;height:200px"></div>
@@ -442,12 +497,13 @@
         </div>
         <div class="card text-center">
             <div class ="card-title text-center">
-                <!--<div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
-                   <button type="button" class="btn btn-info hehum" id="opt1">1 Min</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
-                </div> Cool idea, needs thought and work -->
-               <i class="fas fa-chart-line"></i> Water over Last Minute <i class="fas fa-chart-line"></i>
+                <i class="fas fa-chart-line"></i>
+                <div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
+                   <button type="button" class="btn btn-info hehum" id="opt21">1 Min</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt22">1 Hr</button>
+                    <button type="button" class="btn btn-primary hehum" id="opt23">1 Day</button>
+                </div>
+                <i class="fas fa-chart-line"></i>
             </div>
             <!-- canvas for watergraph-->
             <div class="card-body text-center">

@@ -25,3 +25,14 @@ Found solution on https://stackoverflow.com/questions/16318375/how-to-vertically
 .spacer{
   margin-top:40px;
 }
+
+.card{
+  border-radius: 25px;
+  background-color: #fac829;
+}
+.jumbotron{
+  background-color: #fac829;
+}
+body{
+  background-color: #000000;
+}

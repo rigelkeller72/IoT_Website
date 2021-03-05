@@ -39,14 +39,16 @@ async def data(request):
 
 # returns several entries of temperature and time, used for plotting
 async def tempinfo(request):
-    cursor = conn.execute("SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT 24;")
+    numbah =int(request.query["num"])
+    skipfreq=int(request.query["skip"])
+    cursor = conn.execute("SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT %d" %numbah)
     record = cursor.fetchall()
     cursor.close()
     times=[]
     temps=[]
     hums=[]
     #currently just making a 5 point plot, can add more/take them away in future
-    for x in range(24):
+    for x in range(0, numbah,skipfreq):
         times.append(record[x][0])
         temps.append(record[x][1])
         hums.append(record[x][2])
@@ -55,14 +57,16 @@ async def tempinfo(request):
 
 #request to make water graph, gets the last minute data and returns
 async def waterinfo(request):
-    cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT 24;")
+    numbah = int(request.query["num"])
+    skipfreq = int(request.query["skip"])
+    cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT %d" %numbah)
     record = cursor.fetchall()
     cursor.close()
     times=[]
     wlev=[]
 
     #currently just making a 5 point plot, can add more/take them away in future
-    for x in range(24):
+    for x in range(0,numbah,skipfreq):
         times.append(record[x][0])
         wlev.append(record[x][1])
     senddict ={'times': times, 'levs': wlev}
