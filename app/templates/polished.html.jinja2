@@ -20,13 +20,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/bstrap.css">
     <link rel="stylesheet" href="/static/css/dash.css">
+    <link href="/static/css/all.css" rel="stylesheet">
 
-
-                    <!-- ********************START JAVASCRIPT******************** -->
     <script type="text/javascript">
         $(document).ready(function(){
+            //hides the alerts until needed
             $("#messban").hide();
             $("#alarmmess").hide();
+            //currently unused, for tracking which button is pressed for graph
             var hehumopt=1;
             rdata();//run at launch
             function rdata() {
@@ -41,10 +42,12 @@
                     pirResponse(data['presence'],data['astat']);
                     graphHeat();
                     graphWater();
+                    //pretty little humidity gauge
                     $("#humgGauge").gauge(data['humid'],{color: "#0d63ff"});
                 });
             }
-            function graphHeat() {
+            function graphHeat() {//graphs heat and humidity on same graph. currently just
+                //last minue, but want to give the graph other options as well
                 var legendSettings = {
                     position: "nw",
                     show: true,
@@ -62,7 +65,7 @@
                         recnum=1440;
                     break;For future use
                     }*/
-
+                //pulls data, formats it into the pairs necessary for flot
                 $.getJSON('tempinfo.json', function (tempinfo) {
                     var plotdata = [];
                     var humset = [];
@@ -70,7 +73,7 @@
                         plotdata.push([tempinfo['times'][i], tempinfo["temps"][i]]);
                         humset.push([tempinfo['times'][i], tempinfo["hums"][i]]);
                     }
-                    var today = new Date(1000 * tempinfo["times"][0]);
+                    //options I like the look of fill, but we can get rid of it
                     var data = [
                         //heat
                         {color: "red", lines: {show: true, fill: true}, data: plotdata, label: "Heat"},
@@ -93,7 +96,7 @@
                 });
             }
 
-            function graphWater(){
+            function graphWater(){//same as heat, but only 1 set of data
                 var legendSettings = {
                     position: "nw",
                     show: true,
@@ -125,19 +128,17 @@
                     //console.log(tempinfo['temps']);
                 });
             }
+            //function for determining the messages up top, need to migrate the turn on alarm function
             function pirResponse(near, armed){
                 $("#alarmmess").removeClass("alert-warning");
                 $("#alarmmess").removeClass("alert-info");
                 if(near && armed)
                 {
-                    $.getJSON('buzzon.json', function(){
-                        $("#alarmmess").show();
-                        $("#alarmmess").text("Person Near, Alarm Engaged!")
-                        $("#alarmmess").addClass("alert-info");
-                    });
+                    $("#alarmmess").show();
+                    $("#alarmmess").text("Person Near, Alarm Engaged!")
+                    $("#alarmmess").addClass("alert-info");
                 }
                 else{
-                    $.getJSON('buzzoff.json', function() {
                         if (near) {
                             $("#alarmmess").show();
                             $("#alarmmess").text("Person Near, Alarm System Offline!!")
@@ -145,7 +146,6 @@
                         } else {
                             $("#alarmmess").hide();
                         }
-                    });
                 }
             }
             function dstring(tor){//creates a nice string for the last update and updates it
@@ -165,13 +165,13 @@
                 $('#lstatus').removeClass("bg-danger");
                 if (lbool == 0)
                 {
-                    $('#lstatus').text("Doors are Locked");
+                    $('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
                     $('#lstatus').addClass("bg-info");
                     $('#locked').addClass("btn-success");
                     $('#notlocked').addClass("btn-secondary");
                 }
                 else{
-                    $('#lstatus').text("Doors Unlocked!");
+                    $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
                     $('#lstatus').addClass("bg-danger");
                     $('#locked').addClass("btn-secondary");
                     $('#notlocked').addClass("btn-success");
@@ -186,13 +186,13 @@
                 $('#alarmstatus').removeClass("bg-info");
                 if (albool == 0)
                 {
-                    $('#alarmstatus').text("Alarm Offline");
+                    $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
                     $('#alarmstatus').addClass("bg-danger");
                     $('#unArmed').addClass("btn-success");
                     $('#readyArmed').addClass("btn-secondary");
                 }
                 else{
-                    $('#alarmstatus').text("Alarm Armed");
+                    $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
                     $('#alarmstatus').addClass("bg-info");
                     $('#unArmed').addClass("btn-secondary");
                     $('#readyArmed').addClass("btn-success");
@@ -264,10 +264,10 @@
                     setTimeout(function(){$("#messban").removeClass("alert-warning");},1500);
                 }
             })
-            $('#readyArmed').click(function (){//checks to see if already locked, if not locks
+            $('#readyArmed').click(function (){//checks to see if already armed, if not arms
                 if($(this).hasClass("btn-success"))
                 {
-                    $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
+                    $.getJSON('togglealarm.json', function() {//disarms alarm
                         $("#messban").text("Disarming Alarm");
                         $("#messban").addClass('alert-primary');
                         $("#messban").show().delay(3000).fadeOut();
@@ -276,14 +276,14 @@
                 }
                 else
                 {
-                    $("#messban").text("Alarm Already Offline!");
+                    $("#messban").html("Alarm Already Offline!");
                     $("#messban").addClass('alert-warning');
                     $("#messban").show().delay(1500).fadeOut();
                     setTimeout(function(){$("#messban").removeClass("alert-warning");}, 1500);
                 }
                 rdata();
             })
-            $('#unArmed').click(function (){//checks to see if already locked, if not locks
+            $('#unArmed').click(function (){//checks to see if unarmed, then turns on alarm
                 if($(this).hasClass("btn-success"))
                 {
                     $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
@@ -302,6 +302,7 @@
                 }
                 rdata();
             })
+            //ignore for now, spaget for making the radio buttons
             $("#opt1").click(function (){
                 hehumopt=1;
                 $("#opt1").addClass("btn-info");
@@ -335,10 +336,9 @@
         });
     </script>
 
-                <!-- ********************END JAVASCRIPT******************** -->
-
 </head>
 <body>
+
 <div class="container">
     <div class="alert text-center font-weight-bold" role="alert" id="messban">
         <!-- Empty div, hidden. used to display messages -->
@@ -347,7 +347,7 @@
         <!-- Empty div, hidden. used to display messages -->
     </div>
     <div class="jumbotron text-center">
-        <h1>KEWL DASH</h1>
+        <h1><i class="fas fa-bus"></i>KEWL DASH<i class="fas fa-tachometer-alt"></i></h1>
         <p id="timeread">Updated: {{ rtime }}</p>
 
     </div>
@@ -356,7 +356,7 @@
 
     <div class="col-lg-4" id="heathum"> <!-- temp/humsection -->
         <div class="card text-center">
-            <div class ="card-title text-center">Temperature</div>
+            <div class ="card-title text-center"><i class="fas fa-thermometer-half"></i> Temperature <i class="fas fa-thermometer-half"></i></div>
             <div class="card-body text-center">
                 <div class="col-lg-6">
                     <p id="howhot">{{degC}} C</p>
@@ -384,9 +384,9 @@
                     <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
                     <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
                 </div> Cool idea, needs thought and work -->
-                Last Minute Heat and Humidity
+                <i class="fas fa-chart-line"></i> Last Minute Heat and Humidity <i class="fas fa-chart-line"></i>
             </div>
-            <div class="card-body text-center">
+            <div class="card-body text-center"><!-- canvas for graph 1-->
                 <div id="hehumgraph" class="demo-placeholder" style="width:350px;height:200px"></div>
             </div>
         </div>
@@ -404,6 +404,7 @@
                 </div>
             </div>
         </div>
+        <!-- alarm card-->
         <div class="card text-center">
             <div class="card-title" id="alarmstatus">Alarm</div>
             <div class="card-body">
@@ -416,10 +417,16 @@
             </div>
         </div>
     </div>
+    <!--<div class="card text-center">
+            <div class="card text-center">The Kewl Bus</div>
+            <div class="card-body">
+
+            </div>
+        </div>-->
 
     <div class="col-lg-4"><!-- thermometer secion -->
         <div class="card">
-            <div class="card-title text-center">Water Level</div>
+            <div class="card-title text-center"><i class="fas fa-water"></i> Water Level <i class="fas fa-water"></i></div>
             <div class="card-body text-center">
                 <div class="col-lg-6">
                     <p id="wlev">{{ wlv }}</p>
@@ -441,8 +448,9 @@
                     <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
                     <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
                 </div> Cool idea, needs thought and work -->
-                Water over Last Minute
+               <i class="fas fa-chart-line"></i> Water over Last Minute <i class="fas fa-chart-line"></i>
             </div>
+            <!-- canvas for watergraph-->
             <div class="card-body text-center">
                 <div id="watgraph" class="demo-placeholder" style="width:350px;height:200px"></div>
             </div>
