@@ -145,7 +145,7 @@ def rdata():
     sensVals[0] = round(sensVals[0], 2)
     sensVals[1] = round(sensVals[1]*9/5.0 +32)
     cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",
-                          (minid + 1,round(time.time()) , sensVals[1], sensVals[2], round(sensVals[4]), sensVals[0], sensVals[3]))
+                          (minid + 1, round(time.time()), sensVals[1], sensVals[2], round(sensVals[4]), sensVals[0], sensVals[3]))
     cursor.close()
     conn.commit()
     # return sensVals
@@ -181,15 +181,15 @@ async def runserver(app):
 #reads data every x seconds, infinitly
 async def readdata(serial):
     while(True):
-        rdata()
-        await asyncio.sleep(2.5)
+       rdata()
+    await asyncio.sleep(2.5)
 
 def main():
     global ser, conn, alarmarm
     alarmarm=0;
     # launches db connection and serial, gives time to init
     conn = sqlite3.connect("development.db")
-    DEVICE = 'COM8'
+    DEVICE = 'COM5'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     # randtableEntries()
