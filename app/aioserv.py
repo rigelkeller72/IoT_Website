@@ -39,7 +39,7 @@ async def data(request):
 
 # returns several entries of temperature and time, used for plotting
 async def tempinfo(request):
-    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 24;")
+    cursor = conn.execute("SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT 24;")
     record = cursor.fetchall()
     cursor.close()
     times=[]
@@ -47,15 +47,15 @@ async def tempinfo(request):
     hums=[]
     #currently just making a 5 point plot, can add more/take them away in future
     for x in range(24):
-        times.append(record[x][1])
-        temps.append(record[x][2])
-        hums.append(record[x][3])
+        times.append(record[x][0])
+        temps.append(record[x][1])
+        hums.append(record[x][2])
     senddict ={'times': times, 'temps': temps, 'hums': hums}
     return web.json_response(senddict)
 
-
+#request to make water graph, gets the last minute data and returns
 async def waterinfo(request):
-    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 24;")
+    cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT 24;")
     record = cursor.fetchall()
     cursor.close()
     times=[]
@@ -63,8 +63,8 @@ async def waterinfo(request):
 
     #currently just making a 5 point plot, can add more/take them away in future
     for x in range(24):
-        times.append(record[x][1])
-        wlev.append(record[x][5])
+        times.append(record[x][0])
+        wlev.append(record[x][1])
     senddict ={'times': times, 'levs': wlev}
     return web.json_response(senddict)
 
@@ -83,20 +83,17 @@ async def ligoff(request):
     return web.json_response(message)
 
 # tells arduino to turn off buzzer
-async def buzzoff(request):
+def buzzoff():
     ser.write(('q').encode('ascii'))
     pstate = ser.readline()
-    message = {'mess': pstate.decode('ascii')}
-    return web.json_response(message)
 
 # turns on buzzer by telling arduino
-async def buzzon(request):
+def buzzon():
     ser.write(('b').encode('ascii'))
     pstate = ser.readline()
-    message = {'mess': pstate.decode('ascii')}
-    return web.json_response(message)
 
 
+#state tracked in python so that the alarm doesn't get ignored when off. Just realized, the alarm on function needs to be migrated here. Easy enough
 async  def armDisarm(request):
     global alarmarm
     if alarmarm:
@@ -109,7 +106,6 @@ async  def armDisarm(request):
 
 async def servo_l(request):
     ser.write(('x').encode('ascii'))
-    print("left")
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
@@ -117,7 +113,6 @@ async def servo_l(request):
 
 async def servo_r(request):
     ser.write(('y').encode('ascii'))
-    print()
     pstate = ser.readline()
     message = {'mess': pstate.decode('ascii')}
     return web.json_response(message)
@@ -148,6 +143,11 @@ def rdata():
                           (minid + 1,round(time.time()) , sensVals[1], sensVals[2], round(sensVals[4]), sensVals[0], sensVals[3]))
     cursor.close()
     conn.commit()
+    #migrated over to server instead of website to avoid the alarm turning off when site exited
+    if alarmarm and round(sensVals[4]):
+        buzzon()
+    else:
+        buzzoff()
     # return sensVals
 
 # for creating random table entries. Not normally employed
@@ -203,10 +203,8 @@ def main():
                     web.get('/ligon.json',ligon),
                     web.get('/new',newdisp),
                     web.get('/ligoff.json',ligoff),
-                    web.get('/buzzon.json',buzzon),
                     web.get('/tempinfo.json', tempinfo),
                     web.get('/watinfo.json',waterinfo),
-                    web.get('/buzzoff.json',buzzoff),
                     web.get('/servo_r.json', servo_r),
                     web.get('/servo_l.json',servo_l),
                     web.get('/togglealarm.json',armDisarm)])
