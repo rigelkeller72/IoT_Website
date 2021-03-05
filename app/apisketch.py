@@ -2,6 +2,7 @@ import aiohttp
 from aiohttp import web
 
 
+
 async def temp(request):
     return web.json_response({'temperature':80})
 
