@@ -63,9 +63,8 @@
                         skipnum=60;
                     break;
                     case 3:
-                        console.log("We don't have enough data for a day yet, enjoy 12 hours");
-                        recnum=12*1440;
-                        skipnum=60*12
+                        recnum=24*1440;
+                        skipnum=60*24
                     break;
                     }
                 var reqstr = "tempinfo.json?num="+recnum+"&skip="+skipnum
@@ -117,9 +116,8 @@
                         skipnum=60;
                     break;
                     case 3:
-                        console.log("We don't have enough data for a day yet, enjoy 12 hours");
-                        recnum=12*1440;
-                        skipnum=60*12
+                        recnum=24*1440;
+                        skipnum=60*24;
                     break;
                     }
                     var reqstr = "watinfo.json?num="+recnum+"&skip="+skipnum
@@ -174,8 +172,13 @@
                 var tUsed = new Date(1000*tor);
                 var monarr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
                 mon = monarr[tUsed.getMonth()];
-                day = tUsed.getDay();
-                var upTime = "Last Updated: " + tUsed.getHours()+":"+tUsed.getMinutes()+ " " +mon + " " + day;
+                day = tUsed.getDate();
+                min = tUsed.getMinutes();
+                if (min<10)
+                {
+                    min = "0" + min;
+                }
+                var upTime = "Last Updated: " + tUsed.getHours()+":"+min+ " " +mon + " " + day;
                 $("#timeread").text(upTime);
             }
             function grayLocks(lbool){//clears color classes, then assigns based off of lock state
@@ -375,7 +378,7 @@
                 $("#opt23").addClass("btn-primary");
                 rdata();
             });
-            $("#opt3").click(function (){
+            $("#opt23").click(function (){
                 watopt=3;
                 $("#opt23").addClass("btn-info");
                 $("#opt23").removeClass("btn-primary");
