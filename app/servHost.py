@@ -46,7 +46,7 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/tempinfo.json', tempinfo),
                     web.get('/watinfo.json', watinfo),
                     web.get('/togglealarm.json', arm)])
-    web.run_app(app, port=3000) #for aws
+    web.run_app(app, port=80) #for aws
     #web.run_app(app, port=3000) #for local dev
 
 main()
