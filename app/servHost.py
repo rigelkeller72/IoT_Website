@@ -2,12 +2,24 @@ from aiohttp import web
 import aiohttp_jinja2
 import jinja2, requests
 
+# Renders Kewl Bus Site
 @aiohttp_jinja2.template('polished.html.jinja2')#loads in the dashboard
 async def home(request):
     # holdval=rdata()
     return {}
 
-async def data(reqest):#requests data from database
+# Render template for first site
+# Still named test.html
+@aiohttp_jinja2.template('test.html.jinja2')
+async def firstsite(request):
+    return {}
+
+# Render template timeline page
+@aiohttp_jinja2.template('timeline.jinja2')
+async def timeline(request):
+    return {}
+
+async def data(request):#requests data from database
     r = requests.get("http://127.0.0.1:5000/data.json")
     return web.json_response(r.json())
 
@@ -39,6 +51,8 @@ def main():#defines paths, launches on 0.0.0.0:
                          loader=jinja2.FileSystemLoader('templates'))
     # creates routes for various methods
     app.add_routes([web.get('/', home),
+                    web.get('/firstsite', firstsite),
+                    web.get('/timeline', timeline),
                     web.get('/data.json', data),
                     web.static('/static', 'static'),
                     web.get('/ligon.json', ligon),
@@ -46,7 +60,8 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/tempinfo.json', tempinfo),
                     web.get('/watinfo.json', watinfo),
                     web.get('/togglealarm.json', arm)])
-    web.run_app(app, port=80) #for aws
+
+    web.run_app(app, port=2000) #for aws
     #web.run_app(app, port=3000) #for local dev
 
 main()
