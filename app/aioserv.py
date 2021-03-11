@@ -193,7 +193,7 @@ def main():
     alarmarm=0;
     # launches db connection and serial, gives time to init
     conn = sqlite3.connect("development.db")
-    DEVICE = 'COM5'
+    DEVICE = 'COM8'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     # randtableEntries()
