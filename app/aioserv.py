@@ -98,7 +98,7 @@ def buzzon():
 
 
 #state tracked in python so that the alarm doesn't get ignored when off. Just realized, the alarm on function needs to be migrated here. Easy enough
-async  def armDisarm(request):
+async def armDisarm(request):
     global alarmarm
     if alarmarm:
         alarmarm =0
