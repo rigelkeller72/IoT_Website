@@ -19,6 +19,10 @@ async def firstsite(request):
 async def timeline(request):
     return {}
 
+@aiohttp_jinja2.template('team.html.jinja2')
+async def bioinfo(request):
+    return {}
+
 async def data(request):#requests data from database
     r = requests.get("http://127.0.0.1:5000/data.json")
     return web.json_response(r.json())
@@ -53,6 +57,7 @@ def main():#defines paths, launches on 0.0.0.0:
     app.add_routes([web.get('/', home),
                     web.get('/firstsite', firstsite),
                     web.get('/timeline', timeline),
+                    web.get('/team',bioinfo),
                     web.get('/data.json', data),
                     web.static('/static', 'static'),
                     web.get('/ligon.json', ligon),
@@ -61,7 +66,7 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/watinfo.json', watinfo),
                     web.get('/togglealarm.json', arm)])
 
-    web.run_app(app, port=2000) #for aws
+    web.run_app(app, port=80)
     #web.run_app(app, port=3000) #for local dev
 
 main()
