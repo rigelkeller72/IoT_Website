@@ -36,3 +36,13 @@ Found solution on https://stackoverflow.com/questions/16318375/how-to-vertically
 body{
   background-color: #000000;
 }
+
+.studbio{
+  width: 50%;
+  margin: auto;
+}
+.profbio{
+  width: 45%;
+  text-align: center;
+  margin: auto;
+}
