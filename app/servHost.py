@@ -73,6 +73,6 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/togglealarm.json', arm)])
 
     #web.run_app(app, port=80)
-    web.run_app(app, port=3000) #for local dev
+    web.run_app(app, host="127.0.0.1", port=3000) #for local dev
 
 main()
