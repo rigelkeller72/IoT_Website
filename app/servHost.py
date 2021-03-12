@@ -19,6 +19,11 @@ async def firstsite(request):
 async def timeline(request):
     return {}
 
+# Render arduino code page
+@aiohttp_jinja2.template('arduino_code_static.jinja2')
+async def arduino_code_static(request):
+    return {}
+
 @aiohttp_jinja2.template('team.html.jinja2')
 async def bioinfo(request):
     return {}
@@ -58,6 +63,7 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/firstsite', firstsite),
                     web.get('/timeline', timeline),
                     web.get('/team',bioinfo),
+                    web.get('/arduino_code_static', arduino_code_static),
                     web.get('/data.json', data),
                     web.static('/static', 'static'),
                     web.get('/ligon.json', ligon),
@@ -66,7 +72,7 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/watinfo.json', watinfo),
                     web.get('/togglealarm.json', arm)])
 
-    web.run_app(app, port=80)
-    #web.run_app(app, port=3000) #for local dev
+    #web.run_app(app, port=80)
+    web.run_app(app, port=2000) #for local dev
 
 main()

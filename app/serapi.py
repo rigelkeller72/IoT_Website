@@ -123,7 +123,7 @@ def main():
     global ser, conn, alarmarm
     alarmarm=0
     conn = sqlite3.connect("development.db")
-    DEVICE = 'COM8'
+    DEVICE = 'COM5'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     app = web.Application()
