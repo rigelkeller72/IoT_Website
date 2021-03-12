@@ -5,9 +5,9 @@
     <!-- Contents -->
 
     <div class="timeline">
-        <div class="container left">
+        <div class="container left" id="toggle1">
             <div class="content">
-                <h2 id="toggle1">Step 1: Program Downloads</h2>
+                <h2>Step 1: Program Downloads</h2>
                 <p> Get ready to download Python, Pycharm, Github Desktop and Arduino IDE</p>
                 <div id="toggle_value1">
                     <p>Python 3 is available at python.org. For this project we used the 64-bit Windows version.
@@ -27,59 +27,76 @@
                 </div>
             </div>
         </div>
-        <div class="container right">
+        <div class="container right" id="toggle2">
             <div class="content">
-                <h2 id="toggle2">Step 2: Hardware</h2>
+                <h2>Step 2: Hardware</h2>
                 <p> Bigger and better things with Python.</p>
                 <p id="toggle_value2">Download the latest version of Python from python.org. We used the IDE pycharm to
                     edit and create code but feel free to use any IDE you prefer. If you wish to follow along Pycharm is
                     a safe bet. Make sure to get the professional version. This should be of no cost as a student.  </p>
             </div>
         </div>
-        <div class="container left">
+        <div class="container left" id="toggle3">
             <div class="content">
-                <h2 id="toggle3">Step 3: Arduino Code</h2>
+                <h2>Step 3: Arduino Code</h2>
                 <p> Becoming familiar with the Arduino.</p>
                 <p id="toggle_value3">Before beginning make sure to download the the latest version of of the Arduino IDE.
                     Become familiar with the IDE by playing with the already supplied examples. Easy set-ups (and sensors we will be
-                    using in the future) include the dht humidity and temperature sensor and the servo motor.</p>
+                    using in the future) include the dht humidity and temperature sensor and the servo motor. Also, make sure to map
+                    your pin outs, and ensure you can bring power to each of your sensors/devices.
+                </p>
             </div>
         </div>
-        <div class="container right">
+        <div class="container right" id="toggle4">
             <div class="content">
-                <h2 id="toggle4">Step 4: Serial Communications</h2>
+                <h2>Step 4: Serial Communications</h2>
                 <p> Getting comfortable with the Web.</p>
                 <p>Understand Web Frame work with Flask.</p>
                 <p id="toggle_value4">Flask is a well documented frame work available for Python. Why reinvent the wheel
                     am I right?</p>
             </div>
         </div>
-        <div class="container left">
+        <div class="container left" id="toggle5">
             <div class="content">
-                <h2 id="toggle5">Step 5: Flask (Web Frame Work)</h2>
+                <h2>Step 5: Flask (Web Frame Work)</h2>
                 <p> Onward and upward with AIOHTTP. That's a mouthful.</p>
-                <p id="toggle_value5">TOGGLE TO SHOW AND HIDE VALUE</p>
+                <p id="toggle_value5">Flask served as an introduction into
+                creating websites and pathing functions to support them. However,
+                due to flask's resource management, the scripts could not keep an
+                active, open connection to the arduino. This required a wait for every function that needed
+                to send or receive data from our microcontroller, as new serial connections need
+                a moment to initialize, leading to a very slow site. This was led us to switch to AIOHTTP in the future.</p>
             </div>
         </div>
-        <div class="container right">
+        <div class="container right" id="toggle6">
             <div class="content">
-                <h2 id="toggle6">Step 6: Learn JavaScript!</h2>
+                <h2>Step 6: Learn JavaScript!</h2>
                 <p> Don't forget DATA BASES and SQL!!</p>
-                <p id="toggle_value6">TOGGLE TO SHOW AND HIDE VALUE</p>
+                <p id="toggle_value6">JavaScript is a scripting language used accross the web.
+                It allowed us to add many interactive features (buttons, graphs, and dials oh my!) to
+                improve user experience and interface. It also lets the site automate some features, such as pinging the server
+                for data updates at a set frequency, or displaying and hiding messages based off the data the server returns. Our graph
+                scripts included </p>
             </div>
         </div>
-        <div class="container left">
+        <div class="container left" id="toggle7">
             <div class="content">
-                <h2 id="toggle7">Step 7: Async with AIOHTTP</h2>
-                <p> Getting comfortable with API's</p>
+                <h2>Step 7: Async with AIOHTTP</h2>
+                <p> </p>
                 <p id="toggle_value7">TOGGLE TO SHOW AND HIDE VALUE</p>
             </div>
         </div>
-        <div class="container right">
+        <div class="container right" id="toggle8">
             <div class="content">
-                <h2 id="toggle8">Step 8: Deploying the Website</h2>
+                <h2>Step 8: Deploying the Website</h2>
                 <p> Taking the internet by storm. Prepare to deploy Website!</p>
-                <p id="toggle_value8">TOGGLE TO SHOW AND HIDE VALUE</p>
+                <p id="toggle_value8">While we had a script capable of running both the serial connections and
+                the website, we were doing it off an academy laptop with no public ip address. Other mids could check out
+                our site, the world at large couldn't, so we began hosting on an AWS server. However, the aws server has no connection to our
+                serial ports or devices. So, any and all functions that required serial use were made to send a request to a specific port.
+                When the amazon server goes to process these requests, it recognizes the port, and instead of executing them itself, has
+                our midn laptop, connected to the arduino and ssh'd to the aws server execute the commands, and pass the response back. We run a
+                api server on the mission network, and an actual hosting server on the public internet to allow you access to our site!</p>
             </div>
         </div>
     </div>
