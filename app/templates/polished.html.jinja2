@@ -27,6 +27,7 @@
             //hides the alerts until needed
             $("#messban").hide();
             $("#alarmmess").hide();
+            $('#connected').hide();
             //for tracking which button is pressed for graph
             var hehumopt=1;
             var watopt=1;
@@ -49,6 +50,12 @@
                     graphWater();
                     //pretty little humidity gauge
                     $("#humgGauge").gauge(data['humid'],{color: "#0d63ff"});
+                    if(data['connect']==1){
+                        $('#connected').hide();
+                    }
+                    else{
+                        $('#connected').show();
+                    }
                 });
             }
             function graphHeat() {//graphs heat and humidity on same graph. currently just
@@ -417,6 +424,7 @@
     <div class="jumbotron text-center">
         <h1><i class="fas fa-bus"></i>KEWL DASH<i class="fas fa-tachometer-alt"></i></h1>
         <p id="timeread">Updated: {{ rtime }}</p>
+        <p id="connected">System Offline!</p>
 
     </div>
 

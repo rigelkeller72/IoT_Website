@@ -135,3 +135,5 @@ app/development.db
 *.db
 *.db
 app/development.db
+app/development.db
+*.db

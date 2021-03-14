@@ -29,32 +29,47 @@ async def bioinfo(request):
     return {}
 
 async def data(request):#requests data from database
-    r = requests.get("http://127.0.0.1:5000/data.json")
-    return web.json_response(r.json())
+    global connection
+    try:
+        r = requests.get("http://127.0.0.1:5000/data.json")
+        connection = 1
+        mess = r.json()
+        mess['connect'] = connection
+        return web.json_response(r.json())
+    except:
+        connection=0;
+        mess = {"connect": connection}
+        return web.json_response(mess)
 
 async def ligon(request):#requests for api to turn on locks
-    r = requests.get("http://127.0.0.1:5000/ligon.json")
-    return web.json_response(r.json())
+    if connection:
+        r = requests.get("http://127.0.0.1:5000/ligon.json")
+        return web.json_response(r.json())
 
 async def ligoff(request): #requests locks to be turned off
-    r = requests.get("http://127.0.0.1:5000/ligon.json")
-    return web.json_response(r.json())
+    if connection:
+        r = requests.get("http://127.0.0.1:5000/ligon.json")
+        return web.json_response(r.json())
 
 async def tempinfo(request): #requests data for heat/humidity graph
-    reqstr = "http://127.0.0.1:5000/tempinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
-    r=requests.get(reqstr)
-    return web.json_response(r.json())
+    if connection:
+        reqstr = "http://127.0.0.1:5000/tempinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
+        r=requests.get(reqstr)
+        return web.json_response(r.json())
 
 async def watinfo(request): #requests water level graph info
-    reqstr = "http://127.0.0.1:5000/watinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
-    r=requests.get(reqstr)
-    return web.json_response(r.json())
+    if connection:
+        reqstr = "http://127.0.0.1:5000/watinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
+        r=requests.get(reqstr)
+        return web.json_response(r.json())
 
 async def arm(request):#requests alarm to toggle
-    r = requests.get("http://127.0.0.1:5000/togglealarm.json")
-    return web.json_response(r.json())
+    if connection:
+        r = requests.get("http://127.0.0.1:5000/togglealarm.json")
+        return web.json_response(r.json())
 
 def main():#defines paths, launches on 0.0.0.0:
+    global connection;
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
