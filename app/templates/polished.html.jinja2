@@ -40,8 +40,8 @@
                 $.getJSON('data.json', function (data) {//repeating function to pull data from py script
                     //assign
                     //$('#wlev').text(35)
-                    grayLocks(data['door']);;
-                    grayAlarm(data['astat'])
+                    grayLocks(data['door'],data['connect']);;
+                    grayAlarm(data['astat'],data['connect'])
                     showwater(data['water level']);
                     showheat(data['temp']);
                     dstring(data['tor']);
@@ -194,46 +194,81 @@
                 var upTime = "Last Updated: " + tUsed.getHours()+":"+min+ " " +mon + " " + day;
                 $("#timeread").text(upTime);
             }
-            function grayLocks(lbool){//clears color classes, then assigns based off of lock state
+            function grayLocks(lbool,online){//clears color classes, then assigns based off of lock state
                 $('#locked').removeClass("btn-secondary");
                 $('#locked').removeClass("btn-success");
                 $('#notlocked').removeClass("btn-secondary");
                 $('#notlocked').removeClass("btn-success");
                 $('#lstatus').removeClass("bg-info");
                 $('#lstatus').removeClass("bg-danger");
-                if (lbool == 0)
-                {
-                    $('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
-                    $('#lstatus').addClass("bg-info");
-                    $('#locked').addClass("btn-success");
-                    $('#notlocked').addClass("btn-secondary");
+                if(online ==1){
+                    $('#notlocked').removeClass("offline");
+                    $('#locked').removeClass("offline");
+                    if (lbool == 0)
+                    {
+                        $('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
+                        $('#lstatus').addClass("bg-info");
+                        $('#locked').addClass("btn-success");
+                        $('#notlocked').addClass("btn-secondary");
+                    }
+                    else{
+                        $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
+                        $('#lstatus').addClass("bg-danger");
+                        $('#locked').addClass("btn-secondary");
+                        $('#notlocked').addClass("btn-success");
+                    }
                 }
                 else{
-                    $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
-                    $('#lstatus').addClass("bg-danger");
-                    $('#locked').addClass("btn-secondary");
-                    $('#notlocked').addClass("btn-success");
-                }
+                        $('#notlocked').addClass("btn-secondary");
+                        $('#locked').addClass("btn-secondary");
+                        $('#notlocked').addClass("offline");
+                        $('#locked').addClass("offline");
+                        if (lbool == 0){
+                            ('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
+                            $('#lstatus').addClass("bg-info");
+                        }
+                        else{
+                            $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
+                            $('#lstatus').addClass("bg-danger");
+                        }
+                    }
+
             }
-            function grayAlarm(albool){//clears color classes, then assigns based off of alarm state
+            function grayAlarm(albool,online){//clears color classes, then assigns based off of alarm state
                 $('#unArmed').removeClass("btn-danger");
                 $('#readyArmed').removeClass("btn-success");
                 $('#readyArmed').removeClass("btn-secondary");
                 $('#unArmed').removeClass("btn-success");
                 $('#alarmstatus').removeClass("bg-danger");
                 $('#alarmstatus').removeClass("bg-info");
-                if (albool == 0)
-                {
-                    $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
-                    $('#alarmstatus').addClass("bg-danger");
-                    $('#unArmed').addClass("btn-success");
-                    $('#readyArmed').addClass("btn-secondary");
+                if(online==1) {
+                    $('#unArmed').removeClass('offline');
+                    $('#readyArmed').addClass('offline');
+                    if (albool == 0) {
+                        $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
+                        $('#alarmstatus').addClass("bg-danger");
+                        $('#unArmed').addClass("btn-success");
+                        $('#readyArmed').addClass("btn-secondary");
+                    } else {
+                        $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
+                        $('#alarmstatus').addClass("bg-info");
+                        $('#unArmed').addClass("btn-secondary");
+                        $('#readyArmed').addClass("btn-success");
+                    }
                 }
                 else{
-                    $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
-                    $('#alarmstatus').addClass("bg-info");
+                    $('#unArmed').addClass('offline');
+                    $('#readyArmed').addClass('offline');
                     $('#unArmed').addClass("btn-secondary");
-                    $('#readyArmed').addClass("btn-success");
+                    $('#readyArmed').addClass("btn-secondary");
+                    if (albool == 0) {
+                        $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
+                        $('#alarmstatus').addClass("bg-danger");
+                    }
+                    else {
+                         $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
+                        $('#alarmstatus').addClass("bg-info");
+                    }
                 }
 
             }
@@ -267,78 +302,122 @@
             setInterval(rdata,10000);//refresh rate for the data
 
             $('#locked').click(function (){//for unlocking doors, checks to see if already unlocked, otherwise sends command to do so
-                if($(this).hasClass("btn-success"))
-                {
-                    $.getJSON('ligoff.json', function(ligoff) {//turns on lock and displays locking message
-                        $("#messban").text("Doors Unlocking");
-                        $("#messban").addClass('alert-primary');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 3000);
-                    });
-                }
-                else
-                {
-                    $("#messban").text("Doors Already Unlocked!");
+                if($(this).hasClass('offline')){
+                    $("#messban").text("System Offline");
                     $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(3000).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 3000);
+                    $("#messban").show().delay(1500).fadeOut();
+                    setTimeout(function () {
+                    $("#messban").removeClass("alert-warning");
+                    }, 1500);
+                }
+                else {
+                    if ($(this).hasClass("btn-success")) {
+                        $.getJSON('ligoff.json', function (ligoff) {//turns on lock and displays locking message
+                            $("#messban").text("Doors Unlocking");
+                            $("#messban").addClass('alert-primary');
+                            $("#messban").show().delay(3000).fadeOut();
+                            setTimeout(function () {
+                                $("#messban").removeClass("alert-primary");
+                            }, 3000);
+                        });
+                    } else {
+                        $("#messban").text("Doors Already Unlocked!");
+                        $("#messban").addClass('alert-warning');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function () {
+                            $("#messban").removeClass("alert-warning");
+                        }, 3000);
+                    }
                 }
             })
             $('#notlocked').click(function (){//checks to see if already locked, if not locks
-                if($(this).hasClass("btn-success"))
-                {
-                    $.getJSON('ligon.json', function(ligon) {//turns on lock and displays locking message
-                        $("#messban").text("Doors Locking");
-                        $("#messban").addClass('alert-primary');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
-                    });
-                }
-                else
-                {
-                    $("#messban").text("Doors Already Locked!");
+               if($(this).hasClass('offline')){
+                    $("#messban").text("System Offline");
                     $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(3000).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");},1500);
+                    $("#messban").show().delay(1500).fadeOut();
+                    setTimeout(function () {
+                    $("#messban").removeClass("alert-warning");
+                    }, 1500);
+                }
+                else {
+                    if ($(this).hasClass("btn-success")) {
+                        $.getJSON('ligon.json', function (ligon) {//turns on lock and displays locking message
+                            $("#messban").text("Doors Locking");
+                            $("#messban").addClass('alert-primary');
+                            $("#messban").show().delay(3000).fadeOut();
+                            setTimeout(function () {
+                                $("#messban").removeClass("alert-primary");
+                            }, 1500);
+                        });
+                    } else {
+                        $("#messban").text("Doors Already Locked!");
+                        $("#messban").addClass('alert-warning');
+                        $("#messban").show().delay(3000).fadeOut();
+                        setTimeout(function () {
+                            $("#messban").removeClass("alert-warning");
+                        }, 1500);
+                    }
                 }
             })
             $('#readyArmed').click(function (){//checks to see if already armed, if not arms
-                if($(this).hasClass("btn-success"))
-                {
-                    $.getJSON('togglealarm.json', function() {//disarms alarm
-                        $("#messban").text("Disarming Alarm");
-                        $("#messban").addClass('alert-primary');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
-                    });
-                }
-                else
-                {
-                    $("#messban").html("Alarm Already Offline!");
+                if($(this).hasClass('offline')){
+                    $("#messban").text("System Offline");
                     $("#messban").addClass('alert-warning');
                     $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 1500);
+                    setTimeout(function () {
+                    $("#messban").removeClass("alert-warning");
+                    }, 1500);
                 }
-                rdata();
+                else {
+                    if ($(this).hasClass("btn-success")) {
+                        $.getJSON('togglealarm.json', function () {//disarms alarm
+                            $("#messban").text("Disarming Alarm");
+                            $("#messban").addClass('alert-primary');
+                            $("#messban").show().delay(3000).fadeOut();
+                            setTimeout(function () {
+                                $("#messban").removeClass("alert-primary");
+                            }, 1500);
+                        });
+                    } else {
+                        $("#messban").html("Alarm Already Offline!");
+                        $("#messban").addClass('alert-warning');
+                        $("#messban").show().delay(1500).fadeOut();
+                        setTimeout(function () {
+                            $("#messban").removeClass("alert-warning");
+                        }, 1500);
+                    }
+                    rdata();
+                }
             })
             $('#unArmed').click(function (){//checks to see if unarmed, then turns on alarm
-                if($(this).hasClass("btn-success"))
-                {
-                    $.getJSON('togglealarm.json', function() {//turns on lock and displays locking message
-                        $("#messban").text("Alarm Coming Online");
-                        $("#messban").addClass('alert-primary');
-                        $("#messban").show().delay(1500).fadeOut();
-                        setTimeout(function(){$("#messban").removeClass("alert-primary");}, 1500);
-                    });
-                }
-                else
-                {
-                    $("#messban").text("Alarm Already Online!");
+                if($(this).hasClass('offline')){
+                    $("#messban").text("System Offline");
                     $("#messban").addClass('alert-warning');
                     $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function(){$("#messban").removeClass("alert-warning");}, 1500);
+                    setTimeout(function () {
+                    $("#messban").removeClass("alert-warning");
+                    }, 1500);
                 }
-                rdata();
+                else {
+                    if ($(this).hasClass("btn-success")) {
+                        $.getJSON('togglealarm.json', function () {//turns on lock and displays locking message
+                            $("#messban").text("Alarm Coming Online");
+                            $("#messban").addClass('alert-primary');
+                            $("#messban").show().delay(1500).fadeOut();
+                            setTimeout(function () {
+                                $("#messban").removeClass("alert-primary");
+                            }, 1500);
+                        });
+                    } else {
+                        $("#messban").text("Alarm Already Online!");
+                        $("#messban").addClass('alert-warning');
+                        $("#messban").show().delay(1500).fadeOut();
+                        setTimeout(function () {
+                            $("#messban").removeClass("alert-warning");
+                        }, 1500);
+                    }
+                    rdata();
+                }
             })
             //ignore for now, spaget for making the radio buttons
             $("#opt1").click(function (){

@@ -1,6 +1,6 @@
 from aiohttp import web
 import aiohttp_jinja2
-import jinja2, requests
+import jinja2, requests, sqlite3
 
 # Renders Kewl Bus Site
 @aiohttp_jinja2.template('polished.html.jinja2')#loads in the dashboard
@@ -38,8 +38,18 @@ async def data(request):#requests data from database
         return web.json_response(r.json())
     except:
         connection=0;
-        mess = {"connect": connection}
+        mess=localdata()
+        #mess = {"connect": connection}
+        mess["connect"]: connection
         return web.json_response(mess)
+
+async def localdata(): #returns most recent database entry
+    cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
+    record = cursor.fetchone()
+    cursor.close()
+    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':alarmarm}
+
+    return sensdata
 
 async def ligon(request):#requests for api to turn on locks
     if connection:
@@ -69,7 +79,8 @@ async def arm(request):#requests alarm to toggle
         return web.json_response(r.json())
 
 def main():#defines paths, launches on 0.0.0.0:
-    global connection;
+    global connection, conn;
+    #conn = sqlite3.connect("development.db") add in later
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
