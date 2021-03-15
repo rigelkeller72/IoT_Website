@@ -44,7 +44,12 @@ async def data(request):#requests data from database
         return web.json_response(r.json())
     except:
         connection=0;
-        mess=localdata()
+        cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
+        record = cursor.fetchone()
+        cursor.close()
+        mess = {'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4],
+                    'water level': record[5], 'tor': record[1], 'astat': 0}
+        print(mess)
         #mess = {"connect": connection}
         mess["connect"]: connection
         return web.json_response(mess)
@@ -54,7 +59,7 @@ async def localdata(): #returns most recent database entry
     record = cursor.fetchone()
     cursor.close()
     sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':0}
-
+    print(sensdata)
     return sensdata
 
 async def ligon(request):#requests for api to turn on locks
