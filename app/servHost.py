@@ -116,7 +116,7 @@ async def arm(request):#requests alarm to toggle
 
 def main():#defines paths, launches on 0.0.0.0:
     global connection, conn;
-    #conn = sqlite3.connect("development.db") add in later prolly change name
+    conn = sqlite3.connect("servdb.db") #add in later prolly change name
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
