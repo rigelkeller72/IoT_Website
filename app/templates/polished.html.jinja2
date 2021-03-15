@@ -45,6 +45,7 @@
                     showwater(data['water level']);
                     showheat(data['temp']);
                     dstring(data['tor']);
+                    console.log(data['connect']);
                     pirResponse(data['presence'],data['astat']);
                     graphHeat();
                     graphWater();
@@ -503,7 +504,7 @@
     <div class="jumbotron text-center">
         <h1><i class="fas fa-bus"></i>KEWL DASH<i class="fas fa-tachometer-alt"></i></h1>
         <p id="timeread">Updated: {{ rtime }}</p>
-        <p id="connected">System Offline!</p>
+        <p id="connected">System Offline, Using Cached Data!</p>
 
     </div>
 

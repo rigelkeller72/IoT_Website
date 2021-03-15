@@ -137,3 +137,4 @@ app/development.db
 app/development.db
 app/development.db
 *.db
+app/servdb.db-journal

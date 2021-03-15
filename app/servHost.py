@@ -40,8 +40,9 @@ async def data(request):#requests data from database
         minid = record[0]
         cursor.close()
         cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",
-                              (minid+1,mess['tor'],mess['temp'],mess['humid'],mess['presence'],mess['water level'],))
-        return web.json_response(r.json())
+        (minid + 1, mess['tor'], mess['temp'], mess['humid'], mess['presence'],
+        mess['water level'], mess['door']))
+        return web.json_response(mess)
     except:
         connection=0;
         cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
@@ -49,10 +50,10 @@ async def data(request):#requests data from database
         cursor.close()
         mess = {'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4],
                     'water level': record[5], 'tor': record[1], 'astat': 0}
-        print(mess)
         #mess = {"connect": connection}
         mess["connect"]: connection
         return web.json_response(mess)
+
 
 async def localdata(): #returns most recent database entry
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
