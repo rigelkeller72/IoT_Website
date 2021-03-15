@@ -35,6 +35,12 @@ async def data(request):#requests data from database
         connection = 1
         mess = r.json()
         mess['connect'] = connection
+        cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
+        record = cursor.fetchone()
+        minid = record[0]
+        cursor.close()
+        cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",
+                              (minid+1,mess['tor'],mess['temp'],mess['humid'],mess['presence'],mess['water level'],))
         return web.json_response(r.json())
     except:
         connection=0;
@@ -47,31 +53,61 @@ async def localdata(): #returns most recent database entry
     cursor = conn.execute("SELECT * from rvsensor ORDER BY timestamp DESC LIMIT 1;")
     record = cursor.fetchone()
     cursor.close()
-    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':alarmarm}
+    sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':0}
 
     return sensdata
 
 async def ligon(request):#requests for api to turn on locks
-    if connection:
+    if connection==1:
         r = requests.get("http://127.0.0.1:5000/ligon.json")
         return web.json_response(r.json())
 
 async def ligoff(request): #requests locks to be turned off
-    if connection:
+    if connection==1:
         r = requests.get("http://127.0.0.1:5000/ligon.json")
         return web.json_response(r.json())
 
 async def tempinfo(request): #requests data for heat/humidity graph
-    if connection:
+    if connection==1:
         reqstr = "http://127.0.0.1:5000/tempinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
         r=requests.get(reqstr)
         return web.json_response(r.json())
+    else:
+        numbah = int(request.query['num'])
+        skipfreq = int(request.query['skip'])
+        cursor = conn.execute(
+            "SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+        record = cursor.fetchall()
+        cursor.close()
+        times = []
+        temps = []
+        hums = []
+        for x in range(0, numbah, skipfreq):
+            times.append(record[x][0])
+            temps.append(record[x][1])
+            hums.append(record[x][2])
+        senddict = {'times': times, 'temps': temps, 'hums': hums}
+        return web.json_response(senddict)
+
 
 async def watinfo(request): #requests water level graph info
-    if connection:
+    if connection==1:
         reqstr = "http://127.0.0.1:5000/watinfo.json?num="+request.query['num']+"&skip="+request.query['skip']
         r=requests.get(reqstr)
         return web.json_response(r.json())
+    else:
+        numbah = int(request.query["num"])
+        skipfreq = int(request.query["skip"])
+        cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+        record = cursor.fetchall()
+        cursor.close()
+        times = []
+        wlev = []
+        for x in range(0, numbah, skipfreq):
+            times.append(record[x][0])
+            wlev.append(record[x][1])
+        senddict = {'times': times, 'levs': wlev}
+        return web.json_response(senddict)
 
 async def arm(request):#requests alarm to toggle
     if connection:
@@ -80,7 +116,7 @@ async def arm(request):#requests alarm to toggle
 
 def main():#defines paths, launches on 0.0.0.0:
     global connection, conn;
-    #conn = sqlite3.connect("development.db") add in later
+    #conn = sqlite3.connect("development.db") add in later prolly change name
     app = web.Application()
     aiohttp_jinja2.setup(app,
                          loader=jinja2.FileSystemLoader('templates'))
