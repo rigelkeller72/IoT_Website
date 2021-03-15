@@ -42,6 +42,8 @@ async def data(request):#requests data from database
         cursor = conn.execute("INSERT INTO rvsensor VALUES(?,?,?,?,?,?,?)",
         (minid + 1, mess['tor'], mess['temp'], mess['humid'], mess['presence'],
         mess['water level'], mess['door']))
+        conn.commit()
+        cursor.close()
         return web.json_response(mess)
     except:
         connection=0;
