@@ -6,7 +6,7 @@
         min: 0,
         max: 100,
         unit: "%",
-        color: "lightgreen",
+        color: "#0d63ff",
         colorAlpha: 1,
         bgcolor: "#222",
         type: "default"
