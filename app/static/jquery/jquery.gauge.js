@@ -1,5 +1,5 @@
 (function($) {
-  $.fn.gauge = function(value, options) {
+  $.fn.gauge = function(value,olpos, options) {
     return this.each(function() {
 
       var settings = $.extend({
@@ -19,7 +19,7 @@
       var H = this.height;
       var centerW = (W/2);
 
-      var position = 0;
+      var position = olpos;
       var new_position = 0;
       var difference = 0;
 
@@ -136,13 +136,13 @@
             // Clear animation loop if degrees reaches the new_degrees
             if (position == new_position)
               clearInterval(animation_loop);
-
-            if (position < new_position)
-              position++;
-            else
-              position--;
-
-            update();
+            if(difference<5) {
+              if (position < new_position)
+                position++;
+              else
+                position--;
+              update();
+            }
           }
           draw();
         })();

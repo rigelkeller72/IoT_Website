@@ -31,6 +31,7 @@
             //for tracking which button is pressed for graph
             var hehumopt=1;
             var watopt=1;
+            var dialpos=0;
             //for caring the sell - can't get it to run, throught we had the right jquery on here, but not working as of yet. Will keep poking at it
             //$('.carousel').carousel({
             //    interval: 2000
@@ -49,7 +50,8 @@
                     graphHeat();
                     graphWater();
                     //pretty little humidity gauge
-                    $("#humgGauge").gauge(data['humid']);
+                    $("#humgGauge").gauge(data['humid'],dialpos);
+                    dialpos = Math.round(data['humid']*270/100);
                     if(data['connect']==1){
                         $('#connected').hide();
                     }
