@@ -45,7 +45,6 @@
                     showwater(data['water level']);
                     showheat(data['temp']);
                     dstring(data['tor']);
-                    console.log(data['connect']);
                     pirResponse(data['presence'],data['astat']);
                     graphHeat();
                     graphWater();
@@ -244,7 +243,7 @@
                 $('#alarmstatus').removeClass("bg-info");
                 if(online==1) {
                     $('#unArmed').removeClass('offline');
-                    $('#readyArmed').addClass('offline');
+                    $('#readyArmed').removeClass('offline');
                     if (albool == 0) {
                         $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
                         $('#alarmstatus').addClass("bg-danger");

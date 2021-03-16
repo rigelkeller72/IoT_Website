@@ -118,12 +118,14 @@ async def watinfo(request): #requests water level graph info
         return web.json_response(senddict)
 
 async def arm(request):#requests alarm to toggle
-    if connection:
+    if connection==1:
         r = requests.get("http://127.0.0.1:5000/togglealarm.json")
+        print("I'm here right now")
         return web.json_response(r.json())
 
 def main():#defines paths, launches on 0.0.0.0:
     global connection, conn;
+    connection=1
     conn = sqlite3.connect("servdb.db") #add in later prolly change name
     app = web.Application()
     aiohttp_jinja2.setup(app,
