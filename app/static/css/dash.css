@@ -37,6 +37,10 @@ body{
   background-color: #000000;
 }
 
+.nav-link{
+  color: #fac829;
+}
+
 .studbio{
   width: 50%;
   margin: auto;

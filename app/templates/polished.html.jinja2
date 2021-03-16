@@ -275,10 +275,14 @@
             function showwater(gall){//function to change tank level bar as water changes
                 var perc = (gall/40.0)*100;
                 var heistr = "height:"+perc +"%";
-                $('#wlev').text(gall + ' gallons');
-                $('#watbar').attr('style',heistr);
-
-
+                if(gall<0)
+                {
+                    $('#wlev').text("Check tank level sensors for damage!");
+                }
+                else{
+                    $('#wlev').text(gall + ' gallons');
+                    $('#watbar').attr('style',heistr);
+                }
             }
             function showheat(temp){//function to change thermlevel
                 var heistr = "height:"+ temp +"%";
