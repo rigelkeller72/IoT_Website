@@ -274,6 +274,17 @@
                 }
 
             }
+            function offlinealarm()
+            {
+                $("#messban").text("System Offline");
+                $("#messban").addClass('alert-warning');
+                $("#messban").show().delay(1500).fadeOut();
+                }
+
+            function removemesstags(){
+                $("#messban").removeClass("alert-warning")
+                $("#messban").removeClass("alert-primary")
+            }
             function showwater(gall){//function to change tank level bar as water changes
                 var perc = (gall/40.0)*100;
                 var heistr = "height:"+perc +"%";
@@ -308,101 +319,67 @@
             setInterval(rdata,10000);//refresh rate for the data
 
             $('#locked').click(function (){//for unlocking doors, checks to see if already unlocked, otherwise sends command to do so
+                removemesstags();
                 if($(this).hasClass('offline')){
-                    $("#messban").text("System Offline");
-                    $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function () {
-                    $("#messban").removeClass("alert-warning");
-                    }, 1500);
+                    offlinealarm();
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
                         $.getJSON('ligoff.json', function (ligoff) {//turns on lock and displays locking message
                             $("#messban").text("Doors Unlocking");
                             $("#messban").addClass('alert-primary');
-                            $("#messban").show().delay(3000).fadeOut();
-                            setTimeout(function () {
-                                $("#messban").removeClass("alert-primary");
-                            }, 3000);
+                            $("#messban").show().delay(1500).fadeOut();
                         });
                     } else {
                         $("#messban").text("Doors Already Unlocked!");
                         $("#messban").addClass('alert-warning');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function () {
-                            $("#messban").removeClass("alert-warning");
-                        }, 3000);
+                        $("#messban").show().delay(1500).fadeOut();
                     }
                 }
             })
             $('#notlocked').click(function (){//checks to see if already locked, if not locks
-               if($(this).hasClass('offline')){
-                    $("#messban").text("System Offline");
-                    $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function () {
-                    $("#messban").removeClass("alert-warning");
-                    }, 1500);
+               removemesstags();
+                if($(this).hasClass('offline')){
+                   offlinealarm()
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
                         $.getJSON('ligon.json', function (ligon) {//turns on lock and displays locking message
                             $("#messban").text("Doors Locking");
                             $("#messban").addClass('alert-primary');
-                            $("#messban").show().delay(3000).fadeOut();
-                            setTimeout(function () {
-                                $("#messban").removeClass("alert-primary");
-                            }, 1500);
+                            $("#messban").show().delay(1500).fadeOut();
                         });
                     } else {
                         $("#messban").text("Doors Already Locked!");
                         $("#messban").addClass('alert-warning');
-                        $("#messban").show().delay(3000).fadeOut();
-                        setTimeout(function () {
-                            $("#messban").removeClass("alert-warning");
-                        }, 1500);
+                        $("#messban").show().delay(1500).fadeOut();
                     }
                 }
             })
             $('#readyArmed').click(function (){//checks to see if already armed, if not arms
+                removemesstags();
                 if($(this).hasClass('offline')){
-                    $("#messban").text("System Offline");
-                    $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function () {
-                    $("#messban").removeClass("alert-warning");
-                    }, 1500);
+                    offlinealarm();
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
                         $.getJSON('togglealarm.json', function () {//disarms alarm
                             $("#messban").text("Disarming Alarm");
                             $("#messban").addClass('alert-primary');
-                            $("#messban").show().delay(3000).fadeOut();
-                            setTimeout(function () {
-                                $("#messban").removeClass("alert-primary");
-                            }, 1500);
+                            $("#messban").show().delay(1500).fadeOut();
                         });
                     } else {
                         $("#messban").html("Alarm Already Offline!");
                         $("#messban").addClass('alert-warning');
                         $("#messban").show().delay(1500).fadeOut();
-                        setTimeout(function () {
-                            $("#messban").removeClass("alert-warning");
-                        }, 1500);
                     }
                     rdata();
                 }
             })
             $('#unArmed').click(function (){//checks to see if unarmed, then turns on alarm
+                removemesstags();
                 if($(this).hasClass('offline')){
-                    $("#messban").text("System Offline");
-                    $("#messban").addClass('alert-warning');
-                    $("#messban").show().delay(1500).fadeOut();
-                    setTimeout(function () {
-                    $("#messban").removeClass("alert-warning");
-                    }, 1500);
+                    offlinealarm()
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
@@ -410,80 +387,39 @@
                             $("#messban").text("Alarm Coming Online");
                             $("#messban").addClass('alert-primary');
                             $("#messban").show().delay(1500).fadeOut();
-                            setTimeout(function () {
-                                $("#messban").removeClass("alert-primary");
-                            }, 1500);
                         });
                     } else {
                         $("#messban").text("Alarm Already Online!");
                         $("#messban").addClass('alert-warning');
                         $("#messban").show().delay(1500).fadeOut();
-                        setTimeout(function () {
-                            $("#messban").removeClass("alert-warning");
-                        }, 1500);
                     }
                     rdata();
                 }
             })
             //ignore for now, spaget for making the radio buttons
-            $("#opt1").click(function (){
-                hehumopt=1;
-                $("#opt1").addClass("btn-info");
-                $("#opt1").removeClass("btn-primary");
-                $("#opt2").removeClass("btn-info");
-                $("#opt3").removeClass("btn-info")
-                $("#opt2").addClass("btn-primary");
-                $("#opt3").addClass("btn-primary");
+            function buttonColors(className,numba){
+                $(className).each(function(i){
+                    if (i == numba)
+                    {
+                        $(this).removeClass("btn-primary");
+                        $(this).addClass("btn-info");
+                    }
+                    else{
+                        $(this).removeClass("btn-info");
+                        $(this).addClass("btn-primary");
+                    }
+                });
+            }
+
+            $(".hehum").click(function (){
+                hehumopt=parseInt($(this).attr("idnum"));
+                buttonColors(".hehum",hehumopt-1);
                 rdata();
             });
-            $("#opt2").click(function (){
-                hehumopt=2;
-                $("#opt2").addClass("btn-info");
-                $("#opt2").removeClass("btn-primary");
-                $("#opt1").removeClass("btn-info");
-                $("#opt3").removeClass("btn-info");
-                $("#opt1").addClass("btn-primary");
-                $("#opt3").addClass("btn-primary");
-                rdata();
-            });
-            $("#opt3").click(function (){
-                hehumopt=3;
-                $("#opt3").addClass("btn-info");
-                $("#opt3").removeClass("btn-primary");
-                $("#opt2").removeClass("btn-info");
-                $("#opt1").removeClass("btn-info");
-                $("#opt2").addClass("btn-primary");
-                $("#opt1").addClass("btn-primary");
-                rdata();
-            });
-            $("#opt21").click(function (){
-                watopt=1;
-                $("#opt21").addClass("btn-info");
-                $("#opt21").removeClass("btn-primary");
-                $("#opt22").removeClass("btn-info");
-                $("#opt23").removeClass("btn-info")
-                $("#opt22").addClass("btn-primary");
-                $("#opt23").addClass("btn-primary");
-                rdata();
-            });
-            $("#opt22").click(function (){
-                watopt=2;
-                $("#opt22").addClass("btn-info");
-                $("#opt22").removeClass("btn-primary");
-                $("#opt21").removeClass("btn-info");
-                $("#opt23").removeClass("btn-info");
-                $("#opt21").addClass("btn-primary");
-                $("#opt23").addClass("btn-primary");
-                rdata();
-            });
-            $("#opt23").click(function (){
-                watopt=3;
-                $("#opt23").addClass("btn-info");
-                $("#opt23").removeClass("btn-primary");
-                $("#opt22").removeClass("btn-info");
-                $("#opt21").removeClass("btn-info");
-                $("#opt22").addClass("btn-primary");
-                $("#opt21").addClass("btn-primary");
+
+            $(".wagra").click(function (){
+               watopt=parseInt($(this).attr("idnum"));
+                buttonColors(".wagra",watopt-1);
                 rdata();
             });
         });
@@ -542,9 +478,9 @@
             <div class ="card-title text-center">
                 <i class="fas fa-chart-line"></i>
                 <div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
-                   <button type="button" class="btn btn-info hehum" id="opt1">1 Min</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt2">1 Hr</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt3">1 Day</button>
+                   <button type="button" class="btn btn-info hehum" idnum="1">1 Min</button>
+                    <button type="button" class="btn btn-primary hehum" idnum="2">1 Hr</button>
+                    <button type="button" class="btn btn-primary hehum" idnum="3">1 Day</button>
                 </div>
                 <i class="fas fa-chart-line"></i>
             </div>
@@ -613,9 +549,9 @@
             <div class ="card-title text-center">
                 <i class="fas fa-chart-line"></i>
                 <div class="btn-group btn-group-toggle text-center" role="group" data-toggle="buttons">
-                   <button type="button" class="btn btn-info hehum" id="opt21">1 Min</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt22">1 Hr</button>
-                    <button type="button" class="btn btn-primary hehum" id="opt23">1 Day</button>
+                   <button type="button" class="btn btn-info wagra" idnum="1">1 Min</button>
+                    <button type="button" class="btn btn-primary wagra" idnum="2">1 Hr</button>
+                    <button type="button" class="btn btn-primary wagra" idnum="3">1 Day</button>
                 </div>
                 <i class="fas fa-chart-line"></i>
             </div>
