@@ -242,14 +242,14 @@
             }
 
 
-            function offlinealarm()
+            function offlinealarm()// yells at the user for clicking a button when the system clearly is not connected
             {
                 $("#messban").text("System Offline");
                 $("#messban").addClass('alert-warning');
                 $("#messban").show().delay(1500).fadeOut();
                 }
 
-            function removemesstags(){
+            function removemesstags(){//clears the color classes from the top message
                 $("#messban").removeClass("alert-warning")
                 $("#messban").removeClass("alert-primary")
             }
