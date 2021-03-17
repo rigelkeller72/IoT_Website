@@ -32,6 +32,12 @@
             var hehumopt=1;
             var watopt=1;
             var dialpos=0;
+            var legendSettings = {
+                    position: "nw",
+                    show: true,
+                    noColumns: 2};
+            var recnums=[24, 1440, 1440*24];
+            var skipnums=[1,60,60*24];
             //for caring the sell - can't get it to run, throught we had the right jquery on here, but not working as of yet. Will keep poking at it
             //$('.carousel').carousel({
             //    interval: 2000
@@ -62,27 +68,8 @@
             }
             function graphHeat() {//graphs heat and humidity on same graph. currently just
                 //last minue, but want to give the graph other options as well
-                var legendSettings = {
-                    position: "nw",
-                    show: true,
-                    noColumns: 2};
-                var recnum;
-                var skipnum;
-                switch (hehumopt){
-                    case 1:
-                        recnum=24;
-                        skipnum=1;
-                    break;
-                    case 2:
-                        recnum=1440
-                        skipnum=60;
-                    break;
-                    case 3:
-                        recnum=24*1440;
-                        skipnum=60*24
-                    break;
-                    }
-                var reqstr = "tempinfo.json?num="+recnum+"&skip="+skipnum
+                console.log(recnums[hehumopt-1]);
+                var reqstr = "tempinfo.json?num="+recnums[hehumopt-1]+"&skip="+skipnums[hehumopt-1];
                 //pulls data, formats it into the pairs necessary for flot
                 $.getJSON(reqstr, function (tempinfo) {
                     var plotdata = [];
@@ -115,27 +102,7 @@
             }
 
             function graphWater(){//same as heat, but only 1 set of data
-               var legendSettings = {
-                    position: "nw",
-                    show: true,
-                    noColumns: 2};
-                var recnum;
-                var skipnum;
-                switch (watopt){
-                    case 1:
-                        recnum=24;
-                        skipnum=1;
-                    break;
-                    case 2:
-                        recnum=1440
-                        skipnum=60;
-                    break;
-                    case 3:
-                        recnum=24*1440;
-                        skipnum=60*24;
-                    break;
-                    }
-                    var reqstr = "watinfo.json?num="+recnum+"&skip="+skipnum
+                    var reqstr = "watinfo.json?num="+recnums[watopt-1]+"&skip="+skipnums[watopt-1];
                 $.getJSON(reqstr, function (watinfo) {
                     var plotdata = [];
 
@@ -197,7 +164,7 @@
                 $("#timeread").text(upTime);
             }
 
-            function clearButtSetts()
+            function clearButtSetts(online)
             {
                 $(".lab").each(function(i) {
                     $(this).removeClass("btn-secondary");
@@ -208,33 +175,36 @@
                      $(this).removeClass("btn-info");
                     $(this).removeClass("btn-danger");
                 })
+                if (online == 0)
+                {
+                    $(".lab").each(function(i) {
+                        $(this).addClass('btn-secondary');
+                        $(this).addClass('offline');
+                    });
+                }
             }
 
             function grayLocks(lbool,online){//clears color classes, then assigns based off of lock state
-                clearButtSetts();
+                clearButtSetts(online);
+                lockStatus(lbool);
                 if(online ==1){
                     $('#notlocked').removeClass("offline");
                     $('#locked').removeClass("offline");
                     if (lbool == 0)
                     {
-                        $('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
-                        $('#lstatus').addClass("bg-info");
                         $('#locked').addClass("btn-success");
                         $('#notlocked').addClass("btn-secondary");
                     }
                     else{
-                        $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
-                        $('#lstatus').addClass("bg-danger");
                         $('#locked').addClass("btn-secondary");
                         $('#notlocked').addClass("btn-success");
                     }
                 }
-                else{
-                        $('#notlocked').addClass("btn-secondary");
-                        $('#locked').addClass("btn-secondary");
-                        $('#notlocked').addClass("offline");
-                        $('#locked').addClass("offline");
-                        if (lbool == 0){
+            }
+
+            function lockStatus(lstat)
+            {
+                if (lstat == 0){
                             $('#lstatus').html("<i class='fas fa-lock'> Doors are Locked <i class='fas fa-lock'>");
                             $('#lstatus').addClass("bg-info");
                         }
@@ -242,31 +212,26 @@
                             $('#lstatus').html("<i class='fas fa-lock-open'> Doors Unlocked! <i class='fas fa-lock-open'>");
                             $('#lstatus').addClass("bg-danger");
                         }
-                    }
-
             }
+
             function grayAlarm(albool,online){//clears color classes, then assigns based off of alarm state
+                alarmStatus(albool)
                 if(online==1) {
                     $('#unArmed').removeClass('offline');
                     $('#readyArmed').removeClass('offline');
                     if (albool == 0) {
-                        $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
-                        $('#alarmstatus').addClass("bg-danger");
                         $('#unArmed').addClass("btn-success");
                         $('#readyArmed').addClass("btn-secondary");
                     } else {
-                        $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
-                        $('#alarmstatus').addClass("bg-info");
                         $('#unArmed').addClass("btn-secondary");
                         $('#readyArmed').addClass("btn-success");
                     }
                 }
-                else{
-                    $('#unArmed').addClass('offline');
-                    $('#readyArmed').addClass('offline');
-                    $('#unArmed').addClass("btn-secondary");
-                    $('#readyArmed').addClass("btn-secondary");
-                    if (albool == 0) {
+            }
+
+            function alarmStatus(stat)
+            {
+                if (stat == 0) {
                         $('#alarmstatus').html("<i class='fas fa-bell-slash'></i>'Alarm Offline'<i class='fas fa-bell-slash'>");
                         $('#alarmstatus').addClass("bg-danger");
                     }
@@ -274,9 +239,9 @@
                          $('#alarmstatus').html("<i class='fas fa-bell'></i>'Alarm Armed'<i class='fas fa-bell'>");
                         $('#alarmstatus').addClass("bg-info");
                     }
-                }
-
             }
+
+
             function offlinealarm()
             {
                 $("#messban").text("System Offline");
