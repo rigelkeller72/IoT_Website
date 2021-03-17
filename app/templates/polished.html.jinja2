@@ -196,13 +196,22 @@
                 var upTime = "Last Updated: " + tUsed.getHours()+":"+min+ " " +mon + " " + day;
                 $("#timeread").text(upTime);
             }
+
+            function clearButtSetts()
+            {
+                $(".lab").each(function(i) {
+                    $(this).removeClass("btn-secondary");
+                    $(this).removeClass("btn-success");
+                });
+                $(".labmess").each(function ()
+                {
+                     $(this).removeClass("btn-info");
+                    $(this).removeClass("btn-danger");
+                })
+            }
+
             function grayLocks(lbool,online){//clears color classes, then assigns based off of lock state
-                $('#locked').removeClass("btn-secondary");
-                $('#locked').removeClass("btn-success");
-                $('#notlocked').removeClass("btn-secondary");
-                $('#notlocked').removeClass("btn-success");
-                $('#lstatus').removeClass("bg-info");
-                $('#lstatus').removeClass("bg-danger");
+                clearButtSetts();
                 if(online ==1){
                     $('#notlocked').removeClass("offline");
                     $('#locked').removeClass("offline");
@@ -237,12 +246,6 @@
 
             }
             function grayAlarm(albool,online){//clears color classes, then assigns based off of alarm state
-                $('#unArmed').removeClass("btn-danger");
-                $('#readyArmed').removeClass("btn-success");
-                $('#readyArmed').removeClass("btn-secondary");
-                $('#unArmed').removeClass("btn-success");
-                $('#alarmstatus').removeClass("bg-danger");
-                $('#alarmstatus').removeClass("bg-info");
                 if(online==1) {
                     $('#unArmed').removeClass('offline');
                     $('#readyArmed').removeClass('offline');
@@ -492,25 +495,25 @@
     <!-- for locks and alarms -->
     <div class="col-lg-4" id="keyring">
         <div class="card text-center">
-            <div class ="card-title text-center" id="lstatus">Door Locks</div>
+            <div class ="card-title text-center labmess" id="lstatus">Door Locks</div>
             <div class="card-body">
                 <div class="col-lg-6">
-                    <button type="button" class="btn" id="locked">Unlock Doors</button>
+                    <button type="button" class="btn lab" id="locked">Unlock Doors</button>
                 </div>
                 <div class="col-lg-6">
-                    <button type="button" class="btn" id="notlocked">Lock Doors</button>
+                    <button type="button" class="btn lab" id="notlocked">Lock Doors</button>
                 </div>
             </div>
         </div>
         <!-- alarm card-->
         <div class="card text-center">
-            <div class="card-title" id="alarmstatus">Alarm</div>
+            <div class="card-title labmess" id="alarmstatus">Alarm</div>
             <div class="card-body">
                 <div class="col-lg-6">
-                    <button type="button" class="btn" id="readyArmed">Disarm Alarm</button>
+                    <button type="button" class="btn lab" id="readyArmed">Disarm Alarm</button>
                 </div>
                 <div class="col-lg-6">
-                    <button type="button" class="btn" id="unArmed">Arm Alarm</button>
+                    <button type="button" class="btn lab" id="unArmed">Arm Alarm</button>
                 </div>
             </div>
         </div>
