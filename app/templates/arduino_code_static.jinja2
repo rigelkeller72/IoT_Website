@@ -3,126 +3,126 @@
 
 <body>
 <p>
-    #include "dht.h"
-    #include "Servo.h"
-
-    dht DHT;
-    float temp,hum;
-    #define echoPin 3 // attach pin D2 Arduino to pin Echo of HC-SR04
-    #define trigPin 4 //attach pin D3 Arduino to pin Trig of HC-SR04
-    long duration;
-    float distance;
-    char cmd;
-    //char resetted = 'o';
-    float pot;
-    int hallSensorPin = 2;
-    int hallDrivePin = 1;
-    int buzzer = 8;
-    Servo servo;
-    Servo serv2;
-    int potpin = A5;
-    int mags = 0;
-    #define DHT11_PIN 7
-    void setup() {
-    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-    pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-    pinMode(buzzer, OUTPUT);
-    pinMode(hallDrivePin, OUTPUT);
-    pinMode(hallSensorPin, INPUT);
-    // put your setup code here, to run once:
-    Serial.begin(9600);
-    servo.attach(5);
-    servo.write(135);
-    serv2.attach(9);
-    serv2.write(135);
-
-    }
-
-    void loop() {
-    if(Serial.available() > 0)
-    {
-    cmd = Serial.read();
-    switch (cmd)
-    {
-    case 'r':
-    readsensors();
-    //serial.print(1,20,6,10);
-    break;
-    case 'l':
-    servo.write(0);
-    Serial.print("door locked\n");
-    //resetted ='g';
-    break;
-    case 'o':
-    servo.write(135);
-    Serial.print("LIGHT_OFF\n");
-    break;
-    case 'b':
-    digitalWrite(buzzer, HIGH);
-    Serial.print("AHHHH\n");
-    break;
-    case 'q':
-    digitalWrite(buzzer, LOW);
-    Serial.print("AHHHH\n");
-    break;
-    case 'x':
-    serv2.write(180);
-    Serial.print("left\n");
-    break;
-    case 'y':
-    serv2.write(0);
-    Serial.print("right\n");
-    break;
-    default:
-    Serial.print("Unknown Command use rlo\n");
-    break;
-
-    }
-    //Serial.print(resetted);
-    }
-
-
-    }
-    void readsensors(){
-    // Clears the trigPin condition
-    digitalWrite(hallDrivePin,LOW);
-    delayMicroseconds(2);
-    digitalWrite(hallDrivePin,HIGH);
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-    // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-    // Reads the echoPin, returns the sound wave travel time in microseconds
-    duration = pulseIn(echoPin, HIGH);
-    // Calculating the distance
-    distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
-    dht DHT;
-    #define DHT11_PIN 7
-    // Displays the distance on the Serial Monitor
-    int test1 = DHT.read11(DHT11_PIN);
-    temp = DHT.temperature;
-    hum = DHT.humidity;
-    digitalWrite(hallDrivePin,HIGH);
-    mags = digitalRead(hallSensorPin);
-    pot = analogRead(potpin)/1023.0;
-    Serial.print(distance);
-    Serial.print(",");
-    Serial.print(temp);
-    Serial.print(",");
-    Serial.print(hum);
-    Serial.print(",");
-    Serial.print(mags);
-    Serial.print(",");
-    Serial.print(pot);
-    Serial.print(digitalRead(buzzer));
-    Serial.print("\n");
-    Serial.flush();
-    digitalWrite(hallDrivePin,LOW);
-    delayMicroseconds(2);
-    digitalWrite(hallDrivePin,HIGH);
-    }
+<br>#include "dht.h"
+<br>#include "Servo.h"
+<br>
+<br>dht DHT;
+<br>float temp,hum;
+<br>#define echoPin 3 // attach pin D2 Arduino to pin Echo of HC-SR04
+<br>#define trigPin 4 //attach pin D3 Arduino to pin Trig of HC-SR04
+<br>long duration;
+<br>float distance;
+<br>char cmd;
+<br>//char resetted = 'o';
+<br>float pot;
+<br>int hallSensorPin = 2;
+<br>int hallDrivePin = 1;
+<br>int buzzer = 8;
+<br>Servo servo;
+<br>Servo serv2;
+<br>int potpin = A5;
+<br>int mags = 0;
+<br>#define DHT11_PIN 7
+<br>void setup() {
+<br>pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+<br>pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+<br>pinMode(buzzer, OUTPUT);
+<br>pinMode(hallDrivePin, OUTPUT);
+<br>pinMode(hallSensorPin, INPUT);
+<br>// put your setup code here, to run once:
+<br>Serial.begin(9600);
+<br>servo.attach(5);
+<br>servo.write(135);
+<br>serv2.attach(9);
+<br>serv2.write(135);
+<br>
+<br>}
+<br>
+<br>void loop() {
+<br>if(Serial.available() > 0)
+<br>{
+<br>cmd = Serial.read();
+<br>switch (cmd)
+<br>{
+<br>case 'r':
+<br>readsensors();
+<br>//serial.print(1,20,6,10);
+<br>break;
+<br>case 'l':
+<br>servo.write(0);
+<br>Serial.print("door locked\n");
+<br>//resetted ='g';
+<br>break;
+<br>case 'o':
+<br>servo.write(135);
+<br>Serial.print("LIGHT_OFF\n");
+<br>break;
+<br>case 'b':
+<br>digitalWrite(buzzer, HIGH);
+<br>Serial.print("AHHHH\n");
+<br>break;
+<br>case 'q':
+<br>digitalWrite(buzzer, LOW);
+<br>Serial.print("AHHHH\n");
+<br>break;
+<br>case 'x':
+<br>serv2.write(180);
+<br>Serial.print("left\n");
+<br>break;
+<br>case 'y':
+<br>serv2.write(0);
+<br>Serial.print("right\n");
+<br>break;
+<br>default:
+<br>Serial.print("Unknown Command use rlo\n");
+<br>break;
+<br>
+<br>}
+<br>//Serial.print(resetted);
+<br>}
+<br>
+<br>
+<br>}
+<br>void readsensors(){
+<br>// Clears the trigPin condition
+<br>digitalWrite(hallDrivePin,LOW);
+<br>delayMicroseconds(2);
+<br>digitalWrite(hallDrivePin,HIGH);
+<br>digitalWrite(trigPin, LOW);
+<br>delayMicroseconds(2);
+<br>// Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+<br>digitalWrite(trigPin, HIGH);
+<br>delayMicroseconds(10);
+<br>digitalWrite(trigPin, LOW);
+<br>// Reads the echoPin, returns the sound wave travel time in microseconds<br>
+<br>duration = pulseIn(echoPin, HIGH);
+<br>// Calculating the distance
+<br>distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+<br>dht DHT;
+<br>#define DHT11_PIN 7
+<br>// Displays the distance on the Serial Monitor
+<br>int test1 = DHT.read11(DHT11_PIN);
+<br>temp = DHT.temperature;
+<br>hum = DHT.humidity;
+<br>digitalWrite(hallDrivePin,HIGH);
+<br>mags = digitalRead(hallSensorPin);
+<br>pot = analogRead(potpin)/1023.0;
+<br>Serial.print(distance);
+<br>Serial.print(",");
+<br>Serial.print(temp);
+<br>Serial.print(",");
+<br>Serial.print(hum);
+<br>Serial.print(",");
+<br>Serial.print(mags);
+<br>Serial.print(",");
+<br>Serial.print(pot);
+<br>Serial.print(digitalRead(buzzer));
+<br>Serial.print("\n");
+<br>Serial.flush();
+<br>digitalWrite(hallDrivePin,LOW);
+<br>delayMicroseconds(2);
+<br>digitalWrite(hallDrivePin,HIGH);
+<br>}
 </p>
 </body>
 </html>

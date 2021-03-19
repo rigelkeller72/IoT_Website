@@ -43,7 +43,7 @@
                     <p class="nav-item"><a class="nav-link" href="https://www.amazon.com/EL-KIT-001-Project-Complete-Starter-Tutorial/dp/B01CZTLHGE/ref=asc_df_B01CZTLHGE/?tag=hyprod-20&linkCode=df0&hvadid=241907595991&hvpos=&hvnetw=g&hvrand=5259736415560937031&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9007937&hvtargid=pla-464156272733&psc=1">Arduino UNO R3 Starter Kit</a></p>
                 </div>
 
-            
+
 
             </div>
         </div>
@@ -52,10 +52,16 @@
                 <h2>Step 3: Arduino Code</h2>
                 <p> Becoming familiar with the Arduino.</p>
                 <div id="toggle_value3">
-                    <p> So it might be easier if I just supply you with code.</p>
+                    <p>I can only be so eloquent with describing the arduino code that was used. A link is provided with commented code.
+                        I will mention that we do use "switch case" instead of a heap of if else statements in order to
+                        utilize all the sensors and motors.
+                    </p>
+                    <p>There is also a link to C programing pdf. On chapter 17 there is a great break down on how to use the switch
+                        statement in C. </p>
                     <p></p>
                     <p>Useful Links:</p>
                     <p class="nav-item"><a class="nav-link" href="/arduino_code_static">Arduino Code</a></p>
+                    <p class="nav-item"><a class="nav-link" href="https://sjceodisha.in/wp-content/uploads/2019/09/C-Programming-Absolute-Beginner-ssp.indian@gmail.com_.pdf">Switch Case Reference</a></p>
                 </div>
 
             </div>
@@ -63,9 +69,26 @@
         <div class="container right" id="toggle4">
             <div class="content">
                 <h2>Step 4: Serial Communications</h2>
-                <p> Getting comfortable with the Web.</p>
+                <p> Lets talk 1's and 0's</p>
                 <div id="toggle_value4">
-                    <p>I'm going to write something about serial communications and the handshake.</p>
+                    <p>In order to do serial communication with Python we have to go through a protocol stack. Meaning,
+                        the objects can not be sent directly from the Arduino to Python and instead must be manipulated from
+                        the object to 1's and 0's, then sent to python where it is reverse manipulated back to the objects original form.</p>
+                    <p></p>
+                    <div class="card">
+                        <div class="card-title text-center font-weight-bold">Protocol Stack</div>
+                        <div class="card-body">
+                            <img class="card-img-top" src="/static/images/Protocol_Stack.PNG" alt="Protocol Stack">
+                        </div>
+                    </div>
+                    <p></p>
+                    <p>It is important to note that Serial Communication works well for point-to-point communication over a
+                        short distance. Basically how much wire you have available. For longer distances we must extend our network!</p>
+                    <p>Helpful code for Serial Communications can be found below. Professor Donnal has so graciously posted
+                        material on his Github.</p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p class="nav-item"><a class="nav-link" href="https://git.wattsworth.net/jdonnal/comms_demo">Donnal Serial</a></p>
                 </div>
             </div>
         </div>
@@ -79,14 +102,31 @@
                     <p></p>
                     <p>Useful Links:</p>
                     <p class="nav-item"><a class="nav-link" href="https://flask.palletsprojects.com/en/1.1.x/">Flask Documentation</a></p>
+                    <p class="nav-item"><a class="nav-link" href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Flask Tutorial</a></p>
                 </div>
             </div>
         </div>
         <div class="container right" id="toggle6">
             <div class="content">
-                <h2 id="toggle6">Step 6: Learn JavaScript!</h2>
-                <p> Jquery is a great place to start learning how to code JavaScript</p>
+                <h2>Step 6: Creating a Static Site</h2>
+                <p>Let's have some fun with CSS,Bootstrap and Fontawesome</p>
                 <div id="toggle_value6">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">BootStrap</a></p>
+                    <p class="nav-item"><a class="nav-link" href="https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use">Font Awesome</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container left" id="toggle7">
+            <div class="content">
+                <h2 id="toggle7">Step 7: Learn JavaScript!</h2>
+                <p> Jquery is a great place to start learning how to code JavaScript</p>
+                <div id="toggle_value7">
                     <p>jQuery is a JavaScript library designed to simplify HTML DOM tree traversal and manipulation, as
                         well as event handling, CSS animation, and Ajax. It is free, open-source software using the
                         permissive MIT License. </p>
@@ -96,29 +136,96 @@
                 </div>
             </div>
         </div>
-        <div class="container left" id="toggle7">
-            <div class="content">
-                <h2>Step 7: Async with AIOHTTP</h2>
-                <p> </p>
-                <p id="toggle_value7">TOGGLE TO SHOW AND HIDE VALUE</p>
-            </div>
-        </div>
         <div class="container right" id="toggle8">
             <div class="content">
-                <h2>Step 8: Deploying the Website</h2>
+                <h2>Step 8: Async with AIOHTTP</h2>
+                <p>Multi-threading is the bane of existence</p>
+                <div id="toggle_value8">
+                    <p>Asynchronous or async is better</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container left" id="toggle9">
+            <div class="content">
+                <h2>Step 9: Adding a Database!</h2>
+                <p> Using SQLite lets make the website be useful </p>
+                <div id="toggle_value9">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p></p>
+                    <p class="nav-item"><a class="nav-link" href="">Site</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container right" id="toggle10">
+            <div class="content">
+                <h2>Step 10: Add a Plot</h2>
+                <p> Use Flot to create plots on Python </p>
+                <div id="toggle_value10">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p></p>
+                    <p class="nav-item"><a class="nav-link" href="">Site</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container left" id="toggle11">
+            <div class="content">
+                <h2>Step 11: Deploying the Website</h2>
                 <p> Taking the internet by storm. Prepare to deploy Website!</p>
-                <p id="toggle_value8">While we had a script capable of running both the serial connections and
-                the website, we were doing it off an academy laptop with no public ip address. Other mids could check out
-                our site, the world at large couldn't, so we began hosting on an AWS server. However, the aws server has no connection to our
-                serial ports or devices. So, any and all functions that required serial use were made to send a request to a specific port.
-                When the amazon server goes to process these requests, it recognizes the port, and instead of executing them itself, has
-                our midn laptop, connected to the arduino and ssh'd to the aws server execute the commands, and pass the response back. We run a
-                api server on the mission network, and an actual hosting server on the public internet to allow you access to our site!</p>
+                <div id="toggle_value11">
+                    <p>While we had a script capable of running both the serial connections and
+                        the website, we were doing it off an academy laptop with no public ip address. Other mids could check out
+                        our site, the world at large couldn't, so we began hosting on an AWS server. However, the aws server has no connection to our
+                        serial ports or devices. So, any and all functions that required serial use were made to send a request to a specific port.
+                        When the amazon server goes to process these requests, it recognizes the port, and instead of executing them itself, has
+                        our midn laptop, connected to the arduino and ssh'd to the aws server execute the commands, and pass the response back. We run a
+                        api server on the mission network, and an actual hosting server on the public internet to allow you access to our site!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container right" id="toggle12">
+            <div class="content">
+                <h2>Step 12: Create our own API</h2>
+                <p> Ever heard of Reverse Tunneling?</p>
+                <div id="toggle_value12">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p></p>
+                    <p class="nav-item"><a class="nav-link" href="">Site</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container left" id="toggle13">
+            <div class="content">
+                <h2>Step 13: Create a Proxy</h2>
+                <p> Having a proxy adds security to the site </p>
+                <div id="toggle_value13">
+                    <p>Proxies are used for security purposes. They are a gateway between us and the internet. Proxy
+                        servers act as a firewall and web filter, provide shared network connections, and cache data to
+                        speed up common requests. A good proxy server keeps users and the internal network protected from
+                        the bad stuff that lives out in the wild internet. With out a proxy we would be susceptible to a
+                        http attack (A type of Distributed Denial of service attack).</p>
+                    <p>We are using NGINX for our proxy. There is a free open source version that is available. Big companies
+                        like Starbucks,Bank of America, American Express, and Capital One use NGINX as a proxy server.</p>
+                    <p></p>
+                    <p>Useful Links:</p>
+                    <p></p>
+                    <p class="nav-item"><a class="nav-link" href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/?_ga=2.150704758.1771187416.1616107733-2037060056.1616107733">nginx</a></p>
+                </div>
             </div>
         </div>
     </div>
-
-
-
 
 {% endblock %}
