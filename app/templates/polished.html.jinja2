@@ -68,7 +68,6 @@
             }
             function graphHeat() {//graphs heat and humidity on same graph. currently just
                 //last minue, but want to give the graph other options as well
-                console.log(recnums[hehumopt-1]);
                 var reqstr = "tempinfo.json?num="+recnums[hehumopt-1]+"&skip="+skipnums[hehumopt-1];
                 //pulls data, formats it into the pairs necessary for flot
                 $.getJSON(reqstr, function (tempinfo) {
@@ -175,7 +174,7 @@
                     $(this).removeClass("bg-info");
                     $(this).removeClass("bg-danger");
                 })
-                if (online == 0)
+                if (online != 1)
                 {
                     $(".lab").each(function(i) {
                         $(this).addClass('btn-secondary');
