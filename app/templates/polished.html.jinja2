@@ -293,6 +293,9 @@
                 else {
                     if ($(this).hasClass("btn-success")) {
                         $.getJSON('ligoff.json', function (ligoff) {//turns on lock and displays locking message
+                            if(ligoff['mess']=="bCookie"){
+                                window.location.assign("/login")
+                            }
                             $("#messban").text("Doors Unlocking");
                             $("#messban").addClass('alert-primary');
                             $("#messban").show().delay(1500).fadeOut();
