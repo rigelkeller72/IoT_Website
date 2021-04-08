@@ -30,9 +30,6 @@ async def data(request):
     record = cursor.fetchone()
     cursor.close()
 
-
-
-
     sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':alarmarm}
 
     return web.json_response(sensdata)
@@ -185,7 +182,7 @@ async def runserver(app):
 #reads data every x seconds, infinitly
 async def readdata(serial):
     while(True):
-       rdata()
+        rdata()
     await asyncio.sleep(2.5)
 
 def main():
