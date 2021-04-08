@@ -1,6 +1,7 @@
 from aiohttp import web
-import aiohttp_jinja2
+import aiohttp_jinja2, secrets
 import jinja2, requests, sqlite3
+from hashlib import md5
 
 # Renders Kewl Bus Site
 @aiohttp_jinja2.template('polished.html.jinja2')#loads in the dashboard
@@ -27,6 +28,50 @@ async def arduino_code_static(request):
 @aiohttp_jinja2.template('team.html.jinja2')
 async def bioinfo(request):
     return {}
+
+@aiohttp_jinja2.template('loginpage.html.jinja2')
+async def login(request):
+    return {}
+
+async def logatmp(request):
+    data = await request.post()
+    uname = data['username']
+    cursor = conn.execute("SELECT password,salt from users WHERE username = ?", (uname,))
+    rec = cursor.fetchone()
+    if rec != None:
+        tocomp = data['pword']+rec[1]
+        if rec[0] == md5(tocomp.encode('ascii')).hexdigest():
+            cook = secrets.token_hex()
+            cursor = conn.execute("UPDATE users SET cookie = ? WHERE username=?", (cook,uname))
+            conn.commit()
+            response = web.Response(text="congrats!",
+                                    status=302,
+                                    headers={'Location': "/"})
+            response.cookies['logged_in'] = cook
+            return response
+        else:
+            raise web.HTTPFound("/login")
+    else:
+        raise web.HTTPFound("/login")
+
+def checklogin(request):
+    if "logged_in" not in request.cookies:
+        return True
+    cursor = conn.execute("SELECT cookie FROM users")
+    record = cursor.fetchall()
+    goodcookies=[]
+    for item in record:
+        goodcookies.append(item[0])
+    if request.cookies['logged_in'] not in goodcookies:
+        return True
+    return False
+
+
+async def logout(request):
+    response = aiohttp_jinja2.render_template('loginpage.html.jinja2', request, {})
+    response.cookies['logged_in']='badcookie'
+    return response
+
 
 async def data(request):#requests data from database
     global connection
@@ -66,11 +111,19 @@ async def localdata(): #returns most recent database entry
     return sensdata
 
 async def ligon(request):#requests for api to turn on locks
+    logmess=checklogin(request)
+    if logmess:
+        mess = {"mess": "bCookie"}
+        return web.json_response(mess)
     if connection==1:
         r = requests.get("http://127.0.0.1:5000/ligon.json")
         return web.json_response(r.json())
 
 async def ligoff(request): #requests locks to be turned off
+    logmess = checklogin(request)
+    if logmess:
+        mess = {"mess": "bCookie"}
+        return web.json_response(mess)
     if connection==1:
         r = requests.get("http://127.0.0.1:5000/ligon.json")
         return web.json_response(r.json())
@@ -118,6 +171,7 @@ async def watinfo(request): #requests water level graph info
         return web.json_response(senddict)
 
 async def arm(request):#requests alarm to toggle
+    logmess = checklogin(request)
     if connection==1:
         r = requests.get("http://127.0.0.1:5000/togglealarm.json")
         print("I'm here right now")
@@ -142,6 +196,9 @@ def main():#defines paths, launches on 0.0.0.0:
                     web.get('/ligoff.json', ligoff),
                     web.get('/tempinfo.json', tempinfo),
                     web.get('/watinfo.json', watinfo),
+                    web.get('/login', login),
+                    web.get('/logout', logout),
+                    web.post('/login', logatmp),
                     web.get('/togglealarm.json', arm)])
 
     #web.run_app(app, port=80)

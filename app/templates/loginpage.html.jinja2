@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/bstrap.css">
+    <link rel="stylesheet" href="/static/css/dash.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="col-3 mx-auto">
+        <div class="card">
+            <div class="card-title text-center">Welcome and Log Yourself in!</div>
+            <div class="card-body">
+                <form action ="/login" method="post" class="text-center">
+                    <div class="row">
+                        <label>Username</label>
+                        <input name="username" type="text">
+                    </div>
+                    <div class="row">
+                    <label>Password</label>
+                    <input name="pword" type="password" type="text">
+                    </div>
+                    <input type="submit" class="btn btn-info" value="Log In">
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
