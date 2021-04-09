@@ -75,7 +75,9 @@ async def logatmp(request):
 def checklogin(request):
     if "logged_in" not in request.cookies:
         return True
-    cursor = conn.execute("SELECT logexp FROM users where cookie = ?", (request.cookies['logged_in'], ))
+
+    cursor = conn.execute("SELECT logexp FROM users where cookie = ?", (request.cookies['logged_in'],))
+
     record = cursor.fetchone()
     if record is None:
         return True
@@ -128,6 +130,7 @@ async def facedata(request):  # requests data from  face database
         cursor.close()
         return web.json_response(mess)
 
+
     # If offline
     else:
         cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
@@ -136,6 +139,8 @@ async def facedata(request):  # requests data from  face database
         mess = {'centroidx': record[0], 'centroidy': record[1], 'timestamp': record[2]}
         mess["connect"]: connection
         return web.json_response(mess)
+
+
 
 async def ligon(request):  # requests for api to turn on locks
     logmess = checklogin(request)
@@ -152,8 +157,10 @@ async def ligoff(request):  # requests locks to be turned off
     if logmess:
         mess = {"mess": "bCookie"}
         return web.json_response(mess)
-    if connection == 1:
-        r = requests.get("http://127.0.0.1:5000/ligon.json")
+
+    if connection==1:
+        r = requests.get("http://127.0.0.1:5000/ligoff.json")
+
         return web.json_response(r.json())
 
 
@@ -202,9 +209,13 @@ async def watinfo(request):  # requests water level graph info
 
 async def arm(request):  # requests alarm to toggle
     logmess = checklogin(request)
-    if connection == 1:
+
+    if logmess:
+        mess = {"mess": "bCookie"}
+        return web.json_response(mess)
+    if connection==1:
+
         r = requests.get("http://127.0.0.1:5000/togglealarm.json")
-        print("I'm here right now")
         return web.json_response(r.json())
 
 
