@@ -1,5 +1,5 @@
 from aiohttp import web
-import aiohttp_jinja2, secrets
+import aiohttp_jinja2, secrets, time
 import jinja2, requests, sqlite3
 from hashlib import md5
 
@@ -36,19 +36,26 @@ async def login(request):
 async def logatmp(request):
     data = await request.post()
     uname = data['username']
-    cursor = conn.execute("SELECT password,salt from users WHERE username = ?", (uname,))
+    cursor = conn.execute("SELECT password,salt,logexp,cookie from users WHERE username = ?", (uname,))
     rec = cursor.fetchone()
     if rec != None:
         tocomp = data['pword']+rec[1]
         if rec[0] == md5(tocomp.encode('ascii')).hexdigest():
-            cook = secrets.token_hex()
-            cursor = conn.execute("UPDATE users SET cookie = ? WHERE username=?", (cook,uname))
-            conn.commit()
-            response = web.Response(text="congrats!",
-                                    status=302,
-                                    headers={'Location': "/"})
-            response.cookies['logged_in'] = cook
-            return response
+            if rec[2]<time.time():
+                cook = secrets.token_hex()
+                cursor = conn.execute("UPDATE users SET cookie = ?, logexp=? WHERE username=?", (cook,time.time()+604800,uname))
+                conn.commit()
+                response = web.Response(text="congrats!",
+                                        status=302,
+                                        headers={'Location': "/"})
+                response.cookies['logged_in'] = cook
+                return response
+            else:
+                response = web.Response(text="congrats!",
+                                        status=302,
+                                        headers={'Location': "/"})
+                response.cookies['logged_in'] = rec[3]
+                return response
         else:
             raise web.HTTPFound("/login")
     else:
@@ -57,12 +64,11 @@ async def logatmp(request):
 def checklogin(request):
     if "logged_in" not in request.cookies:
         return True
-    cursor = conn.execute("SELECT cookie FROM users")
-    record = cursor.fetchall()
-    goodcookies=[]
-    for item in record:
-        goodcookies.append(item[0])
-    if request.cookies['logged_in'] not in goodcookies:
+    cursor = conn.execute("SELECT logexp FROM users where cookie = ?" (request.cookies['logged_in'],))
+    record = cursor.fetchone()
+    if record is None:
+        return True
+    if record[0]<time.time():
         return True
     return False
 
