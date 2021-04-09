@@ -131,7 +131,7 @@ async def ligoff(request): #requests locks to be turned off
         mess = {"mess": "bCookie"}
         return web.json_response(mess)
     if connection==1:
-        r = requests.get("http://127.0.0.1:5000/ligon.json")
+        r = requests.get("http://127.0.0.1:5000/ligoff.json")
         return web.json_response(r.json())
 
 async def tempinfo(request): #requests data for heat/humidity graph
