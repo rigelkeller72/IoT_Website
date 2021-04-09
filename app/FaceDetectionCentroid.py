@@ -58,7 +58,8 @@ while True:
 
             if (time.time() - start_seconds) > 1:
                 # data base commands
-                cursor = conn.execute("INSERT INTO faces VALUES (?,?,?)", (centroidx, centroidy, time.time() - start_time,))
+                ts = time.time()
+                cursor = conn.execute("INSERT INTO faces VALUES (?,?,?)", (centroidx, centroidy, ts,))
                 cursor.close()
                 conn.commit()
                 start_frame_number = frame_number
