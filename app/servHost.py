@@ -4,7 +4,6 @@ import jinja2, requests, sqlite3
 from hashlib import md5
 
 
-
 # Renders Kewl Bus Site
 @aiohttp_jinja2.template('polished.html.jinja2')  # loads in the dashboard
 async def home(request):
@@ -99,7 +98,7 @@ async def data(request):  # requests data from database
         connection = 1
         mess = r.json()
         mess['connect'] = connection
-        cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;") # similiar code for face data
+        cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")  # similiar code for face data
         record = cursor.fetchone()
         minid = record[0]
         cursor.close()
@@ -120,18 +119,21 @@ async def data(request):  # requests data from database
         mess["connect"]: connection
         return web.json_response(mess)
 
-async def facedata(request):  # requests data from  face database
+
+# requests data from  face database
+async def facedata(request):
     global connection
     if connection == 1:
         r = requests.get("http://127.0.0.1:5000/facedata.json")
         mess = r.json()
-        cursor = faceconn.execute("INSERT INTO faces VALUES(?,?,?)", (mess['centroidx'], mess['centroidy'], mess['timestamp']))
+        cursor = faceconn.execute("INSERT INTO faces VALUES(?,?,?)",
+                                  (mess['centroidx'], mess['centroidy'], mess['timestamp']))
         conn.commit()
         cursor.close()
         return web.json_response(mess)
 
 
-    # If offline
+# If offline returns old data
     else:
         cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
         record = cursor.fetchone()
@@ -139,7 +141,6 @@ async def facedata(request):  # requests data from  face database
         mess = {'centroidx': record[0], 'centroidy': record[1], 'timestamp': record[2]}
         mess["connect"]: connection
         return web.json_response(mess)
-
 
 
 async def ligon(request):  # requests for api to turn on locks
@@ -158,7 +159,7 @@ async def ligoff(request):  # requests locks to be turned off
         mess = {"mess": "bCookie"}
         return web.json_response(mess)
 
-    if connection==1:
+    if connection == 1:
         r = requests.get("http://127.0.0.1:5000/ligoff.json")
 
         return web.json_response(r.json())
@@ -213,8 +214,7 @@ async def arm(request):  # requests alarm to toggle
     if logmess:
         mess = {"mess": "bCookie"}
         return web.json_response(mess)
-    if connection==1:
-
+    if connection == 1:
         r = requests.get("http://127.0.0.1:5000/togglealarm.json")
         return web.json_response(r.json())
 

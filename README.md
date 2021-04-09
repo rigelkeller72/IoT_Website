@@ -1,1 +1,1 @@
-New Branch by Rigel. Opened 09APR21 to try and get openCV and test webcam to work along with the site.
+This id the main branch. Everything figured out 09APR21, time 1425
