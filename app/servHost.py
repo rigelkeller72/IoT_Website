@@ -65,7 +65,7 @@ async def logatmp(request):
 def checklogin(request):
     if "logged_in" not in request.cookies:
         return True
-    cursor = conn.execute("SELECT logexp FROM users where cookie = ?" (request.cookies['logged_in'],))
+    cursor = conn.execute("SELECT logexp FROM users where cookie = ?", (request.cookies['logged_in'],))
     record = cursor.fetchone()
     if record is None:
         return True
@@ -114,7 +114,6 @@ async def localdata(): #returns most recent database entry
     record = cursor.fetchone()
     cursor.close()
     sensdata={'temp': record[2], 'humid': record[3], 'door': record[6], 'presence': record[4], 'water level': record[5], 'tor': record[1], 'astat':0}
-    print(sensdata)
     return sensdata
 
 async def ligon(request):#requests for api to turn on locks
@@ -179,9 +178,11 @@ async def watinfo(request): #requests water level graph info
 
 async def arm(request):#requests alarm to toggle
     logmess = checklogin(request)
+    if logmess:
+        mess = {"mess": "bCookie"}
+        return web.json_response(mess)
     if connection==1:
         r = requests.get("http://127.0.0.1:5000/togglealarm.json")
-        print("I'm here right now")
         return web.json_response(r.json())
 
 def main():#defines paths, launches on 0.0.0.0:
