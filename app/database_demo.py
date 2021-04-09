@@ -4,7 +4,7 @@ import sqlite3
 def main():
     conn = sqlite3.connect("site_data.db")
     # Adding new data with the INSERT statement
-    cursor = conn.execute("INSERT INTO temperature VALUES ('00:30', '001','30','DHT-11')")
+    cursor = conn.execute("INSERT INTO temperature VALUES ('00:31', '001','30','DHT-11')")
     cursor.close()
     conn.commit()
 
