@@ -315,6 +315,9 @@
                 else {
                     if ($(this).hasClass("btn-success")) {
                         $.getJSON('ligon.json', function (ligon) {//turns on lock and displays locking message
+                             if(ligon['mess']=="bCookie"){
+                                window.location.assign("/login")
+                            }
                             $("#messban").text("Doors Locking");
                             $("#messban").addClass('alert-primary');
                             $("#messban").show().delay(1500).fadeOut();
@@ -333,7 +336,10 @@
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
-                        $.getJSON('togglealarm.json', function () {//disarms alarm
+                        $.getJSON('togglealarm.json', function (buzzon) {//disarms alarm
+                            if(buzzon['mess']=="bCookie"){
+                                window.location.assign("/login")
+                            }
                             $("#messban").text("Disarming Alarm");
                             $("#messban").addClass('alert-primary');
                             $("#messban").show().delay(1500).fadeOut();
@@ -353,7 +359,10 @@
                 }
                 else {
                     if ($(this).hasClass("btn-success")) {
-                        $.getJSON('togglealarm.json', function () {//turns on lock and displays locking message
+                        $.getJSON('togglealarm.json', function (buzz) {//turns on lock and displays locking message
+                             if(buzz['mess']=="bCookie"){
+                                window.location.assign("/login")
+                            }
                             $("#messban").text("Alarm Coming Online");
                             $("#messban").addClass('alert-primary');
                             $("#messban").show().delay(1500).fadeOut();

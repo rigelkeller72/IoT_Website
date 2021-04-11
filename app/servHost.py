@@ -76,10 +76,13 @@ def checklogin(request):
         return True
 
     cursor = conn.execute("SELECT logexp FROM users where cookie = ?", (request.cookies['logged_in'],))
+    print(request.cookies['logged_in'])
 
     record = cursor.fetchone()
     if record is None:
         return True
+    print(record[0])
+    print(time.time())
     if record[0] < time.time():
         return True
     return False
