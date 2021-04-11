@@ -122,7 +122,7 @@ async def data(request):  # requests data from database
 
 async def facedata(request):  # requests data from  face database
     global connection
-    if connection == 1:
+    try:
         r = requests.get("http://127.0.0.1:5000/facedata.json")
         mess = r.json()
         cursor = faceconn.execute("INSERT INTO faces VALUES(?,?,?)", (mess['centroidx'], mess['centroidy'], mess['timestamp']))
@@ -132,7 +132,7 @@ async def facedata(request):  # requests data from  face database
 
 
     # If offline
-    else:
+    except:
         cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
         record = cursor.fetchone()
         cursor.close()

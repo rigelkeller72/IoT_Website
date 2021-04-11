@@ -175,7 +175,7 @@ def main():
     alarmarm = 0
     conn = sqlite3.connect("development.db")
     faceconn = sqlite3.connect("site_data.db")
-    DEVICE = 'COM5'
+    DEVICE = 'COM8'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     app = web.Application()

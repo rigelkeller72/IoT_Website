@@ -44,7 +44,7 @@ while True:
     # print("Size of faces:", len(faces))
 
     if len(faces) > 0:  # people have been detected
-        print("Face detected")
+        #print("Face detected")
         # draw retangle around each detected face
         for (x, y, w, h) in faces:
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -64,8 +64,9 @@ while True:
                 conn.commit()
                 start_frame_number = frame_number
                 start_seconds = time.time()
-    else:
-        print('No faces')
+    #else:
+
+        #print('No faces')
 
     # if 5 seconds have passed, compute Frames Per Second and SQL insert to data base
     if (time.time() - start_seconds) > 5:
