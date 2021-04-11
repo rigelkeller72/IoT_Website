@@ -51,7 +51,10 @@
                     grayAlarm(data['astat'],data['connect'])
                     showwater(data['water level']);
                     showheat(data['temp']);
-                    dstring(data['tor']);
+                    $("#timeread").text(dstring(data['tor'],1));
+                    $.getJSON('facedata.json', function (facedata) {
+                       $('#facedec').text(dstring(facedata['timestamp'],0)) ;
+                    });
                     pirResponse(data['presence'],data['astat']);
                     graphHeat();
                     graphWater();
@@ -136,20 +139,20 @@
                 if(near && armed)
                 {
                     $("#alarmmess").show();
-                    $("#alarmmess").text("Person Near, Alarm Engaged!")
+                    $("#alarmmess").text("Person Inside, Alarm Engaged!")
                     $("#alarmmess").addClass("alert-info");
                 }
                 else{
                         if (near) {
                             $("#alarmmess").show();
-                            $("#alarmmess").text("Person Near, Alarm System Offline!!")
+                            $("#alarmmess").text("Person Inside, Alarm System Offline!!")
                             $("#alarmmess").addClass("alert-warning");
                         } else {
                             $("#alarmmess").hide();
                         }
                 }
             }
-            function dstring(tor){//creates a nice string for the last update and updates it
+            function dstring(tor,tim){//creates a nice string for the last update and updates it
                 var tUsed = new Date(1000*tor);
                 var monarr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
                 mon = monarr[tUsed.getMonth()];
@@ -159,8 +162,14 @@
                 {
                     min = "0" + min;
                 }
-                var upTime = "Last Updated: " + tUsed.getHours()+":"+min+ " " +mon + " " + day;
-                $("#timeread").text(upTime);
+                var upTime = tUsed.getHours()+":"+min+ " " +mon + " " + day;
+                if (tim>0){
+                    upTime = "Last Updated " + upTime;
+                }
+                else{
+                    upTime = "Last person seen at " + upTime;
+                }
+                return upTime;
             }
 
             function clearButtSetts(online)
@@ -540,6 +549,14 @@
                 <div id="watgraph" class="demo-placeholder" style="width:100%;height:200px"></div>
             </div>
         </div>
+         <div class="card text-center">
+             <div class="card-title text-center">
+                 People Outside
+             </div>
+             <div class="card-body text-center">
+                 <p id="facedec"></p>
+             </div>
+         </div>
     </div>
 
 </div>
