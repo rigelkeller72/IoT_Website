@@ -15,7 +15,10 @@ async def data(request):  # returns most recent database entry
 
     return web.json_response(sensdata)
 
-async def facedata(request):  # returns most recent face database entry
+
+# Face database located in site_data.db
+# returns most recent face database entry
+async def facedata(request):
     cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
     record = cursor.fetchone()
     cursor.close()
@@ -23,7 +26,9 @@ async def facedata(request):  # returns most recent face database entry
 
     return web.json_response(sensfacedata)
 
-async def tempinfo(request):  # returns 24 entries, spaced according to desired range
+
+# returns 24 entries, spaced according to desired range
+async def tempinfo(request):
     numbah = int(request.query["num"])
     skipfreq = int(request.query["skip"])
     cursor = conn.execute(
@@ -93,32 +98,6 @@ async def armDisarm(request):
     return web.json_response(message)
 
 
-# async def cam(request):
-#     # grab the reference to the webcam
-#     camera = cv2.VideoCapture(0)
-#
-#     # keep looping
-#     while True:
-#         print("Camera is running")
-#         # grab the current frame
-#         (grabbed, frame) = camera.read()
-#
-#         #    # resize the frame, optional
-#         #    frame = cv2.resize(frame, (0,0), fx=2.0, fy=2.0)
-#
-#         # show the frame to our screen and increment the frame
-#         show = cv2.imshow("Test Webcam", frame)
-#
-#         # if the 'q' key is pressed, stop the loop
-#         key = cv2.waitKey(1) & 0xFF
-#         if key == 27 or key == ord("q"):
-#             break
-#         await asyncio.sleep(1)
-#     # cleanup the camera and close any open windows
-#     camera.release()
-#     cv2.destroyAllWindows()
-
-
 def rdata():  # process of reading and recording data
     cursor = conn.execute("SELECT * from rvsensor ORDER BY id DESC LIMIT 1;")
     record = cursor.fetchone()
@@ -151,9 +130,6 @@ def rdata():  # process of reading and recording data
     else:
         buzzoff()
     # return sensVals
-
-
-
 
 
 async def runserver(app):  # runs site on port 5000, local hosting

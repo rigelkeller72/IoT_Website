@@ -56,6 +56,7 @@ while True:
             # print("Face: Left=%d Top=%d Width=%d Height=%d" % (x, y, w, h))
             # print("Centroid: %d, %d" % (centroidx, centroidy))
 
+            # send data base face data every 1 second
             if (time.time() - start_seconds) > 1:
                 # data base commands
                 ts = time.time()
