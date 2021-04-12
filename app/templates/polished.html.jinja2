@@ -36,8 +36,7 @@
                     position: "nw",
                     show: true,
                     noColumns: 2};
-            var recnums=[24, 1440, 1440*24];
-            var skipnums=[1,60,60*24];
+            var recnums=[60, 60*60, 60*60*24];
             //for caring the sell - can't get it to run, throught we had the right jquery on here, but not working as of yet. Will keep poking at it
             //$('.carousel').carousel({
             //    interval: 2000
@@ -71,7 +70,7 @@
             }
             function graphHeat() {//graphs heat and humidity on same graph. currently just
                 //last minue, but want to give the graph other options as well
-                var reqstr = "tempinfo.json?num="+recnums[hehumopt-1]+"&skip="+skipnums[hehumopt-1];
+                var reqstr = "tempinfo.json?num="+recnums[hehumopt-1];
                 //pulls data, formats it into the pairs necessary for flot
                 $.getJSON(reqstr, function (tempinfo) {
                     var plotdata = [];
@@ -104,7 +103,7 @@
             }
 
             function graphWater(){//same as heat, but only 1 set of data
-                    var reqstr = "watinfo.json?num="+recnums[watopt-1]+"&skip="+skipnums[watopt-1];
+                    var reqstr = "watinfo.json?num="+recnums[watopt-1];
                 $.getJSON(reqstr, function (watinfo) {
                     var plotdata = [];
 

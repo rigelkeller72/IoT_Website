@@ -3,21 +3,21 @@
 
 dht DHT;
 float temp,hum;
-#define echoPin 3 // attach pin D2 Arduino to pin Echo of HC-SR04
-#define trigPin 4 //attach pin D3 Arduino to pin Trig of HC-SR04
+#define echoPin 2 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 3 //attach pin D3 Arduino to pin Trig of HC-SR04
 long duration;
 float distance;
 char cmd;
 //char resetted = 'o';
-float pot;
-int hallSensorPin = 2; 
-int hallDrivePin = 1;
+int pir;
+int hallSensorPin = A2; 
+int hallDrivePin = A1;
 int buzzer = 8;
 Servo servo;
 Servo serv2;
-int potpin = A5;
+int pirpin = A5;
 int mags = 0;
-#define DHT11_PIN 7
+#define DHT11_PIN 13
 void setup() {
    pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
@@ -28,7 +28,7 @@ void setup() {
   Serial.begin(9600);
   servo.attach(5);
   servo.write(135);
-  serv2.attach(9);
+  serv2.attach(6);
   serv2.write(135);
   
 }
@@ -45,11 +45,13 @@ void loop() {
         break;
       case 'l':
         servo.write(0);
+        serv2.write(0);
         Serial.print("door locked\n");
         //resetted ='g';
         break;
       case 'o':
         servo.write(135);
+        serv2.write(135);
         Serial.print("LIGHT_OFF\n");
         break;
        case 'b':
@@ -94,14 +96,14 @@ void readsensors(){
   // Calculating the distance
   distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
       dht DHT;
-      #define DHT11_PIN 7
+      #define DHT11_PIN 13
       // Displays the distance on the Serial Monitor
       int test1 = DHT.read11(DHT11_PIN);
       temp = DHT.temperature;
       hum = DHT.humidity;
        digitalWrite(hallDrivePin,HIGH);
       mags = digitalRead(hallSensorPin);
-      pot = digitalRead(potpin);
+      pir = digitalRead(pirpin);
       Serial.print(distance);
       Serial.print(",");
       Serial.print(temp);
@@ -110,7 +112,7 @@ void readsensors(){
       Serial.print(",");
       Serial.print(mags);
       Serial.print(",");
-      Serial.print(pot);
+      Serial.print(pir);
       Serial.print("\n");
       Serial.flush();
        digitalWrite(hallDrivePin,LOW);

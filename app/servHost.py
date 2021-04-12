@@ -1,6 +1,6 @@
 from aiohttp import web
 import aiohttp_jinja2, secrets, time
-import jinja2, requests, sqlite3
+import jinja2, requests, sqlite3,math
 from hashlib import md5
 
 
@@ -170,20 +170,25 @@ async def ligoff(request):  # requests locks to be turned off
 
 async def tempinfo(request):  # requests data for heat/humidity graph
     if connection == 1:
-        reqstr = "http://127.0.0.1:5000/tempinfo.json?num=" + request.query['num'] + "&skip=" + request.query['skip']
+        reqstr = "http://127.0.0.1:5000/tempinfo.json?num=" + request.query['num']
         r = requests.get(reqstr)
         return web.json_response(r.json())
     else:
         numbah = int(request.query['num'])
-        skipfreq = int(request.query['skip'])
         cursor = conn.execute(
-            "SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+            "SELECT timestamp from rvsensor ORDER BY timestamp DESC")
+        record = cursor.fetchone()
+        lasttime=record[0]-numbah
+        cursor.close()
+        cursor = conn.execute(
+            "SELECT timestamp,temperature,humidity from rvsensor WHERE timestamp>? ORDER BY timestamp DESC", (lasttime,))
         record = cursor.fetchall()
         cursor.close()
         times = []
         temps = []
         hums = []
-        for x in range(0, numbah, skipfreq):
+        skipfreq=math.ceil(len(record)/24)
+        for x in range(0, len(record), skipfreq):
             times.append(record[x][0])
             temps.append(record[x][1])
             hums.append(record[x][2])
@@ -193,18 +198,23 @@ async def tempinfo(request):  # requests data for heat/humidity graph
 
 async def watinfo(request):  # requests water level graph info
     if connection == 1:
-        reqstr = "http://127.0.0.1:5000/watinfo.json?num=" + request.query['num'] + "&skip=" + request.query['skip']
+        reqstr = "http://127.0.0.1:5000/watinfo.json?num=" + request.query['num']
         r = requests.get(reqstr)
         return web.json_response(r.json())
     else:
         numbah = int(request.query["num"])
-        skipfreq = int(request.query["skip"])
-        cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+        cursor = conn.execute(
+            "SELECT timestamp from rvsensor ORDER BY timestamp DESC")
+        record = cursor.fetchone()
+        lasttime = record[0] - numbah
+        cursor.close()
+        cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor WHERE timestamp > ? ORDER BY timestamp DESC" ,(lasttime,))
         record = cursor.fetchall()
         cursor.close()
         times = []
         wlev = []
-        for x in range(0, numbah, skipfreq):
+        skipfreq = math.ceil(len(record) / 24)
+        for x in range(0, len(record), skipfreq):
             times.append(record[x][0])
             wlev.append(record[x][1])
         senddict = {'times': times, 'levs': wlev}

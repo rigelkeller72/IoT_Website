@@ -1,7 +1,7 @@
 import aiohttp_jinja2
 import jinja2
 from aiohttp import web
-import requests
+import requests, math
 import serial, time, sqlite3, asyncio
 import cv2
 
@@ -30,15 +30,16 @@ async def facedata(request):
 # returns 24 entries, spaced according to desired range
 async def tempinfo(request):
     numbah = int(request.query["num"])
-    skipfreq = int(request.query["skip"])
+    tlimit = time.time()-numbah
     cursor = conn.execute(
-        "SELECT timestamp,temperature,humidity from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+        "SELECT timestamp,temperature,humidity from rvsensor WHERE timestamp > ? ORDER BY timestamp DESC ",(tlimit,))
     record = cursor.fetchall()
     cursor.close()
     times = []
     temps = []
     hums = []
-    for x in range(0, numbah, skipfreq):
+    skipfreq = math.ceil(len(record) / 24)
+    for x in range(0, len(record), skipfreq):
         times.append(record[x][0])
         temps.append(record[x][1])
         hums.append(record[x][2])
@@ -48,13 +49,14 @@ async def tempinfo(request):
 
 async def waterinfo(request):  # same as heathum, but for water level
     numbah = int(request.query["num"])
-    skipfreq = int(request.query["skip"])
-    cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor ORDER BY timestamp DESC LIMIT %d" % numbah)
+    tlimit = time.time()-numbah
+    cursor = conn.execute("SELECT timestamp,waterlevel from rvsensor WHERE timestamp > ? ORDER BY timestamp DESC", (tlimit,))
     record = cursor.fetchall()
     cursor.close()
     times = []
     wlev = []
-    for x in range(0, numbah, skipfreq):
+    skipfreq=math.ceil(len(record)/24)
+    for x in range(0, len(record),skipfreq):
         times.append(record[x][0])
         wlev.append(record[x][1])
     senddict = {'times': times, 'levs': wlev}
@@ -151,7 +153,7 @@ def main():
     alarmarm = 0
     conn = sqlite3.connect("development.db")
     faceconn = sqlite3.connect("site_data.db")
-    DEVICE = 'COM8'
+    DEVICE = 'COM7'
     ser = serial.Serial(DEVICE)
     time.sleep(2)
     app = web.Application()
