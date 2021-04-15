@@ -3,3 +3,5 @@ aiohttp-jinja2
 jinja2
 requests
 pyserial
+opencv-python
+db-sqlite3
