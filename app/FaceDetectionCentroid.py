@@ -8,6 +8,7 @@
 import cv2
 import time
 import sqlite3
+import pyttsx3
 
 # create a video object for the default webcam
 camera = cv2.VideoCapture(0)
@@ -25,6 +26,9 @@ i = 0
 
 # data base commands
 conn = sqlite3.connect("site_data.db")
+
+# initialize the voice engine
+engine = pyttsx3.init()
 
 # keep looping
 while True:
@@ -57,7 +61,9 @@ while True:
             # print("Centroid: %d, %d" % (centroidx, centroidy))
 
             # send data base face data every 1 second
-            if (time.time() - start_seconds) > 1:
+            if (time.time() - start_seconds) > 5:
+                engine.say('Intruder Alert!')
+                engine.runAndWait()
                 # data base commands
                 ts = time.time()
                 cursor = conn.execute("INSERT INTO faces VALUES (?,?,?)", (centroidx, centroidy, ts,))

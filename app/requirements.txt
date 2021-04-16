@@ -5,3 +5,6 @@ requests
 pyserial
 opencv-python
 db-sqlite3
+imutils
+imagezmq
+pyttsx3
