@@ -19,7 +19,7 @@ import numpy as np
 face_cascade = cv2.CascadeClassifier('HarrXML\haarcascade_frontalface_alt2.xml')
 
 # Wireless image collection. (Using imagezmq libarary)
-Receive_From_Address = 'tcp://10.16.131.247:5555'
+Receive_From_Address = 'tcp://127.0.0.1:5001'
 image_hub = imagezmq.ImageHub(open_port=Receive_From_Address, REQ_REP=False)
 
 print("Press ESC or q to end program")
