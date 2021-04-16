@@ -9,12 +9,18 @@ import cv2
 import time
 import sqlite3
 import pyttsx3
+import imagezmq
+import numpy as np
 
-# create a video object for the default webcam
-camera = cv2.VideoCapture(0)
+# # create a video object for the default webcam
+# camera = cv2.VideoCapture(0)
 
 # create cascade classifier which uses a face database
 face_cascade = cv2.CascadeClassifier('HarrXML\haarcascade_frontalface_alt2.xml')
+
+# Wireless image collection. (Using imagezmq libarary)
+Receive_From_Address = 'tcp://10.16.131.247:5555'
+image_hub = imagezmq.ImageHub(open_port=Receive_From_Address, REQ_REP=False)
 
 print("Press ESC or q to end program")
 frame_number = 0  # this variable is used to count the frames
@@ -34,13 +40,17 @@ engine = pyttsx3.init()
 while True:
     frame_number = frame_number + 1  # count each frame that is processed
 
-    # grab the current frame
-    (grabbed, img) = camera.read()
+    # # grab the current frame
+    # (grabbed, img) = camera.read()
 
-    # convert color image to gray scale image
+    # grab the current frame (WIRELESS)
+    host_name, jpg_buffer = image_hub.recv_jpg()
+    img = cv2.imdecode(np.frombuffer(jpg_buffer, dtype='uint8'), -1)
+
+    # convert color image to gray scale image (FDcode)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # find faces in entire image (uncomment one)
+    # find faces in entire image (uncomment one) (FDcode)
     faces = face_cascade.detectMultiScale(gray)
     # faces = face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=4)
     # faces = face_cascade.detectMultiScale(gray,scaleactor=1.2, minNeighbors=5, minSize=(100, 100), maxSize=(250, 250))
@@ -104,6 +114,9 @@ while True:
     if key == 27 or key == ord("q"):
         break
 
-# cleanup the camera and close any open windows
-camera.release()
+# # cleanup the camera
+# camera.release()
+# close the connection
+image_hub.close()
+# close any open windows
 cv2.destroyAllWindows()
