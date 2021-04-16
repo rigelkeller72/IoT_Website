@@ -126,24 +126,12 @@ async def data(request):  # requests data from database
 # requests data from  face database
 async def facedata(request):
     global connection
-    try:
-        r = requests.get("http://127.0.0.1:5000/facedata.json")
-        mess = r.json()
-        cursor = faceconn.execute("INSERT INTO faces VALUES(?,?,?)",
-                                  (mess['centroidx'], mess['centroidy'], mess['timestamp']))
-        conn.commit()
-        cursor.close()
-        return web.json_response(mess)
-
-
-    # If offline
-    except:
-        cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
-        record = cursor.fetchone()
-        cursor.close()
-        mess = {'centroidx': record[0], 'centroidy': record[1], 'timestamp': record[2]}
-        mess["connect"]: connection
-        return web.json_response(mess)
+    cursor = faceconn.execute("SELECT * from faces ORDER BY timestamp DESC LIMIT 1;")
+    record = cursor.fetchone()
+    cursor.close()
+    mess = {'centroidx': record[0], 'centroidy': record[1], 'timestamp': record[2]}
+    mess["connect"]: connection
+    return web.json_response(mess)
 
 
 async def ligon(request):  # requests for api to turn on locks

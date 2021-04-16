@@ -10,7 +10,7 @@ def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't even have to be reachable
-        s.connect(('10.255.255.255', 1))
+        s.connect(('10.255.255.255', 5001))
         IP = s.getsockname()[0]
     except Exception:
         IP = '127.0.0.1'
@@ -19,11 +19,11 @@ def get_ip():
     return IP
 
 # Create an image sender in PUB/SUB (non-blocking) mode
-sender = imagezmq.ImageSender(connect_to='tcp://*:5555', REQ_REP=False)
+sender = imagezmq.ImageSender(connect_to='tcp://*:5001', REQ_REP=False)
 host_name = socket.gethostname()  # send RPi hostname with each image
 IP_Addr = get_ip()    
 print("Your Computer Name is:" + host_name)    
-print("HOST 1 sending images from IP Address: " + IP_Addr + ':5555') 
+print("HOST 1 sending images from IP Address: " + IP_Addr + ':5001') 
 
 #cam = VideoStream(usePiCamera=True).start()
 cam = VideoStream(0).start() # open camera
