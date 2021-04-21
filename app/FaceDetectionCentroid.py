@@ -11,6 +11,9 @@ import sqlite3
 import pyttsx3
 import imagezmq, os
 import numpy as np
+import sys
+
+sys.path.append('/usr/local/lib/python2.7/site-packages')
 
 # # create a video object for the default webcam
 # camera = cv2.VideoCapture(0)
