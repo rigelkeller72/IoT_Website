@@ -109,6 +109,7 @@ while True:
 
     # display image which contains rectangles drawn on it
     savestr = os.getcwd()+"/static/images/test.jpg"
+    print(os.getcwd())
     cv2.imwrite(savestr, img)
     #cv2.imshow("AGAGA",img)
 
