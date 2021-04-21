@@ -13,7 +13,7 @@ import imagezmq, os
 import numpy as np
 import sys
 
-sys.path.append('/usr/local/lib/python2.7/site-packages')
+sys.path.append('/home/ubuntu/.local/lib')
 
 # # create a video object for the default webcam
 # camera = cv2.VideoCapture(0)
@@ -37,7 +37,7 @@ i = 0
 conn = sqlite3.connect("site_data.db")
 
 # initialize the voice engine
-engine = pyttsx3.init()
+#engine = pyttsx3.init()
 
 # keep looping
 while True:
