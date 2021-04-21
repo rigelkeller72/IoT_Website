@@ -9,7 +9,7 @@ import cv2
 import time
 import sqlite3
 import pyttsx3
-import imagezmq
+import imagezmq, os
 import numpy as np
 
 # # create a video object for the default webcam
@@ -72,8 +72,8 @@ while True:
 
             # send data base face data every 1 second
             if (time.time() - start_seconds) > 5:
-                engine.say('Intruder Alert!')
-                engine.runAndWait()
+                #engine.say('Intruder Alert!')
+                #engine.runAndWait()
                 # data base commands
                 ts = time.time()
                 cursor = conn.execute("INSERT INTO faces VALUES (?,?,?)", (centroidx, centroidy, ts,))
@@ -97,15 +97,17 @@ while True:
         start_seconds = time.time()
 
     # print frame number and Frames Per Second on image
-    cv2.putText(img, str(frame_number), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
-    cv2.putText(img, 'FPS: %02.1f' % (fps), (470, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+    #cv2.putText(img, str(frame_number), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
+    #cv2.putText(img, 'FPS: %02.1f' % (fps), (470, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
 
     # resize the frame, optional
     img = cv2.resize(img, (0, 0), fx=2.0, fy=2.0)
 
     # display image which contains rectangles drawn on it
-    cv2.imshow("Face Detector", img)
+    savestr = os.getcwd()+"/static/images/test.jpg"
+    cv2.imwrite(savestr, img)
+    #cv2.imshow("AGAGA",img)
 
     # check keyboard for a keypress
     key = cv2.waitKey(1) & 0xFF

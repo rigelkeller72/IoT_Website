@@ -141,3 +141,4 @@ app/servdb.db-journal
 site_data.db
 *.db
 app/site_data.db-journal
+app/static/images/test.jpg
