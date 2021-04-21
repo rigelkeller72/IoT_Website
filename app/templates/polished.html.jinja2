@@ -248,6 +248,12 @@
                     }
             }
 
+            function videoFeed()
+            {
+                var timmy = Date.now()/1000
+                var srcString= "/static/images/test.JPG?" + timmy
+                $("#vidFeed").attr("src", srcString);
+            }
 
             function offlinealarm()// yells at the user for clicking a button when the system clearly is not connected
             {
@@ -292,6 +298,7 @@
                 }
             }
             setInterval(rdata,10000);//refresh rate for the data
+            setInterval(videoFeed,100);//refresh rate to update picture
 
             $('#locked').click(function (){//for unlocking doors, checks to see if already unlocked, otherwise sends command to do so
                 removemesstags();
@@ -554,6 +561,7 @@
              </div>
              <div class="card-body text-center">
                  <p id="facedec"></p>
+                  <img class="card-img-top" id="vidFeed" src="/static/images/test.JPG" alt="Feed down">
              </div>
          </div>
     </div>
