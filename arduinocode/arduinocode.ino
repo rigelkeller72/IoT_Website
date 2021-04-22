@@ -29,7 +29,7 @@ void setup() {
   servo.attach(5);
   servo.write(135);
   serv2.attach(6);
-  serv2.write(135);
+  serv2.write(0);
   
 }
 
@@ -44,13 +44,13 @@ void loop() {
         //serial.print(1,20,6,10);
         break;
       case 'l':
-        servo.write(0);
+        servo.write(135);
         serv2.write(0);
         Serial.print("door locked\n");
         //resetted ='g';
         break;
       case 'o':
-        servo.write(135);
+        servo.write(0);
         serv2.write(135);
         Serial.print("LIGHT_OFF\n");
         break;

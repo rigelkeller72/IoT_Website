@@ -19,7 +19,7 @@ sys.path.append('/home/ubuntu/.local/lib')
 # camera = cv2.VideoCapture(0)
 
 # create cascade classifier which uses a face database
-face_cascade = cv2.CascadeClassifier('HarrXML\haarcascade_frontalface_alt2.xml')
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_alt2.xml')
 
 # Wireless image collection. (Using imagezmq libarary)
 Receive_From_Address = 'tcp://127.0.0.1:5001'
