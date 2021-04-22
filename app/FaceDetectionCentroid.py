@@ -108,7 +108,7 @@ while True:
     img = cv2.resize(img, (0, 0), fx=2.0, fy=2.0)
 
     # display image which contains rectangles drawn on it
-    savestr = os.getcwd()+"/home/ubuntu/IoT_Website/app/static/images/testing.jpg"
+    savestr = "/home/ubuntu/IoT_Website/app/static/images/testing.jpg"
     #print(os.getcwd())
     cv2.imwrite(savestr, img)
     #cv2.imshow("AGAGA",img)
