@@ -40,12 +40,14 @@ while True:  # press Ctrl-C to stop image sending program
 
     # read image from webcam
     # Add an incrementing counter to the image
+
     image = cam.read()
+        # Send an image to the queue
+    #if i % 5 == 0:
     cv2.putText(image, str(i), (10,30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 4)
 
     # encode image into JPEG format (compressed)
     ret_code, jpg_image = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality])
-    # Send an image to the queue
     sender.send_jpg(host_name, jpg_image) # send image
 
     time.sleep(0.25) # in seconds
