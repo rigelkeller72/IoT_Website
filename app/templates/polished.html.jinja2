@@ -194,10 +194,10 @@
             function grayLocks(lbool,online){//clears color classes, then assigns based off of lock state
                 clearButtSetts(online);
                 lockStatus(lbool);
-                if(online ==0){
+                if(online ==1){
                     $('#notlocked').removeClass("offline");
                     $('#locked').removeClass("offline");
-                    if (lbool == 0)
+                    if (lbool == 1)
                     {
                         $('#locked').addClass("btn-success");
                         $('#notlocked').addClass("btn-secondary");
